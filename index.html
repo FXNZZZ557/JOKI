@@ -3,837 +3,4809 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#08090d">
-<title>FXNZZ STORE — Joki Game</title>
+<meta name="theme-color" content="#07070b">
+<title>FXNZZ STORE — Gaming Service</title>
 
 <style>
 :root{
-  --bg:#08090d;
-  --bg2:#0d0f15;
-  --card:rgba(17,18,24,.88);
-  --card2:#11131b;
-  --line:rgba(255,255,255,.09);
-  --muted:#9698a6;
-  --text:#fff;
-  --red:#ff315d;
-  --red2:#ff5276;
-  --green:#45e69a;
-  --yellow:#ffd35a;
-  --shadow:0 18px 50px rgba(0,0,0,.28);
+    --bg:#07070b;
+    --bg2:#0d0d14;
+    --panel:rgba(20,20,30,.72);
+    --panel2:rgba(28,28,40,.86);
+    --line:rgba(255,255,255,.09);
+    --text:#f4f4f7;
+    --muted:#8e8e9d;
+    --accent:#ff2d72;
+    --accent2:#a855f7;
+    --good:#35e69a;
+    --warning:#ffc857;
+    --danger:#ff526f;
+    --radius:22px;
+    --shadow:0 20px 70px rgba(0,0,0,.35);
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:
-    radial-gradient(circle at 15% 10%,rgba(255,49,93,.10),transparent 28%),
-    radial-gradient(circle at 85% 30%,rgba(255,49,93,.06),transparent 25%),
-    linear-gradient(180deg,#08090d,#0a0b10 50%,#08090d);
-  color:var(--text);
-  overflow-x:hidden;
-}
-body::before{
-  content:"";
-  position:fixed;inset:0;z-index:-5;pointer-events:none;
-  background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);
-  background-size:34px 34px;
-  opacity:.12;
-  animation:drift 18s linear infinite;
-}
-a{text-decoration:none;color:inherit}
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-.container{width:min(1100px,92%);margin:auto}
-section{scroll-margin-top:82px}
-.hidden{display:none!important}
 
-.navbar{
-  position:sticky;top:0;z-index:1000;
-  background:rgba(8,9,13,.78);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line);
+/* =========================
+   BASE
+========================= */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
-.nav-inner{
-  width:min(1100px,92%);margin:auto;min-height:64px;
-  display:flex;align-items:center;justify-content:space-between;gap:20px;
+
+html{
+    scroll-behavior:smooth;
 }
-.logo{font-size:20px;font-weight:900;letter-spacing:1px}
-.logo span{color:var(--red)}
-.nav-links{display:flex;align-items:center;gap:4px}
-.nav-links a{
-  padding:9px 12px;border-radius:8px;color:#aaa;
-  transition:.2s;
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    background:
+        radial-gradient(circle at 15% 10%,rgba(255,45,114,.13),transparent 28%),
+        radial-gradient(circle at 85% 20%,rgba(168,85,247,.12),transparent 30%),
+        linear-gradient(145deg,#06060a,#0a0a10 50%,#08080d);
+    color:var(--text);
+    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
-.nav-links a:hover,.nav-links a.active{color:#fff;background:rgba(255,255,255,.07)}
+
+/* subtle ambient grid */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.25;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:42px 42px;
+    mask-image:linear-gradient(to bottom,black,transparent 88%);
+    z-index:-3;
+}
+
+/* ambient scanline */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.035;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.8) 0,
+            rgba(255,255,255,.8) 1px,
+            transparent 1px,
+            transparent 5px
+        );
+    z-index:9998;
+}
+
+/* ambient orb */
+.ambient-orb{
+    position:fixed;
+    width:520px;
+    height:520px;
+    border-radius:50%;
+    right:-180px;
+    top:-170px;
+    background:radial-gradient(
+        circle,
+        rgba(255,45,114,.075),
+        transparent 67%
+    );
+    filter:blur(20px);
+    pointer-events:none;
+    z-index:-2;
+    animation:orbMove 12s ease-in-out infinite alternate;
+}
+
+@keyframes orbMove{
+    from{
+        transform:translate(0,0);
+    }
+    to{
+        transform:translate(-100px,130px);
+    }
+}
+
+/* subtle geometric particles */
+.ambient-particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+    overflow:hidden;
+}
+
+.ambient-particles i{
+    position:absolute;
+    width:2px;
+    height:2px;
+    border-radius:50%;
+    background:rgba(255,255,255,.16);
+    animation:particleFloat linear infinite;
+}
+
+.ambient-particles i:nth-child(1){left:8%;top:30%;animation-duration:11s}
+.ambient-particles i:nth-child(2){left:18%;top:70%;animation-duration:15s}
+.ambient-particles i:nth-child(3){left:33%;top:18%;animation-duration:13s}
+.ambient-particles i:nth-child(4){left:49%;top:82%;animation-duration:17s}
+.ambient-particles i:nth-child(5){left:62%;top:32%;animation-duration:12s}
+.ambient-particles i:nth-child(6){left:74%;top:68%;animation-duration:16s}
+.ambient-particles i:nth-child(7){left:86%;top:24%;animation-duration:14s}
+.ambient-particles i:nth-child(8){left:93%;top:80%;animation-duration:18s}
+
+@keyframes particleFloat{
+    0%{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    20%{
+        opacity:.6;
+    }
+    80%{
+        opacity:.25;
+    }
+    100%{
+        opacity:0;
+        transform:translateY(-120px);
+    }
+}
+
+/* =========================
+   ENTRY
+========================= */
+
+.entry{
+    position:fixed;
+    inset:0;
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        radial-gradient(circle at center,rgba(255,45,114,.12),transparent 38%),
+        #06060a;
+    transition:opacity .8s ease,visibility .8s ease;
+}
+
+.entry.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.entry-box{
+    width:min(600px,90%);
+    text-align:center;
+    animation:entryUp 1s ease;
+}
+
+@keyframes entryUp{
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.logo-mini{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:8px 14px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    color:#bbb;
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    background:rgba(255,255,255,.03);
+    margin-bottom:28px;
+}
+
+.live-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--good);
+    box-shadow:0 0 15px var(--good);
+    animation:pulse 1.8s infinite;
+}
+
+@keyframes pulse{
+    50%{
+        opacity:.4;
+        transform:scale(.7);
+    }
+}
+
+/* Existing FXNZZ glow retained */
+.entry h1{
+    position:relative;
+    font-size:clamp(48px,10vw,92px);
+    line-height:.9;
+    letter-spacing:-5px;
+    font-weight:900;
+    background:linear-gradient(
+        120deg,
+        #fff,
+        #ff6d9b 45%,
+        #b875ff
+    );
+    -webkit-background-clip:text;
+    color:transparent;
+    filter:drop-shadow(
+        0 0 28px rgba(255,45,114,.2)
+    );
+}
+
+/* =========================
+   WHITE BLOOM SLASH
+========================= */
+
+.entry-title-wrap{
+    position:relative;
+    display:inline-block;
+}
+
+.entry-title-wrap::after{
+    content:"";
+    position:absolute;
+    pointer-events:none;
+    z-index:5;
+    top:-35%;
+    left:-22%;
+    width:17%;
+    height:170%;
+    opacity:0;
+    transform:skewX(-20deg) translateX(-80px);
+    background:
+        linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255,255,255,.1) 15%,
+            rgba(255,255,255,.92) 45%,
+            #fff 55%,
+            rgba(255,255,255,.2) 75%,
+            transparent 100%
+        );
+    filter:blur(8px);
+}
+
+.entry-title-wrap.slashing::after{
+    animation:whiteBloomSlash .72s cubic-bezier(.2,.7,.2,1) forwards;
+}
+
+.entry-title-wrap.slashing::before{
+    content:"";
+    position:absolute;
+    pointer-events:none;
+    z-index:4;
+    inset:-12% -6%;
+    opacity:0;
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(255,255,255,.85) 0%,
+            rgba(255,255,255,.35) 20%,
+            transparent 58%
+        );
+    filter:blur(18px);
+    mix-blend-mode:screen;
+}
+
+.entry-title-wrap.slashing::before{
+    animation:bloomFlash .72s ease forwards;
+}
+
+.entry-title-wrap.slashing h1{
+    animation:titleWhiteFlash .72s ease forwards;
+}
+
+@keyframes whiteBloomSlash{
+    0%{
+        opacity:0;
+        transform:skewX(-20deg) translateX(-90px);
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    45%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:0;
+        transform:skewX(-20deg) translateX(680px);
+    }
+}
+
+@keyframes bloomFlash{
+    0%,15%{
+        opacity:0;
+        transform:scale(.96);
+    }
+
+    42%{
+        opacity:.95;
+        transform:scale(1.03);
+    }
+
+    65%{
+        opacity:.25;
+        transform:scale(1);
+    }
+
+    100%{
+        opacity:0;
+    }
+}
+
+@keyframes titleWhiteFlash{
+    0%,18%{
+        filter:drop-shadow(
+            0 0 28px rgba(255,45,114,.2)
+        );
+    }
+
+    43%{
+        color:#fff;
+        background:none;
+        -webkit-background-clip:initial;
+        filter:
+            brightness(2.2)
+            drop-shadow(0 0 32px rgba(255,255,255,.9));
+    }
+
+    62%{
+        filter:
+            brightness(1.35)
+            drop-shadow(0 0 35px rgba(255,255,255,.55));
+    }
+
+    100%{
+        background:linear-gradient(
+            120deg,
+            #fff,
+            #ff6d9b 45%,
+            #b875ff
+        );
+        -webkit-background-clip:text;
+        color:transparent;
+        filter:drop-shadow(
+            0 0 28px rgba(255,45,114,.2)
+        );
+    }
+}
+
+.entry p{
+    margin:25px auto 30px;
+    max-width:470px;
+    color:var(--muted);
+    line-height:1.7;
+}
+
+.enter-btn{
+    border:0;
+    cursor:pointer;
+    padding:16px 30px;
+    border-radius:14px;
+    color:white;
+    font-weight:800;
+    background:linear-gradient(
+        135deg,
+        var(--accent),
+        #b326ff
+    );
+    box-shadow:0 12px 40px rgba(255,45,114,.25);
+    transition:.25s;
+}
+
+.enter-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 50px rgba(255,45,114,.38);
+}
+
+/* =========================
+   APP
+========================= */
+
+.app{
+    min-height:100vh;
+    opacity:0;
+    transition:1s ease;
+}
+
+.app.ready{
+    opacity:1;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.nav{
+    position:sticky;
+    top:0;
+    z-index:100;
+    height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 5%;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    background:rgba(7,7,11,.72);
+    backdrop-filter:blur(18px);
+}
+
+.brand{
+    font-size:18px;
+    font-weight:900;
+    letter-spacing:-.5px;
+}
+
+.brand span{
+    color:var(--accent);
+}
+
+.nav-links{
+    position:relative;
+    display:flex;
+    gap:7px;
+}
+
+.nav-links button{
+    position:relative;
+    border:0;
+    background:transparent;
+    color:#aaa;
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.nav-links button:hover{
+    color:white;
+    background:rgba(255,255,255,.06);
+}
+
+.nav-links button.active{
+    color:white;
+}
+
+.nav-indicator{
+    position:absolute;
+    bottom:-4px;
+    left:0;
+    height:2px;
+    width:0;
+    border-radius:10px;
+    background:linear-gradient(
+        90deg,
+        var(--accent),
+        var(--accent2)
+    );
+    box-shadow:0 0 12px rgba(255,45,114,.65);
+    transition:
+        left .3s cubic-bezier(.2,.8,.2,1),
+        width .3s cubic-bezier(.2,.8,.2,1);
+    pointer-events:none;
+}
+
 .nav-order{
-  background:var(--red)!important;color:#fff!important;
-  box-shadow:0 0 20px rgba(255,49,93,.18);
+    position:relative;
+    border:1px solid rgba(255,45,114,.3);
+    background:rgba(255,45,114,.08);
+    color:#ff8db0;
+    border-radius:12px;
+    padding:10px 14px;
+    cursor:pointer;
 }
-.menu-btn{display:none;background:transparent;color:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 11px}
-.cart{
-  display:flex;align-items:center;gap:7px;
-  background:rgba(255,255,255,.07);border:1px solid var(--line);
-  padding:8px 12px;border-radius:10px;transition:.2s;
+
+.cart-count{
+    position:absolute;
+    top:-7px;
+    right:-7px;
+    min-width:18px;
+    height:18px;
+    padding:0 5px;
+    border-radius:20px;
+    display:grid;
+    place-items:center;
+    font-size:10px;
+    font-weight:800;
+    color:white;
+    background:var(--accent);
 }
-.cart.pop{animation:cartPop .28s ease}
+
+/* =========================
+   MAIN
+========================= */
+
+main{
+    width:min(1400px,90%);
+    margin:auto;
+}
+
+section{
+    padding:90px 0;
+}
 
 .hero{
-  min-height:78vh;display:flex;align-items:center;justify-content:center;
-  text-align:center;padding:70px 20px 55px;position:relative;
+    min-height:620px;
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:50px;
+    align-items:center;
 }
-.hero::after{
-  content:"";position:absolute;width:280px;height:280px;border-radius:50%;
-  background:rgba(255,49,93,.11);filter:blur(80px);z-index:-1;
-}
-.hero-content{max-width:850px}
+
 .eyebrow{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:7px 11px;border:1px solid rgba(255,49,93,.3);
-  background:rgba(255,49,93,.07);border-radius:999px;
-  color:#ff91a6;font-size:12px;font-weight:700;margin-bottom:18px;
+    color:#ff739a;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:18px;
 }
-.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
-.hero h1{
-  font-size:clamp(45px,9vw,86px);letter-spacing:3px;margin-bottom:18px;
-  text-shadow:0 0 25px rgba(255,49,93,.10);
+
+.hero h2{
+    font-size:clamp(42px,6vw,76px);
+    line-height:.98;
+    letter-spacing:-4px;
+    max-width:800px;
 }
-.hero h1 span{color:var(--red)}
-.hero p{max-width:700px;margin:auto;color:#c2c2ca;line-height:1.7;font-size:15px}
-.hero-buttons{display:flex;justify-content:center;gap:10px;margin-top:25px;flex-wrap:wrap}
+
+.hero h2 span{
+    background:linear-gradient(
+        100deg,
+        #ff477f,
+        #b66aff
+    );
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero-text{
+    margin-top:24px;
+    max-width:630px;
+    color:var(--muted);
+    line-height:1.8;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:30px;
+}
+
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  color:#fff;padding:12px 19px;border-radius:10px;
-  background:rgba(255,255,255,.07);border:1px solid var(--line);
-  backdrop-filter:blur(8px);transition:.2s;position:relative;overflow:hidden;
+    position:relative;
+    overflow:hidden;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.045);
+    color:white;
+    border-radius:13px;
+    padding:13px 18px;
+    cursor:pointer;
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease;
+    font-weight:700;
+    will-change:transform;
 }
-.btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.13)}
-.btn.primary{background:var(--red);border-color:var(--red)}
-.btn:active{transform:scale(.97)}
 
-.section{margin-bottom:60px}
-.section-title{margin-bottom:20px}
-.section-title h2{font-size:28px}
-.section-title p{color:var(--muted);margin-top:5px;font-size:14px}
-
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.trust-card,.stat-card,.comment-card,.faq-item,.contact-card,.coming{
-  background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:18px;backdrop-filter:blur(10px);box-shadow:var(--shadow);
+.btn:hover{
+    border-color:rgba(255,255,255,.18);
 }
-.trust-card,.stat-card,.package,.social a,.contact-card,.comment-card{
-  transition:transform .22s,border-color .22s,background .22s,box-shadow .22s;
-}
-.trust-card:hover,.stat-card:hover,.package:hover,.social a:hover,.contact-card:hover,.comment-card:hover{
-  transform:translateY(-4px);border-color:rgba(255,49,93,.38);
-}
-.trust-card h3{margin-bottom:7px}.trust-card p{color:var(--muted);font-size:13px;line-height:1.5}
 
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.stat-card{text-align:center}
-.stat-value{font-size:26px;font-weight:900;color:#fff}
-.stat-label{font-size:12px;color:var(--muted);margin-top:5px}
+.btn.primary{
+    border:0;
+    background:linear-gradient(
+        135deg,
+        var(--accent),
+        #b22aff
+    );
+    box-shadow:0 12px 35px rgba(255,45,114,.2);
+}
 
-.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+/* ripple */
+.ripple{
+    position:absolute;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:rgba(255,255,255,.55);
+    transform:translate(-50%,-50%) scale(0);
+    pointer-events:none;
+    animation:ripple .28s ease-out forwards;
+}
+
+@keyframes ripple{
+    to{
+        transform:translate(-50%,-50%) scale(15);
+        opacity:0;
+    }
+}
+
+/* =========================
+   HERO CARD
+========================= */
+
+.hero-card{
+    min-height:400px;
+    position:relative;
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:30px;
+    padding:30px;
+    background:
+        radial-gradient(
+            circle at 80% 10%,
+            rgba(168,85,247,.25),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 10% 90%,
+            rgba(255,45,114,.16),
+            transparent 40%
+        ),
+        rgba(255,255,255,.035);
+    box-shadow:var(--shadow);
+}
+
+.hero-card::before{
+    content:"FXNZZ";
+    position:absolute;
+    font-size:120px;
+    font-weight:1000;
+    color:rgba(255,255,255,.025);
+    transform:rotate(-18deg);
+    right:-40px;
+    bottom:40px;
+}
+
+.status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-radius:999px;
+    background:rgba(53,230,154,.08);
+    border:1px solid rgba(53,230,154,.2);
+    color:#74efbc;
+    font-size:11px;
+    font-weight:800;
+}
+
+.hero-card h3{
+    margin-top:55px;
+    font-size:32px;
+    letter-spacing:-1px;
+}
+
+.hero-card p{
+    color:var(--muted);
+    line-height:1.7;
+    margin-top:12px;
+}
+
+.fake-wave{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:110px;
+    background:
+        linear-gradient(
+            135deg,
+            transparent 30%,
+            rgba(255,45,114,.08)
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 45px,
+            rgba(255,255,255,.035) 46px 47px
+        );
+    clip-path:polygon(
+        0 65%,
+        15% 45%,
+        30% 58%,
+        45% 25%,
+        60% 50%,
+        75% 20%,
+        100% 42%,
+        100% 100%,
+        0 100%
+    );
+}
+
+/* =========================
+   SECTION HEADER
+========================= */
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.section-head h2{
+    font-size:34px;
+    letter-spacing:-1.5px;
+}
+
+.section-head p{
+    max-width:600px;
+    color:var(--muted);
+    line-height:1.6;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+}
+
+.stat{
+    padding:23px;
+    border:1px solid var(--line);
+    border-radius:18px;
+    background:var(--panel);
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.stat-value{
+    margin-top:9px;
+    font-size:29px;
+    font-weight:900;
+}
+
+.stat small{
+    display:block;
+    margin-top:7px;
+    color:#6f6f7d;
+}
+
+/* =========================
+   GAME
+========================= */
+
+.game-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.game-card{
+    position:relative;
+    min-height:270px;
+    overflow:hidden;
+    padding:30px;
+    border:1px solid var(--line);
+    border-radius:24px;
+    background:linear-gradient(
+        145deg,
+        rgba(255,255,255,.06),
+        rgba(255,255,255,.025)
+    );
+    transition:.3s;
+}
+
+.game-card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(255,45,114,.25);
+}
+
+.game-code{
+    color:#ff6f98;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.game-card h3{
+    margin-top:45px;
+    font-size:31px;
+}
+
+.game-card p{
+    max-width:500px;
+    color:var(--muted);
+    margin-top:10px;
+    line-height:1.6;
+}
+
+.game-number{
+    position:absolute;
+    right:25px;
+    top:20px;
+    font-size:90px;
+    line-height:1;
+    font-weight:1000;
+    color:rgba(255,255,255,.035);
+}
+
+/* =========================
+   FILTER
+========================= */
+
 .filter{
-  color:#aaa;background:#111218;border:1px solid #292a32;
-  padding:10px 17px;border-radius:9px;transition:.2s;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:22px;
 }
-.filter:hover{color:#fff;transform:translateY(-2px)}
-.filter.active{color:#fff;background:var(--red);border-color:var(--red)}
 
-.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:18px}
-.search{
-  width:100%;padding:11px 13px;border-radius:10px;
-  border:1px solid var(--line);background:#0e1016;color:#fff;outline:none;
+.filter button{
+    padding:9px 13px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    color:#999;
+    background:rgba(255,255,255,.03);
+    cursor:pointer;
+    transition:.2s;
 }
-.search:focus{border-color:rgba(255,49,93,.55);box-shadow:0 0 0 3px rgba(255,49,93,.08)}
 
-.package-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.filter button.active{
+    color:white;
+    border-color:rgba(255,45,114,.4);
+    background:rgba(255,45,114,.1);
+}
+
+/* =========================
+   CARD SPOTLIGHT
+========================= */
+
+.package-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
 .package{
-  background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px;
-  opacity:0;transform:translateY(15px);position:relative;overflow:hidden;
+    --spot-x:50%;
+    --spot-y:50%;
+
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    min-height:270px;
+    padding:22px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:
+        radial-gradient(
+            260px circle at var(--spot-x) var(--spot-y),
+            rgba(255,45,114,.12),
+            transparent 65%
+        ),
+        var(--panel);
+    transition:
+        transform .25s ease,
+        opacity .25s ease,
+        filter .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
 }
-.package.show{opacity:1;transform:translateY(0)}
-.package::before{
-  content:"";position:absolute;inset:-1px;background:linear-gradient(120deg,transparent 30%,rgba(255,49,93,.12),transparent 70%);
-  transform:translateX(-120%);transition:.55s;pointer-events:none;
+
+.package:hover,
+.package.spotlight-active{
+    transform:translateY(-5px);
+    border-color:rgba(255,45,114,.32);
+    box-shadow:
+        0 18px 55px rgba(0,0,0,.25),
+        0 0 28px rgba(255,45,114,.07);
 }
-.package:hover::before{transform:translateX(120%)}
-.package h3{font-size:14px;line-height:1.4;margin-bottom:9px}
-.category{font-size:10px;color:#888b99;text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
-.price{color:var(--red2);font-size:17px;font-weight:bold;margin-bottom:12px}
-.badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
-.badge{font-size:9px;padding:4px 6px;border-radius:999px;background:rgba(255,255,255,.07);color:#bbb}
-.badge.red{background:rgba(255,49,93,.14);color:#ff8aa1}
-.badge.gold{background:rgba(255,211,90,.12);color:#ffd35a}
-.package-actions{display:grid;grid-template-columns:1fr auto;gap:7px}
-.order-btn,.detail-btn{
-  border:none;padding:9px;border-radius:8px;transition:.2s
+
+.package-grid.spotlight-mode .package:not(.spotlight-active){
+    opacity:.48;
+    filter:saturate(.65);
 }
-.order-btn{background:var(--red);color:#fff;font-weight:bold}
-.detail-btn{background:rgba(255,255,255,.07);color:#ddd;border:1px solid var(--line)}
-.order-btn:hover,.detail-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
-.order-btn:active,.detail-btn:active{transform:scale(.97)}
 
-.progress-wrap{margin-top:11px}
-.progress-label{display:flex;justify-content:space-between;font-size:10px;color:#858793;margin-bottom:5px}
-.progress{height:5px;background:#242630;border-radius:99px;overflow:hidden}
-.progress span{display:block;height:100%;width:70%;background:linear-gradient(90deg,var(--red),#ff7791);animation:progressGlow 1.6s ease-in-out infinite alternate}
-
-.social{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.social a{text-align:center;padding:14px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:10px}
-.social small{display:block;color:#888;margin-top:4px}
-
-.payment{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-.payment-item{padding:13px 20px;background:#111218;border:1px solid #292a32;border-radius:10px;font-weight:bold}
-
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.contact-card h3{margin-bottom:8px}.contact-card p{color:var(--muted);line-height:1.6;font-size:13px}
-.copy-box{display:flex;gap:8px;margin-top:12px}
-.copy-box input{flex:1;background:#090a0f;border:1px solid var(--line);color:#fff;border-radius:8px;padding:9px}
-.copy-box button{background:rgba(255,255,255,.07);border:1px solid var(--line);color:#fff;border-radius:8px;padding:0 12px}
-
-.faq{display:grid;gap:8px}
-.faq-item{padding:0;overflow:hidden}
-.faq-q{width:100%;background:transparent;color:#fff;border:0;text-align:left;padding:16px;font-weight:bold;display:flex;justify-content:space-between}
-.faq-a{max-height:0;overflow:hidden;color:var(--muted);font-size:13px;line-height:1.6;padding:0 16px;transition:max-height .3s,padding .3s}
-.faq-item.open .faq-a{max-height:150px;padding:0 16px 16px}
-.faq-item.open .faq-q span{transform:rotate(45deg)}
-
-.testimonial-layout{display:grid;grid-template-columns:360px 1fr;gap:14px}
-.form-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
-.form-card h3{margin-bottom:13px}
-.field{margin-bottom:10px}
-.field label{display:block;color:#aaa;font-size:12px;margin-bottom:5px}
-.field input,.field textarea,.field select{
-  width:100%;background:#0c0e13;color:#fff;border:1px solid var(--line);
-  border-radius:8px;padding:10px;outline:none;
+.package-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:start;
+    gap:10px;
 }
-.field textarea{min-height:90px;resize:vertical}
-.rating-input{display:flex;gap:3px;flex-direction:row-reverse;justify-content:flex-end}
-.rating-input input{display:none}
-.rating-input label{font-size:23px;color:#444;cursor:pointer}
-.rating-input input:checked~label,.rating-input label:hover,.rating-input label:hover~label{color:#ffd35a}
-.photo-preview{margin-top:8px;border:1px dashed var(--line);border-radius:8px;min-height:70px;display:flex;align-items:center;justify-content:center;color:#666;font-size:12px;overflow:hidden}
-.photo-preview img{width:100%;max-height:170px;object-fit:cover}
-.testimonials{display:grid;gap:10px}
-.comment-card .top{display:flex;justify-content:space-between;gap:10px}
-.stars{color:#ffd35a;letter-spacing:1px}
-.comment-card p{color:#c4c5cc;font-size:13px;line-height:1.6;margin-top:9px}
-.comment-meta{color:#777;font-size:10px;margin-top:10px}
 
-.comment-form{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:12px}
-.comment-form input{background:#0c0e13;color:#fff;border:1px solid var(--line);border-radius:8px;padding:10px}
-.comment-list{display:grid;gap:8px}
-
-.coming{text-align:center;color:#aaa;line-height:1.8}
-
-.promo{
-  display:flex;justify-content:space-between;align-items:center;gap:10px;
-  padding:14px 16px;border:1px solid rgba(255,49,93,.24);
-  background:rgba(255,49,93,.06);border-radius:12px;margin-bottom:16px;
+.package-category{
+    color:#ff6c97;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:1.5px;
 }
-.countdown{font-weight:900;color:#ff8aa1;white-space:nowrap}
 
-.modal{
-  position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);
-  z-index:2000;display:none;align-items:center;justify-content:center;padding:18px;
+.badge{
+    padding:5px 8px;
+    border-radius:7px;
+    background:rgba(255,255,255,.06);
+    color:#aaa;
+    font-size:9px;
+    font-weight:800;
 }
-.modal.open{display:flex}
-.modal-box{
-  width:min(520px,100%);background:#101219;border:1px solid var(--line);
-  border-radius:16px;padding:20px;box-shadow:0 30px 80px rgba(0,0,0,.5);
-  animation:modalIn .22s ease;
+
+.package h3{
+    margin-top:22px;
+    font-size:18px;
+    line-height:1.35;
 }
-.modal-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
-.modal-close{background:transparent;color:#aaa;border:0;font-size:24px}
-.modal-body{color:#aaa;line-height:1.7;font-size:13px;margin:15px 0}
-.confirm-actions{display:flex;gap:8px;justify-content:flex-end}
+
+.package-desc{
+    margin-top:9px;
+    color:#858592;
+    font-size:12px;
+    line-height:1.6;
+}
+
+.price{
+    margin-top:auto;
+    padding-top:20px;
+    font-size:23px;
+    font-weight:900;
+}
+
+.price span{
+    color:#777;
+    font-size:11px;
+    font-weight:500;
+}
+
+.package .btn{
+    margin-top:14px;
+    width:100%;
+}
+
+/* =========================
+   SPECIAL
+========================= */
+
+.special{
+    position:relative;
+    overflow:hidden;
+    padding:30px;
+    border-radius:25px;
+    border:1px solid rgba(255,45,114,.2);
+    background:
+        radial-gradient(
+            circle at 90% 0,
+            rgba(255,45,114,.15),
+            transparent 40%
+        ),
+        rgba(255,45,114,.045);
+}
+
+.special h3{
+    margin:12px 0 7px;
+    font-size:26px;
+}
+
+.special p{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+/* =========================
+   ORDER
+========================= */
+
+.order-layout{
+    display:grid;
+    grid-template-columns:1fr .7fr;
+    gap:20px;
+}
+
+.panel{
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:24px;
+    background:var(--panel);
+}
+
+.panel h3{
+    margin-bottom:20px;
+}
+
+.form-group{
+    margin-bottom:15px;
+}
+
+.form-group label{
+    display:block;
+    color:#aaa;
+    font-size:11px;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:12px;
+    color:white;
+    outline:none;
+    background:rgba(0,0,0,.25);
+}
+
+.form-group textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    border-color:rgba(255,45,114,.5);
+}
+
+/* =========================
+   PAYMENT MEDIA
+========================= */
+
+.payment-methods{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.payment-method{
+    position:relative;
+    min-height:100px;
+    padding:15px 10px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:6px;
+    text-align:center;
+    border:1px solid var(--line);
+    border-radius:15px;
+    cursor:pointer;
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.payment-method:hover{
+    transform:translateY(-2px);
+    border-color:rgba(255,255,255,.2);
+}
+
+.payment-method.active{
+    border-color:var(--accent);
+    background:rgba(255,45,114,.08);
+    box-shadow:
+        0 0 25px rgba(255,45,114,.08);
+}
+
+.payment-icon{
+    width:42px;
+    height:30px;
+    display:grid;
+    place-items:center;
+    border-radius:8px;
+    font-size:11px;
+    font-weight:1000;
+    letter-spacing:-.5px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.08);
+}
+
+.payment-method:nth-child(1) .payment-icon{
+    color:#66aaff;
+}
+
+.payment-method:nth-child(2) .payment-icon{
+    color:#63e8a9;
+}
+
+.payment-method:nth-child(3) .payment-icon{
+    color:#fff;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.12),
+            rgba(255,45,114,.12)
+        );
+}
+
+.payment-method strong{
+    display:block;
+    font-size:13px;
+}
+
+.payment-method small{
+    color:#777;
+    font-size:9px;
+}
+
+.checkout-total{
+    display:flex;
+    justify-content:space-between;
+    padding:20px 0;
+    margin-top:15px;
+    border-top:1px solid var(--line);
+}
+
+.checkout-total strong{
+    font-size:24px;
+}
+
+/* =========================
+   PAYMENT PREVIEW
+========================= */
+
+.payment-preview{
+    position:relative;
+    overflow:hidden;
+    margin-top:22px;
+    padding:25px;
+    border:1px solid var(--line);
+    border-radius:17px;
+    background:
+        radial-gradient(
+            circle at 50% 0,
+            rgba(255,45,114,.08),
+            transparent 55%
+        ),
+        rgba(255,255,255,.025);
+}
+
+.payment-preview::after{
+    content:"SECURE PAYMENT";
+    position:absolute;
+    right:-25px;
+    bottom:12px;
+    font-size:9px;
+    letter-spacing:2px;
+    color:rgba(255,255,255,.04);
+    transform:rotate(-15deg);
+}
+
+.payment-status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--warning);
+    box-shadow:0 0 12px rgba(255,200,87,.45);
+}
+
+/* =========================
+   QR
+========================= */
+
+#fakeQR{
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.3);
+}
+
+/* =========================
+   TRACKER
+========================= */
+
+.tracker{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+}
+
+.tracker::before{
+    content:"";
+    position:absolute;
+    top:18px;
+    left:8%;
+    right:8%;
+    height:2px;
+    background:var(--line);
+}
+
+.step{
+    position:relative;
+    z-index:1;
+    text-align:center;
+}
+
+.step-dot{
+    width:36px;
+    height:36px;
+    margin:auto;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:#171720;
+    border:1px solid var(--line);
+    color:#666;
+    font-size:11px;
+    font-weight:900;
+    transition:.25s;
+}
+
+.step.done .step-dot{
+    color:white;
+    background:var(--accent);
+    border-color:var(--accent);
+    box-shadow:0 0 22px rgba(255,45,114,.25);
+}
+
+.step span{
+    display:block;
+    margin-top:10px;
+    color:#777;
+    font-size:10px;
+}
+
+.step.done span{
+    color:#ccc;
+}
+
+/* =========================
+   ACTIVITY
+========================= */
+
+.activity{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.activity-list{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.activity-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px;
+    border:1px solid var(--line);
+    border-radius:13px;
+    background:rgba(255,255,255,.025);
+}
+
+.activity-left{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.activity-icon{
+    width:32px;
+    height:32px;
+    border-radius:10px;
+    display:grid;
+    place-items:center;
+    background:rgba(255,45,114,.1);
+    color:#ff7ba0;
+    font-size:9px;
+    font-weight:900;
+}
+
+.activity-item strong{
+    display:block;
+    font-size:12px;
+}
+
+.activity-item small{
+    color:#6f6f7d;
+}
+
+.activity-price{
+    color:#aaa;
+    font-size:11px;
+}
+
+/* =========================
+   TESTIMONIAL
+========================= */
+
+.testimonial-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.testimonial{
+    padding:23px;
+    border:1px solid var(--line);
+    border-radius:19px;
+    background:var(--panel);
+}
+
+.stars{
+    color:#ffc857;
+    letter-spacing:2px;
+}
+
+.testimonial p{
+    margin-top:17px;
+    color:#a5a5b0;
+    line-height:1.7;
+    font-size:13px;
+}
+
+.user{
+    margin-top:20px;
+    display:flex;
+    justify-content:space-between;
+    color:#ddd;
+    font-size:12px;
+}
+
+.user span{
+    color:#666;
+}
+
+/* =========================
+   FAQ
+========================= */
+
+.faq{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.faq-item{
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    background:rgba(255,255,255,.025);
+}
+
+.faq-q{
+    width:100%;
+    padding:18px;
+    display:flex;
+    justify-content:space-between;
+    color:white;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+    text-align:left;
+    font-weight:700;
+}
+
+.faq-a{
+    max-height:0;
+    overflow:hidden;
+    padding:0 18px;
+    color:#858592;
+    line-height:1.7;
+    font-size:13px;
+    transition:.3s;
+}
+
+.faq-item.open .faq-a{
+    max-height:150px;
+    padding-bottom:18px;
+}
+
+/* =========================
+   SUPPORT
+========================= */
+
+.support{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.support-card{
+    padding:25px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:var(--panel);
+}
+
+.support-card h3{
+    margin-bottom:8px;
+}
+
+.support-card p{
+    color:var(--muted);
+    line-height:1.6;
+    font-size:13px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    border-top:1px solid var(--line);
+    padding:35px 5%;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    color:#666;
+    font-size:11px;
+}
+
+/* =========================
+   CART
+========================= */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    z-index:300;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(8px);
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+}
+
+.overlay.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.drawer{
+    position:absolute;
+    right:0;
+    top:0;
+    bottom:0;
+    width:min(440px,92%);
+    padding:25px;
+    background:#0c0c12;
+    border-left:1px solid var(--line);
+    transform:translateX(100%);
+    transition:.35s ease;
+    overflow:auto;
+}
+
+.overlay.show .drawer{
+    transform:none;
+}
+
+.drawer-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:25px;
+}
+
+.close{
+    border:0;
+    background:rgba(255,255,255,.06);
+    color:white;
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.cart-empty{
+    text-align:center;
+    padding:70px 20px;
+    color:#666;
+}
+
+.cart-item{
+    padding:18px 0;
+    border-bottom:1px solid var(--line);
+}
+
+.cart-item strong{
+    display:block;
+    font-size:14px;
+}
+
+.cart-item small{
+    color:#666;
+}
+
+.cart-item-bottom{
+    display:flex;
+    justify-content:space-between;
+    margin-top:12px;
+}
+
+.remove{
+    border:0;
+    background:none;
+    color:#ff607f;
+    cursor:pointer;
+}
+
+.drawer-total{
+    display:flex;
+    justify-content:space-between;
+    padding:20px 0;
+    font-weight:800;
+}
+
+/* =========================
+   TOAST
+========================= */
 
 .toast{
-  position:fixed;right:18px;bottom:18px;z-index:3000;
-  background:#151821;border:1px solid var(--line);color:#fff;
-  padding:11px 14px;border-radius:10px;box-shadow:var(--shadow);
-  opacity:0;transform:translateY(15px);pointer-events:none;transition:.25s;
-  max-width:320px;font-size:13px;
+    position:fixed;
+    z-index:1000;
+    left:50%;
+    bottom:25px;
+    transform:translate(-50%,30px);
+    opacity:0;
+    pointer-events:none;
+    padding:13px 17px;
+    border:1px solid var(--line);
+    border-radius:13px;
+    background:#15151e;
+    box-shadow:var(--shadow);
+    font-size:12px;
+    transition:.3s;
 }
-.toast.show{opacity:1;transform:translateY(0)}
 
-.cart-panel{
-  position:fixed;right:18px;top:75px;width:min(390px,calc(100% - 36px));
-  background:#101219;border:1px solid var(--line);border-radius:15px;z-index:1500;
-  box-shadow:0 30px 80px rgba(0,0,0,.5);display:none;overflow:hidden;
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
 }
-.cart-panel.open{display:block;animation:modalIn .2s ease}
-.cart-head{padding:15px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
-.cart-items{max-height:350px;overflow:auto;padding:10px}
-.cart-item{padding:10px;border:1px solid var(--line);border-radius:9px;margin-bottom:7px}
-.cart-item .row{display:flex;justify-content:space-between;gap:8px}
-.qty{display:flex;align-items:center;gap:7px;margin-top:8px}
-.qty button{width:26px;height:26px;border-radius:6px;border:1px solid var(--line);background:#191b23;color:#fff}
-.remove{margin-left:auto;background:transparent;border:0;color:#ff708c}
-.cart-foot{padding:14px;border-top:1px solid var(--line)}
-.total{display:flex;justify-content:space-between;font-weight:bold;margin-bottom:10px}
-.full{width:100%}
 
-.back-top{
-  position:fixed;right:18px;bottom:72px;width:40px;height:40px;border-radius:50%;
-  border:1px solid var(--line);background:#14161e;color:#fff;display:none;z-index:900
+/* =========================
+   MOBILE NAV
+========================= */
+
+.mobile-nav{
+    display:none;
 }
-.back-top.show{display:block}
 
-.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);transform:scale(0);animation:ripple .5s linear;pointer-events:none}
+/* =========================
+   RESPONSIVE
+========================= */
 
-.reveal{opacity:0;transform:translateY(22px);transition:.65s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.loading{
-  display:flex;justify-content:center;align-items:center;padding:35px;color:#777
+@media(max-width:950px){
+
+    .hero{
+        grid-template-columns:1fr;
+    }
+
+    .hero-card{
+        min-height:300px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .package-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .order-layout{
+        grid-template-columns:1fr;
+    }
+
+    .testimonial-grid{
+        grid-template-columns:1fr;
+    }
+
+    .activity{
+        grid-template-columns:1fr;
+    }
 }
-.spinner{width:24px;height:24px;border:3px solid #292b34;border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite}
-.empty{grid-column:1/-1;text-align:center;padding:35px;color:#777;border:1px dashed var(--line);border-radius:12px}
 
-footer{text-align:center;padding:35px 20px;color:#777;font-size:12px;border-top:1px solid rgba(255,255,255,.06)}
-
-@keyframes heroIn{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
-@keyframes cartPop{50%{transform:scale(1.12)}}
-@keyframes ripple{to{transform:scale(4);opacity:0}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes modalIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
-@keyframes drift{to{background-position:34px 34px}}
-@keyframes progressGlow{to{filter:brightness(1.3)}}
-
-@media(max-width:850px){
-  .nav-links{display:none;position:absolute;left:4%;right:4%;top:64px;background:#0d0f15;border:1px solid var(--line);border-radius:12px;padding:8px;flex-direction:column;align-items:stretch}
-  .nav-links.open{display:flex}
-  .menu-btn{display:block}
-  .nav-inner{position:relative}
-  .package-grid{grid-template-columns:repeat(2,1fr)}
-  .testimonial-layout{grid-template-columns:1fr}
-}
 @media(max-width:650px){
-  .hero{min-height:70vh}
-  .hero h1{font-size:45px}
-  .grid3,.stats,.social,.contact-grid{grid-template-columns:1fr}
-  .package-grid{grid-template-columns:repeat(2,1fr);gap:8px}
-  .package{padding:11px}
-  .package h3{font-size:12px}
-  .price{font-size:14px}
-  .order-btn,.detail-btn{font-size:11px;padding:8px 4px}
-  .toolbar{display:block}
-  .promo{align-items:flex-start;flex-direction:column}
-  .comment-form{grid-template-columns:1fr}
+
+    .nav{
+        padding:0 18px;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
+    main{
+        width:min(92%,600px);
+    }
+
+    section{
+        padding:65px 0;
+    }
+
+    .hero{
+        min-height:560px;
+        gap:25px;
+    }
+
+    .hero h2{
+        font-size:43px;
+        letter-spacing:-2.5px;
+    }
+
+    .hero-card{
+        min-height:260px;
+    }
+
+    .game-grid{
+        grid-template-columns:1fr;
+    }
+
+    /*
+       KHUSUS MOBILE:
+       3 PACKAGE PER ROW.
+       Width tiap card dijaga cukup lebar,
+       typography diperkecil secara terukur,
+       bukan dibuat sekecil mungkin.
+    */
+
+    .package-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:7px;
+    }
+
+    .package{
+        min-height:255px;
+        padding:13px 9px;
+        border-radius:14px;
+    }
+
+    .package-category{
+        font-size:8px;
+        letter-spacing:.7px;
+        white-space:nowrap;
+    }
+
+    .package h3{
+        font-size:12px;
+        line-height:1.3;
+        margin-top:14px;
+        letter-spacing:-.15px;
+    }
+
+    .package-desc{
+        font-size:9px;
+        line-height:1.42;
+        margin-top:7px;
+    }
+
+    .price{
+        font-size:14px;
+        padding-top:11px;
+        letter-spacing:-.3px;
+    }
+
+    .price span{
+        display:none;
+    }
+
+    .package .btn{
+        padding:9px 3px;
+        font-size:8px;
+        line-height:1.15;
+        border-radius:9px;
+    }
+
+    .badge{
+        display:none;
+    }
+
+    .section-head{
+        display:block;
+    }
+
+    .section-head h2{
+        font-size:27px;
+        margin-bottom:8px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat-value{
+        font-size:22px;
+    }
+
+    .payment-methods{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:7px;
+    }
+
+    .payment-method{
+        min-height:90px;
+        padding:10px 4px;
+        border-radius:12px;
+    }
+
+    .payment-icon{
+        width:36px;
+        height:27px;
+        font-size:9px;
+    }
+
+    .payment-method strong{
+        font-size:11px;
+    }
+
+    .payment-method small{
+        font-size:8px;
+    }
+
+    .tracker{
+        grid-template-columns:1fr;
+        gap:15px;
+    }
+
+    .tracker::before{
+        top:18px;
+        bottom:18px;
+        left:17px;
+        width:2px;
+        height:auto;
+    }
+
+    .step{
+        display:flex;
+        align-items:center;
+        text-align:left;
+        gap:12px;
+    }
+
+    .step-dot{
+        flex-shrink:0;
+        margin:0;
+    }
+
+    .step span{
+        margin:0;
+    }
+
+    .support{
+        grid-template-columns:1fr;
+    }
+
+    footer{
+        display:block;
+    }
+
+    footer div+div{
+        margin-top:10px;
+    }
+
+    .mobile-nav{
+        display:flex;
+        position:fixed;
+        z-index:200;
+        left:10px;
+        right:10px;
+        bottom:10px;
+        height:62px;
+        border:1px solid var(--line);
+        border-radius:18px;
+        background:rgba(12,12,18,.9);
+        backdrop-filter:blur(18px);
+        box-shadow:0 15px 40px rgba(0,0,0,.4);
+        justify-content:space-around;
+        align-items:center;
+    }
+
+    .mobile-nav button{
+        border:0;
+        background:none;
+        color:#777;
+        font-size:9px;
+        cursor:pointer;
+    }
+
+    .mobile-nav button span{
+        display:block;
+        font-size:16px;
+        margin-bottom:4px;
+    }
+
+    /*
+       Magnetic effect otomatis mati karena
+       JS hanya aktif pada pointer: fine.
+    */
 }
-@media(max-width:400px){
-  .hero h1{font-size:38px}
-  .package h3{font-size:11px}
-  .price{font-size:13px}
+
+/* touch device: no hover dimming */
+@media(hover:none){
+
+    .package-grid.spotlight-mode .package:not(.spotlight-active){
+        opacity:1;
+        filter:none;
+    }
+
+    .package:hover{
+        transform:none;
+    }
+
+    .btn:hover{
+        transform:none;
+    }
 }
 </style>
 </head>
 
 <body>
-<nav class="navbar">
-  <div class="nav-inner">
-    <a href="#home" class="logo">FXNZZ <span>STORE</span></a>
-    <div class="nav-links" id="navLinks">
-      <a href="#home">Home</a>
-      <a href="#paket">Paket</a>
-      <a href="#testimoni">Testimoni</a>
-      <a href="#kontak">Kontak</a>
-      <a href="#order" class="nav-order">Order</a>
+
+<div class="ambient-orb"></div>
+
+<div class="ambient-particles">
+    <i></i><i></i><i></i><i></i>
+    <i></i><i></i><i></i><i></i>
+</div>
+
+<!-- =========================
+     ENTRY
+========================= -->
+
+<div class="entry" id="entry">
+
+    <div class="entry-box">
+
+        <div class="logo-mini">
+            <span class="live-dot"></span>
+            FXNZZ STORE / SYSTEM ONLINE
+        </div>
+
+        <div class="entry-title-wrap" id="entryTitle">
+            <h1>
+                FXNZZ<br>STORE
+            </h1>
+        </div>
+
+        <p>
+            Gaming service untuk Zenless Zone Zero dan
+            Punishing: Gray Raven. Pilih layanan, checkout,
+            lalu pantau progres order langsung dari dashboard.
+        </p>
+
+        <button
+            class="enter-btn"
+            id="enterButton"
+            onclick="enterStore()">
+            ENTER STORE →
+        </button>
+
     </div>
-    <div style="display:flex;align-items:center;gap:7px">
-      <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
-      <button class="cart" id="cartBtn">Order: <span id="cartCount">0</span></button>
+
+</div>
+
+<!-- =========================
+     APP
+========================= -->
+
+<div class="app" id="app">
+
+<nav class="nav">
+
+    <div class="brand">
+        FXNZZ<span>.</span>STORE
     </div>
-  </div>
+
+    <div class="nav-links">
+
+        <button
+            data-section="dashboard"
+            onclick="scrollToId('dashboard')">
+            Dashboard
+        </button>
+
+        <button
+            data-section="games"
+            onclick="scrollToId('games')">
+            Games
+        </button>
+
+        <button
+            data-section="services"
+            onclick="scrollToId('services')">
+            Services
+        </button>
+
+        <button
+            data-section="order"
+            onclick="scrollToId('order')">
+            Order
+        </button>
+
+        <button
+            data-section="status"
+            onclick="scrollToId('status')">
+            Status
+        </button>
+
+        <div class="nav-indicator" id="navIndicator"></div>
+
+    </div>
+
+    <button
+        class="nav-order"
+        onclick="openCart()">
+
+        CART
+
+        <span
+            class="cart-count"
+            id="cartCount">
+            0
+        </span>
+
+    </button>
+
 </nav>
 
-<section class="hero" id="home">
-  <div class="hero-content">
-    <div class="eyebrow"><span class="status-dot"></span> FXNZZ STORE • <span id="heroStatus">OPEN</span></div>
-    <h1>JOKI GAME <span>— CEPAT & AMAN</span></h1>
-    <p>Joki game untuk kamu yang tidak punya waktu farming, mengejar pull character, atau menyelesaikan konten endgame. Pilih layanan, masukkan ke order, lalu checkout langsung melalui WhatsApp.</p>
-    <div class="hero-buttons">
-      <a href="#paket" class="btn primary">Lihat Paket</a>
-      <a href="https://wa.me/6285850654348" target="_blank" rel="noopener" class="btn">WhatsApp</a>
-    </div>
-  </div>
-</section>
+<main>
 
-<main class="container">
-<section class="section reveal">
-  <div class="grid3">
-    <div class="trust-card"><h3>Joki Aman</h3><p>Akun digunakan sesuai layanan yang dipesan dan detail order dikonfirmasi sebelum pengerjaan.</p></div>
-    <div class="trust-card"><h3>Fast Response</h3><p>Hubungi admin melalui WhatsApp untuk konsultasi, pengecekan akun, dan order.</p></div>
-    <div class="trust-card"><h3>Terpercaya</h3><p>Hasil pengerjaan dapat digunakan sebagai bahan testimoni setelah layanan selesai.</p></div>
-  </div>
-</section>
+<!-- =========================
+     HERO
+========================= -->
 
-<section class="section reveal">
-  <div class="section-title"><h2>Statistik Toko</h2><p>Data lokal browser untuk demo dan monitoring tampilan.</p></div>
-  <div class="stats">
-    <div class="stat-card"><div class="stat-value" id="statOrders">0</div><div class="stat-label">Total Order</div></div>
-    <div class="stat-card"><div class="stat-value" id="statTestimonials">0</div><div class="stat-label">Testimoni</div></div>
-    <div class="stat-card"><div class="stat-value" id="statRating">5.0</div><div class="stat-label">Rating</div></div>
-    <div class="stat-card"><div class="stat-value">~5m</div><div class="stat-label">Response</div></div>
-  </div>
-</section>
+<section
+    class="hero"
+    id="dashboard">
 
-<section class="section reveal" id="paket">
-  <div class="section-title"><h2>Paket Joki</h2><p>Pilih game, kategori, atau cari layanan secara langsung.</p></div>
-  <div class="promo">
-    <div><strong>Promo/Event</strong><br><span style="color:#999;font-size:12px">Slot promo berikutnya tersedia dalam:</span></div>
-    <div class="countdown" id="countdown">00:00:00:00</div>
-  </div>
-  <div class="filter-row" id="gameFilters">
-    <button class="filter active" data-game="ALL">Semua</button>
-    <button class="filter" data-game="ZZZ">Zenless Zone Zero</button>
-    <button class="filter" data-game="PGR">Punishing Gray Raven</button>
-  </div>
-  <div class="filter-row" id="categoryFilters">
-    <button class="filter active" data-category="ALL">Semua Kategori</button>
-    <button class="filter" data-category="ENDGAME">Endgame</button>
-    <button class="filter" data-category="MIDGAME / FARMING">Midgame / Farming</button>
-    <button class="filter" data-category="PULL JOKI">Pull Joki</button>
-    <button class="filter" data-category="SPECIAL LIST">Special</button>
-  </div>
-  <div class="toolbar"><input class="search" id="searchInput" placeholder="Cari paket, misalnya: Shiyu, Pull, Rawat Akun..."></div>
-  <div id="packageGrid" class="package-grid"><div class="loading"><div class="spinner"></div></div></div>
-</section>
+    <div>
 
-<section class="section reveal" id="order">
-  <div class="section-title"><h2>Order</h2><p>Keranjang order aktif di tombol Order pada navbar.</p></div>
-  <div class="contact-card">
-    <h3>Checkout cepat</h3>
-    <p>Tambahkan paket ke keranjang, periksa jumlah dan total, kemudian checkout ke WhatsApp. Detail akhir seperti kondisi akun/team dapat dikonfirmasi dengan admin.</p>
-    <button class="btn primary" style="margin-top:12px" id="openCartFromSection">Buka Keranjang</button>
-  </div>
-</section>
-
-<section class="section reveal" id="testimoni">
-  <div class="section-title"><h2>Testimoni</h2><p>Data testimoni pada versi ini disimpan lokal di browser. Untuk database publik, sambungkan Firebase Firestore.</p></div>
-  <div class="testimonial-layout">
-    <form class="form-card" id="testimonialForm">
-      <h3>Kirim Testimoni</h3>
-      <div class="field"><label>Nama</label><input id="tName" required maxlength="40" placeholder="Nama kamu"></div>
-      <div class="field"><label>Komentar</label><textarea id="tComment" required maxlength="500" placeholder="Tulis pengalamanmu..."></textarea></div>
-      <div class="field"><label>Rating</label>
-        <div class="rating-input">
-          <input id="r5" name="rating" type="radio" value="5" checked><label for="r5">★</label>
-          <input id="r4" name="rating" type="radio" value="4"><label for="r4">★</label>
-          <input id="r3" name="rating" type="radio" value="3"><label for="r3">★</label>
-          <input id="r2" name="rating" type="radio" value="2"><label for="r2">★</label>
-          <input id="r1" name="rating" type="radio" value="1"><label for="r1">★</label>
+        <div class="eyebrow">
+            FXNZZ SERVICE NETWORK
         </div>
-      </div>
-      <div class="field"><label>Foto (opsional)</label><input id="tPhoto" type="file" accept="image/*"></div>
-      <div class="photo-preview" id="photoPreview">Preview foto</div>
-      <button class="btn primary full" style="margin-top:12px" type="submit">Kirim Testimoni</button>
-    </form>
-    <div class="testimonials" id="testimonialList"></div>
-  </div>
+
+        <h2>
+            Your account.<br>
+            Our <span>grind.</span>
+        </h2>
+
+        <p class="hero-text">
+            Pilih layanan gaming yang lu butuhkan tanpa
+            muter-muter. Semua paket, checkout, pembayaran,
+            dan status order dirancang dalam satu dashboard.
+        </p>
+
+        <div class="actions">
+
+            <button
+                class="btn primary magnetic"
+                onclick="scrollToId('services')">
+                Lihat Layanan
+            </button>
+
+            <button
+                class="btn magnetic"
+                onclick="scrollToId('status')">
+                Cek Status
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="hero-card">
+
+        <div class="status-pill">
+            <span class="live-dot"></span>
+            STORE ONLINE
+        </div>
+
+        <h3>
+            Ready to grind.
+        </h3>
+
+        <p>
+            Slot pengerjaan tersedia. Order akan masuk
+            ke antrean setelah pembayaran terverifikasi.
+        </p>
+
+        <div style="
+            margin-top:28px;
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:10px;
+        ">
+
+            <div class="stat">
+                <div class="stat-label">
+                    ORDER TODAY
+                </div>
+
+                <div class="stat-value">
+                    08
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">
+                    SLOT LEFT
+                </div>
+
+                <div class="stat-value">
+                    17
+                </div>
+            </div>
+
+        </div>
+
+        <div class="fake-wave"></div>
+
+    </div>
+
 </section>
 
-<section class="section reveal">
-  <div class="section-title"><h2>Komentar Pelanggan</h2><p>Komentar singkat dapat ditambahkan dari form berikut.</p></div>
-  <form class="comment-form" id="commentForm">
-    <input id="cName" required maxlength="40" placeholder="Nama">
-    <input id="cText" required maxlength="180" placeholder="Komentar">
-    <button class="btn primary" type="submit">Kirim</button>
-  </form>
-  <div class="comment-list" id="commentList"></div>
+<!-- =========================
+     STATS
+========================= -->
+
+<section>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="eyebrow">
+                LIVE SYSTEM
+            </div>
+
+            <h2>
+                Store Overview
+            </h2>
+
+        </div>
+
+        <p>
+            Data di bawah merupakan simulasi realtime
+            untuk prototype. Nantinya bagian ini dapat
+            langsung diganti dengan Firebase.
+        </p>
+
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="stat-label">
+                TOTAL ORDER
+            </div>
+
+            <div
+                class="stat-value counter"
+                data-target="1284">
+                0
+            </div>
+
+            <small>
+                All time
+            </small>
+        </div>
+
+        <div class="stat">
+            <div class="stat-label">
+                ORDER TODAY
+            </div>
+
+            <div
+                class="stat-value counter"
+                data-target="8">
+                0
+            </div>
+
+            <small>
+                Updated just now
+            </small>
+        </div>
+
+        <div class="stat">
+            <div class="stat-label">
+                COMPLETED
+            </div>
+
+            <div
+                class="stat-value counter"
+                data-target="97">
+                0
+            </div>
+
+            <small>
+                Completion rate
+            </small>
+        </div>
+
+        <div class="stat">
+            <div class="stat-label">
+                AVG. RESPONSE
+            </div>
+
+            <div class="stat-value">
+                12m
+            </div>
+
+            <small>
+                During active hours
+            </small>
+        </div>
+
+    </div>
+
 </section>
 
-<section class="section reveal">
-  <div class="section-title"><h2>Social Media</h2><p>Akses langsung akun FXNZZ STORE.</p></div>
-  <div class="social">
-    <a href="https://www.tiktok.com/@fxnzzz_store" target="_blank" rel="noopener">TikTok<small>@fxnzzz_store</small></a>
-    <a href="https://www.instagram.com/fxnzz_storee" target="_blank" rel="noopener">Instagram<small>@fxnzz_storee</small></a>
-    <a href="https://wa.me/6285850654348" target="_blank" rel="noopener">WhatsApp<small>+62 858-5065-4348</small></a>
-  </div>
+<!-- =========================
+     GAMES
+========================= -->
+
+<section id="games">
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="eyebrow">
+                GAME HUB
+            </div>
+
+            <h2>
+                Pilih Game
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="game-grid">
+
+        <div class="game-card">
+
+            <div class="game-number">
+                01
+            </div>
+
+            <div class="game-code">
+                ZZZ / SERVICE
+            </div>
+
+            <h3>
+                Zenless Zone Zero
+            </h3>
+
+            <p>
+                Endgame, farming, event, Hollow Zero,
+                pull dan account maintenance.
+            </p>
+
+            <button
+                class="btn primary magnetic"
+                style="margin-top:22px"
+                onclick="filterGame('ZZZ')">
+                Lihat Paket
+            </button>
+
+        </div>
+
+        <div class="game-card">
+
+            <div class="game-number">
+                02
+            </div>
+
+            <div class="game-code">
+                PGR / SERVICE
+            </div>
+
+            <h3>
+                Punishing: Gray Raven
+            </h3>
+
+            <p>
+                Layanan progression, midgame,
+                farming dan content PGR.
+            </p>
+
+            <button
+                class="btn primary magnetic"
+                style="margin-top:22px"
+                onclick="filterGame('PGR')">
+                Lihat Paket
+            </button>
+
+        </div>
+
+    </div>
+
 </section>
 
-<section class="section reveal" id="kontak">
-  <div class="section-title"><h2>Kontak</h2><p>Hubungi admin untuk pengecekan kondisi akun dan detail pengerjaan.</p></div>
-  <div class="contact-grid">
-    <div class="contact-card"><h3>WhatsApp Admin</h3><p>Nomor utama FXNZZ STORE untuk konsultasi dan checkout.</p><div class="copy-box"><input value="6285850654348" id="waNumber" readonly><button id="copyWa">Copy</button></div><a class="btn primary" style="margin-top:10px" href="https://wa.me/6285850654348" target="_blank" rel="noopener">Chat WhatsApp</a></div>
-    <div class="contact-card"><h3>Status Toko: <span id="storeStatus" style="color:var(--green)">OPEN</span></h3><p>Status tampilan otomatis mengikuti jam browser. Admin tetap menjadi sumber konfirmasi terakhir untuk order.</p><div class="progress-wrap"><div class="progress-label"><span>Progress pengerjaan aktif</span><span>70%</span></div><div class="progress"><span></span></div></div></div>
-  </div>
+<!-- =========================
+     SERVICES
+========================= -->
+
+<section id="services">
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="eyebrow">
+                SERVICE CENTER
+            </div>
+
+            <h2>
+                Available Services
+            </h2>
+
+        </div>
+
+        <p>
+            Pilih kategori untuk mempersempit layanan.
+            Pada mobile, paket tetap tiga card per baris.
+        </p>
+
+    </div>
+
+    <div class="filter">
+
+        <button
+            class="active"
+            onclick="filterCategory('ALL',this)">
+            ALL
+        </button>
+
+        <button
+            onclick="filterCategory('ZZZ',this)">
+            ZZZ
+        </button>
+
+        <button
+            onclick="filterCategory('PGR',this)">
+            PGR
+        </button>
+
+        <button
+            onclick="filterCategory('ENDGAME',this)">
+            ENDGAME
+        </button>
+
+        <button
+            onclick="filterCategory('FARMING',this)">
+            FARMING
+        </button>
+
+        <button
+            onclick="filterCategory('PULL',this)">
+            PULL
+        </button>
+
+    </div>
+
+    <div
+        class="package-grid"
+        id="packageGrid">
+    </div>
+
 </section>
 
-<section class="section reveal">
-  <div class="section-title"><h2>FAQ</h2><p>Pertanyaan umum sebelum order.</p></div>
-  <div class="faq">
-    <div class="faq-item"><button class="faq-q">Bagaimana cara order?<span>＋</span></button><div class="faq-a">Pilih paket, klik Tambah Order, periksa keranjang, lalu checkout melalui WhatsApp.</div></div>
-    <div class="faq-item"><button class="faq-q">Apakah harga bisa berubah?<span>＋</span></button><div class="faq-a">Price list pada halaman ini menjadi acuan tampilan. Konfirmasi admin diperlukan bila ada kondisi akun khusus atau perubahan layanan.</div></div>
-    <div class="faq-item"><button class="faq-q">Apakah semua layanan punya syarat team?<span>＋</span></button><div class="faq-a">Beberapa layanan memang bergantung pada kondisi akun atau team, termasuk layanan yang diberi catatan tersebut pada price list.</div></div>
-    <div class="faq-item"><button class="faq-q">Apakah testimoni langsung masuk database publik?<span>＋</span></button><div class="faq-a">Belum. Versi satu-file ini menggunakan localStorage. Untuk penyimpanan lintas perangkat dan moderasi pending/approve, gunakan Firebase Firestore.</div></div>
-  </div>
+<!-- =========================
+     SPECIAL
+========================= -->
+
+<section>
+
+    <div class="special">
+
+        <div class="eyebrow">
+            SPECIAL SERVICE
+        </div>
+
+        <h3>
+            Rawat Akun VIP — 3 Patch
+        </h3>
+
+        <p>
+            All Content Endgame selama 3 patch.
+            Cocok untuk account yang ingin maintenance
+            jangka panjang.
+        </p>
+
+        <div style="
+            margin-top:20px;
+            display:flex;
+            align-items:center;
+            gap:15px;
+            flex-wrap:wrap;
+        ">
+
+            <strong style="font-size:28px">
+                Rp58.000
+            </strong>
+
+            <button
+                class="btn primary magnetic"
+                onclick="addSpecial()">
+                Tambahkan ke Order
+            </button>
+
+        </div>
+
+    </div>
+
 </section>
 
-<section class="section reveal">
-  <div class="coming"><strong>Akan segera dibuka</strong><br>Konten joki: Etheria: Restart · Arknights: Endfield · Wuthering Waves · Arena Breakout · Free Fire · Mobile Legends</div>
+<!-- =========================
+     ORDER
+========================= -->
+
+<section id="order">
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="eyebrow">
+                CHECKOUT CENTER
+            </div>
+
+            <h2>
+                Buat Order
+            </h2>
+
+        </div>
+
+        <p>
+            Data ini masih bersifat simulasi.
+            Jangan memasukkan data akun asli ke prototype publik.
+        </p>
+
+    </div>
+
+    <div class="order-layout">
+
+        <div class="panel">
+
+            <h3>
+                Customer Information
+            </h3>
+
+            <div class="form-group">
+
+                <label>
+                    NAMA / NICKNAME
+                </label>
+
+                <input
+                    id="customerName"
+                    placeholder="Masukkan nama">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    WHATSAPP
+                </label>
+
+                <input
+                    id="customerWA"
+                    placeholder="08xxxxxxxxxx">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    CATATAN ORDER
+                </label>
+
+                <textarea
+                    id="customerNote"
+                    placeholder="Contoh: fokus clear content tertentu..."></textarea>
+
+            </div>
+
+            <button
+                class="btn primary magnetic"
+                style="width:100%"
+                onclick="createOrder()">
+                LANJUT KE PEMBAYARAN
+            </button>
+
+        </div>
+
+        <div class="panel">
+
+            <h3>
+                Order Summary
+            </h3>
+
+            <div id="orderSummary">
+
+                <p style="color:#666;font-size:13px">
+                    Belum ada layanan dipilih.
+                </p>
+
+            </div>
+
+            <div class="checkout-total">
+
+                <span>
+                    TOTAL
+                </span>
+
+                <strong id="orderTotal">
+                    Rp0
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
+
+<!-- =========================
+     PAYMENT
+========================= -->
+
+<section id="payment">
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="eyebrow">
+                PAYMENT DASHBOARD
+            </div>
+
+            <h2>
+                Payment Center
+            </h2>
+
+        </div>
+
+        <p>
+            Pilih media pembayaran yang tersedia.
+            Payment gateway asli dapat diintegrasikan
+            pada tahap production.
+        </p>
+
+    </div>
+
+    <div class="order-layout">
+
+        <div class="panel">
+
+            <h3>
+                Select Payment Method
+            </h3>
+
+            <div class="payment-methods">
+
+                <div
+                    class="payment-method active"
+                    onclick="selectPayment('DANA',this)">
+
+                    <div class="payment-icon">
+                        DANA
+                    </div>
+
+                    <strong>
+                        DANA
+                    </strong>
+
+                    <small>
+                        Digital Wallet
+                    </small>
+
+                </div>
+
+                <div
+                    class="payment-method"
+                    onclick="selectPayment('GoPay',this)">
+
+                    <div class="payment-icon">
+                        GOPAY
+                    </div>
+
+                    <strong>
+                        GoPay
+                    </strong>
+
+                    <small>
+                        Digital Wallet
+                    </small>
+
+                </div>
+
+                <div
+                    class="payment-method"
+                    onclick="selectPayment('QRIS',this)">
+
+                    <div class="payment-icon">
+                        QRIS
+                    </div>
+
+                    <strong>
+                        QRIS
+                    </strong>
+
+                    <small>
+                        Scan Payment
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="payment-preview">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                ">
+
+                    <div style="
+                        display:flex;
+                        align-items:center;
+                        gap:8px;
+                        color:#777;
+                        font-size:10px;
+                        letter-spacing:1px;
+                    ">
+
+                        <span class="payment-status-dot"></span>
+
+                        SELECTED METHOD
+
+                    </div>
+
+                    <span style="
+                        color:#555;
+                        font-size:9px;
+                    ">
+                        FXNZZ PAY
+                    </span>
+
+                </div>
+
+                <div
+                    id="selectedPayment"
+                    style="
+                        font-size:29px;
+                        font-weight:900;
+                        margin-top:15px;
+                    ">
+                    DANA
+                </div>
+
+                <p
+                    id="paymentDescription"
+                    style="
+                        color:#777;
+                        font-size:12px;
+                        margin-top:8px;
+                    ">
+                    Payment wallet simulation.
+                </p>
+
+                <div
+                    id="fakeQR"
+                    style="
+                        display:none;
+                        margin:20px auto 0;
+                        width:170px;
+                        height:170px;
+                        padding:10px;
+                        background:white;
+                    ">
+
+                    <svg
+                        viewBox="0 0 100 100"
+                        width="100%"
+                        height="100%">
+
+                        <rect
+                            width="100"
+                            height="100"
+                            fill="white"/>
+
+                        <path
+                            d="
+                            M5 5h30v30H5z
+                            M10 10v20h20V10z
+                            M65 5h30v30H65z
+                            M70 10v20h20V10z
+                            M5 65h30v30H5z
+                            M10 70v20h20V70z
+                            M45 5h8v8h-8z
+                            M55 15h8v8h-8z
+                            M42 28h8v8h-8z
+                            M52 38h8v8h-8z
+                            M65 45h8v8h-8z
+                            M78 43h8v8h-8z
+                            M40 55h8v8h-8z
+                            M52 58h8v8h-8z
+                            M65 65h8v8h-8z
+                            M78 58h8v8h-8z
+                            M45 75h8v8h-8z
+                            M57 82h8v8h-8z
+                            M70 75h8v8h-8z
+                            M82 82h8v8h-8z"
+                            fill="black"/>
+
+                    </svg>
+
+                </div>
+
+            </div>
+
+            <button
+                class="btn primary magnetic"
+                style="width:100%;margin-top:15px"
+                onclick="simulatePayment()">
+                SIMULATE PAYMENT
+            </button>
+
+        </div>
+
+        <div class="panel">
+
+            <h3>
+                Payment Information
+            </h3>
+
+            <div class="activity-item">
+
+                <div>
+                    <small>
+                        ORDER ID
+                    </small>
+
+                    <strong id="paymentOrderId">
+                        FXNZZ-DEMO
+                    </strong>
+                </div>
+
+            </div>
+
+            <div
+                class="activity-item"
+                style="margin-top:9px">
+
+                <div>
+                    <small>
+                        AMOUNT
+                    </small>
+
+                    <strong id="paymentAmount">
+                        Rp0
+                    </strong>
+                </div>
+
+            </div>
+
+            <div
+                class="activity-item"
+                style="margin-top:9px">
+
+                <div>
+                    <small>
+                        STATUS
+                    </small>
+
+                    <strong
+                        id="paymentStatus"
+                        style="color:var(--warning)">
+                        WAITING
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     STATUS
+========================= -->
+
+<section id="status">
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="eyebrow">
+                ORDER TRACKER
+            </div>
+
+            <h2>
+                Track Your Order
+            </h2>
+
+        </div>
+
+        <p>
+            Progress tracker ini nantinya dapat membaca
+            status order langsung dari database.
+        </p>
+
+    </div>
+
+    <div class="panel">
+
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            gap:15px;
+            flex-wrap:wrap;
+            margin-bottom:30px;
+        ">
+
+            <div>
+
+                <small style="color:#666">
+                    ORDER ID
+                </small>
+
+                <h3
+                    id="trackerId"
+                    style="margin:5px 0 0">
+                    FXNZZ-DEMO
+                </h3>
+
+            </div>
+
+            <div style="text-align:right">
+
+                <small style="color:#666">
+                    CURRENT STATUS
+                </small>
+
+                <h3
+                    id="trackerStatus"
+                    style="
+                        margin:5px 0 0;
+                        color:var(--warning);
+                    ">
+                    WAITING
+                </h3>
+
+            </div>
+
+        </div>
+
+        <div class="tracker">
+
+            <div
+                class="step done"
+                id="step1">
+
+                <div class="step-dot">
+                    01
+                </div>
+
+                <span>
+                    Payment
+                </span>
+
+            </div>
+
+            <div
+                class="step"
+                id="step2">
+
+                <div class="step-dot">
+                    02
+                </div>
+
+                <span>
+                    Queue
+                </span>
+
+            </div>
+
+            <div
+                class="step"
+                id="step3">
+
+                <div class="step-dot">
+                    03
+                </div>
+
+                <span>
+                    Processing
+                </span>
+
+            </div>
+
+            <div
+                class="step"
+                id="step4">
+
+                <div class="step-dot">
+                    04
+                </div>
+
+                <span>
+                    Quality Check
+                </span>
+
+            </div>
+
+            <div
+                class="step"
+                id="step5">
+
+                <div class="step-dot">
+                    05
+                </div>
+
+                <span>
+                    Completed
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     ACTIVITY
+========================= -->
+
+<section>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="eyebrow">
+                STORE ACTIVITY
+            </div>
+
+            <h2>
+                Recent Activity
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="activity">
+
+        <div class="panel">
+
+            <h3>
+                Recent Orders
+            </h3>
+
+            <div class="activity-list">
+
+                <div class="activity-item">
+
+                    <div class="activity-left">
+
+                        <div class="activity-icon">
+                            ZZZ
+                        </div>
+
+                        <div>
+                            <strong>
+                                Shiyu Defense
+                            </strong>
+
+                            <small>
+                                Order #FX-8214
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="activity-price">
+                        Rp28k
+                    </div>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <div class="activity-left">
+
+                        <div class="activity-icon">
+                            PGR
+                        </div>
+
+                        <div>
+                            <strong>
+                                Endgame Service
+                            </strong>
+
+                            <small>
+                                Order #FX-8213
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="activity-price">
+                        Rp13k
+                    </div>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <div class="activity-left">
+
+                        <div class="activity-icon">
+                            ZZZ
+                        </div>
+
+                        <div>
+                            <strong>
+                                10 Pull
+                            </strong>
+
+                            <small>
+                                Order #FX-8212
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="activity-price">
+                        Rp8k
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel">
+
+            <h3>
+                System Monitor
+            </h3>
+
+            <div class="activity-item">
+
+                <div>
+                    <small>
+                        STORE STATUS
+                    </small>
+
+                    <strong style="color:var(--good)">
+                        ONLINE
+                    </strong>
+                </div>
+
+            </div>
+
+            <div
+                class="activity-item"
+                style="margin-top:9px">
+
+                <div>
+                    <small>
+                        QUEUE
+                    </small>
+
+                    <strong>
+                        4 ORDERS
+                    </strong>
+                </div>
+
+            </div>
+
+            <div
+                class="activity-item"
+                style="margin-top:9px">
+
+                <div>
+                    <small>
+                        AVAILABLE SLOT
+                    </small>
+
+                    <strong>
+                        17 / 20
+                    </strong>
+                </div>
+
+            </div>
+
+            <div
+                class="activity-item"
+                style="margin-top:9px">
+
+                <div>
+                    <small>
+                        SYSTEM
+                    </small>
+
+                    <strong style="color:var(--good)">
+                        ALL SYSTEMS NORMAL
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     TESTIMONIALS
+========================= -->
+
+<section>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="eyebrow">
+                CUSTOMER FEEDBACK
+            </div>
+
+            <h2>
+                Testimonials
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="testimonial-grid">
+
+        <div class="testimonial">
+
+            <div class="stars">
+                ★★★★★
+            </div>
+
+            <p>
+                Pengerjaan sesuai request. Status order
+                juga jelas, jadi gak perlu spam admin.
+            </p>
+
+            <div class="user">
+                <strong>
+                    Anonymous
+                </strong>
+
+                <span>
+                    ZZZ
+                </span>
+            </div>
+
+        </div>
+
+        <div class="testimonial">
+
+            <div class="stars">
+                ★★★★★
+            </div>
+
+            <p>
+                Order simple dan prosesnya gampang dipahami.
+                Yang paling berguna bagian tracker-nya.
+            </p>
+
+            <div class="user">
+                <strong>
+                    Anonymous
+                </strong>
+
+                <span>
+                    PGR
+                </span>
+            </div>
+
+        </div>
+
+        <div class="testimonial">
+
+            <div class="stars">
+                ★★★★★
+            </div>
+
+            <p>
+                Harga paket jelas dari awal. Tinggal pilih,
+                checkout, lalu tunggu status selesai.
+            </p>
+
+            <div class="user">
+                <strong>
+                    Anonymous
+                </strong>
+
+                <span>
+                    ZZZ
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     FAQ
+========================= -->
+
+<section>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="eyebrow">
+                HELP CENTER
+            </div>
+
+            <h2>
+                FAQ
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="faq">
+
+        <div class="faq-item">
+
+            <button
+                class="faq-q"
+                onclick="toggleFAQ(this)">
+
+                Bagaimana cara melakukan order?
+
+                <span>
+                    +
+                </span>
+
+            </button>
+
+            <div class="faq-a">
+                Pilih game, pilih layanan, tambahkan ke order,
+                isi informasi customer, lalu pilih metode pembayaran.
+            </div>
+
+        </div>
+
+        <div class="faq-item">
+
+            <button
+                class="faq-q"
+                onclick="toggleFAQ(this)">
+
+                Bagaimana status pengerjaan dilihat?
+
+                <span>
+                    +
+                </span>
+
+            </button>
+
+            <div class="faq-a">
+                Setelah order dibuat, nomor order digunakan
+                untuk melihat progress pengerjaan pada Order Tracker.
+            </div>
+
+        </div>
+
+        <div class="faq-item">
+
+            <button
+                class="faq-q"
+                onclick="toggleFAQ(this)">
+
+                Apakah pembayaran sudah benar-benar terhubung?
+
+                <span>
+                    +
+                </span>
+
+            </button>
+
+            <div class="faq-a">
+                Prototype ini hanya mensimulasikan payment flow.
+                Payment gateway asli membutuhkan backend dan provider
+                pembayaran pada tahap production.
+            </div>
+
+        </div>
+
+        <div class="faq-item">
+
+            <button
+                class="faq-q"
+                onclick="toggleFAQ(this)">
+
+                Apakah data order realtime?
+
+                <span>
+                    +
+                </span>
+
+            </button>
+
+            <div class="faq-a">
+                Belum. Dashboard saat ini menggunakan data dummy.
+                Struktur UI dibuat agar nantinya mudah dihubungkan
+                ke Firebase atau backend sendiri.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     SUPPORT
+========================= -->
+
+<section>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="eyebrow">
+                CUSTOMER SUPPORT
+            </div>
+
+            <h2>
+                Need Assistance?
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="support">
+
+        <div class="support-card">
+
+            <div class="eyebrow">
+                WHATSAPP
+            </div>
+
+            <h3>
+                Chat Admin
+            </h3>
+
+            <p>
+                Gunakan WhatsApp untuk pertanyaan order,
+                konfirmasi, atau masalah pengerjaan.
+            </p>
+
+            <button
+                class="btn primary magnetic"
+                style="margin-top:18px">
+                OPEN WHATSAPP
+            </button>
+
+        </div>
+
+        <div class="support-card">
+
+            <div class="eyebrow">
+                DISCORD
+            </div>
+
+            <h3>
+                Join Community
+            </h3>
+
+            <p>
+                Discord dapat digunakan sebagai channel komunitas,
+                update store, dan support tambahan.
+            </p>
+
+            <button
+                class="btn magnetic"
+                style="margin-top:18px">
+                OPEN DISCORD
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
 </main>
 
-<footer>FXNZZ STORE — Joki Game<br><br>© 2026 FXNZZ STORE</footer>
+<footer>
 
-<button class="back-top" id="backTop">↑</button>
-<div class="toast" id="toast"></div>
+    <div>
+        <strong style="color:#aaa">
+            FXNZZ STORE
+        </strong>
 
-<div class="cart-panel" id="cartPanel">
-  <div class="cart-head"><strong>Keranjang Order</strong><button class="modal-close" id="closeCart">×</button></div>
-  <div class="cart-items" id="cartItems"></div>
-  <div class="cart-foot"><div class="total"><span>Total</span><span id="cartTotal">Rp0</span></div><button class="btn primary full" id="checkoutBtn">Checkout WhatsApp</button></div>
+        <br>
+
+        Gaming service prototype.
+    </div>
+
+    <div>
+        ZZZ · PGR · DANA · GoPay · QRIS
+    </div>
+
+    <div>
+        © 2026 FXNZZ STORE
+    </div>
+
+</footer>
+
+<!-- MOBILE NAV -->
+
+<div class="mobile-nav">
+
+    <button onclick="scrollToId('dashboard')">
+        <span>⌂</span>
+        HOME
+    </button>
+
+    <button onclick="scrollToId('services')">
+        <span>◈</span>
+        SERVICE
+    </button>
+
+    <button onclick="openCart()">
+        <span>□</span>
+        CART
+    </button>
+
+    <button onclick="scrollToId('status')">
+        <span>◌</span>
+        STATUS
+    </button>
+
 </div>
 
-<div class="modal" id="detailModal">
-  <div class="modal-box">
-    <div class="modal-head"><h3 id="detailTitle">Detail Paket</h3><button class="modal-close" data-close-modal>×</button></div>
-    <div class="modal-body" id="detailBody"></div>
-    <div class="confirm-actions"><button class="btn" data-close-modal>Tutup</button><button class="btn primary" id="detailOrder">Tambah Order</button></div>
-  </div>
+<!-- CART -->
+
+<div
+    class="overlay"
+    id="cartOverlay"
+    onclick="closeCart(event)">
+
+    <div
+        class="drawer"
+        onclick="event.stopPropagation()">
+
+        <div class="drawer-head">
+
+            <h2>
+                Your Order
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeCart()">
+                ×
+            </button>
+
+        </div>
+
+        <div id="cartItems"></div>
+
+        <div class="drawer-total">
+
+            <span>
+                TOTAL
+            </span>
+
+            <span id="cartTotal">
+                Rp0
+            </span>
+
+        </div>
+
+        <button
+            class="btn primary magnetic"
+            style="width:100%"
+            onclick="goCheckout()">
+            PROCEED TO CHECKOUT
+        </button>
+
+    </div>
+
 </div>
 
-<div class="modal" id="confirmModal">
-  <div class="modal-box">
-    <div class="modal-head"><h3>Konfirmasi Checkout</h3><button class="modal-close" data-close-confirm>×</button></div>
-    <div class="modal-body">Kamu akan diarahkan ke WhatsApp dengan ringkasan order. Pastikan paket dan jumlah sudah benar.</div>
-    <div class="confirm-actions"><button class="btn" data-close-confirm>Batal</button><button class="btn primary" id="confirmCheckout">Lanjut ke WhatsApp</button></div>
-  </div>
+<div
+    class="toast"
+    id="toast">
 </div>
 
 <script>
-"use strict";
 
-const WA_NUMBER = "6285850654348";
+/* ==============================
+   DATA
+================================ */
 
 const packages = [
-  {game:"ZZZ",category:"ENDGAME",name:"Shiyu Defense — Full Clear*",price:18000,badge:"POPULAR",desc:"Full clear Shiyu Defense. Full clear tergantung kondisi/team akun."},
-  {game:"ZZZ",category:"ENDGAME",name:"Deadly Assault — Full Clear*",price:18000,badge:"POPULAR",desc:"Full clear Deadly Assault. Full clear tergantung kondisi/team akun."},
-  {game:"ZZZ",category:"ENDGAME",name:"Battle Trial — / 3 Floor",price:8000,badge:"",desc:"Pengerjaan Battle Trial sampai 3 Floor."},
-  {game:"ZZZ",category:"ENDGAME",name:"Endgame Combat Event",price:13000,badge:"",desc:"Pengerjaan konten combat event endgame."},
-  {game:"ZZZ",category:"ENDGAME",name:"Hollow Zero — Difficulty Max + Full Clear",price:13000,badge:"BEST VALUE",desc:"Hollow Zero difficulty max dan full clear."},
-  {game:"ZZZ",category:"ENDGAME",name:"Event Combat",price:10000,badge:"",desc:"Pengerjaan event combat."},
-  {game:"ZZZ",category:"MIDGAME / FARMING",name:"Rawat Akun — 2 Patch",price:15000,badge:"POPULAR",desc:"Perawatan akun selama 2 patch."},
-  {game:"ZZZ",category:"MIDGAME / FARMING",name:"Rawat Akun VIP — All Content Endgame, 1 Patch",price:60000,badge:"BEST VALUE",desc:"Rawat akun dengan target seluruh content endgame selama 1 patch."},
-  {game:"ZZZ",category:"MIDGAME / FARMING",name:"Event Permanen",price:12000,badge:"",desc:"Farming event sesuai kebutuhan."},
-  {game:"ZZZ",category:"MIDGAME / FARMING",name:"Hollow Zero",price:8000,badge:"POPULAR",desc:"Pengerjaan Hollow Zero HIGH DIFFICULTY."},
-  {game:"ZZZ",category:"MIDGAME / FARMING",name:"Quest",price:8000,badge:"",desc:"Rp8k / 6 quest."},
-  {game:"ZZZ",category:"MIDGAME / FARMING",name:"Story — 2 Chapter",price:12000,badge:"",desc:"Pengerjaan Story sampai 2 chapter."},
-  {game:"ZZZ",category:"PULL JOKI",name:"10 Pull",price:10000,badge:"",desc:"Joki 10 pull."},
-  {game:"ZZZ",category:"PULL JOKI",name:"30 Pull",price:25000,badge:"",desc:"Joki 30 pull."},
-  {game:"ZZZ",category:"PULL JOKI",name:"50 Pull",price:45000,badge:"POPULAR",desc:"Joki 50 pull."},
-  {game:"ZZZ",category:"PULL JOKI",name:"100 Pull",price:95000,badge:"BEST VALUE",desc:"Joki 100 pull."},
 
-  {game:"PGR",category:"SPECIAL LIST",name:"Rawat Akun VIP — All Content Endgame, 3 Patch",price:58000,badge:"BEST VALUE",desc:"Rawat akun VIP dengan target seluruh content endgame selama 3 patch."},
-  {game:"PGR",category:"ENDGAME",name:"Stronghold — / 7 Stage",price:10000,badge:"",desc:"Pengerjaan Stronghold sampai 7 Stage."},
-  {game:"PGR",category:"ENDGAME",name:"Norman Revival Plan (tergantung team)",price:20000,badge:"",desc:"Harga/hasil pengerjaan bergantung pada kondisi team akun."},
-  {game:"PGR",category:"ENDGAME",name:"Warzone intensive (tergantung team)",price:12000,badge:"",desc:"Warzone intensive, tergantung kondisi team akun."},
-  {game:"PGR",category:"ENDGAME",name:"PPC — Intensive (tergantung team)",price:10000,badge:"",desc:"PPC intensive, tergantung kondisi team akun."},
-  {game:"PGR",category:"MIDGAME / FARMING",name:"Cursed Wave — / 15 Level",price:5000,badge:"POPULAR",desc:"Pengerjaan Cursed Wave sampai 15 level."},
-  {game:"PGR",category:"MIDGAME / FARMING",name:"Awakening Thundra — / 10 Level",price:2000,badge:"",desc:"Pengerjaan Awakening Thundra sampai 10 level."},
-  {game:"PGR",category:"MIDGAME / FARMING",name:"Derived from Matrix — / 10 Level",price:3000,badge:"",desc:"Pengerjaan Derived from Matrix sampai 10 level."},
-  {game:"PGR",category:"MIDGAME / FARMING",name:"Rawat Akun Mid — Weekly + Daily + Event, 60 Hari",price:25000,badge:"POPULAR",desc:"Weekly + daily + event selama 60 hari."},
-  {game:"PGR",category:"MIDGAME / FARMING",name:"Rawat Akun Endgame — 30 Hari",price:28000,badge:"BEST VALUE",desc:"Rawat akun endgame selama 30 hari."}
+    {
+        game:"ZZZ",
+        category:"ENDGAME",
+        title:"Shiyu Defense — Full Clear",
+        desc:"Full clear Shiyu Defense.",
+        price:28000,
+        badge:"POPULAR"
+    },
+
+    {
+        game:"ZZZ",
+        category:"ENDGAME",
+        title:"Deadly Assault — Full Clear",
+        desc:"Full clear Deadly Assault.",
+        price:28000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"ENDGAME",
+        title:"Battle Trial — 3 Floor",
+        desc:"Clear hingga 3 floor.",
+        price:8000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"ENDGAME",
+        title:"Endgame Combat Event",
+        desc:"Pengerjaan combat event endgame.",
+        price:13000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"ENDGAME",
+        title:"Hollow Zero — Max + Full Clear",
+        desc:"Difficulty max dan full clear.",
+        price:13000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"ENDGAME",
+        title:"Event Combat",
+        desc:"Pengerjaan event combat.",
+        price:10000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"FARMING",
+        title:"Rawat Akun — 2 Patch",
+        desc:"Maintenance account selama 2 patch.",
+        price:15000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"FARMING",
+        title:"Rawat Akun VIP — 1 Patch",
+        desc:"All Content Endgame selama 1 patch.",
+        price:28000,
+        badge:"VIP"
+    },
+
+    {
+        game:"ZZZ",
+        category:"FARMING",
+        title:"Event Farming",
+        desc:"Farming material dari event.",
+        price:8000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"FARMING",
+        title:"Hollow Zero",
+        desc:"Pengerjaan Hollow Zero.",
+        price:8000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"FARMING",
+        title:"Quest",
+        desc:"Pengerjaan quest account.",
+        price:6000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"FARMING",
+        title:"Event",
+        desc:"Pengerjaan event biasa.",
+        price:6000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"FARMING",
+        title:"Story — 2 Chapter",
+        desc:"Clear 2 chapter story.",
+        price:8000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"PULL",
+        title:"10 Pull",
+        desc:"Joki pull 10 kali.",
+        price:8000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"PULL",
+        title:"30 Pull",
+        desc:"Joki pull 30 kali.",
+        price:22000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"PULL",
+        title:"50 Pull",
+        desc:"Joki pull 50 kali.",
+        price:35000,
+        badge:""
+    },
+
+    {
+        game:"ZZZ",
+        category:"PULL",
+        title:"100 Pull",
+        desc:"Joki pull 100 kali.",
+        price:65000,
+        badge:"POPULAR"
+    },
+
+    /* PGR EXISTING */
+
+    {
+        game:"PGR",
+        category:"ENDGAME",
+        title:"PGR Endgame Service",
+        desc:"Layanan pengerjaan content endgame PGR.",
+        price:13000,
+        badge:""
+    },
+
+    {
+        game:"PGR",
+        category:"FARMING",
+        title:"PGR Farming Service",
+        desc:"Farming material dan progression.",
+        price:8000,
+        badge:""
+    },
+
+    {
+        game:"PGR",
+        category:"FARMING",
+        title:"PGR Event Service",
+        desc:"Pengerjaan event PGR.",
+        price:10000,
+        badge:""
+    },
+
+    /* PGR NEW */
+
+    {
+        game:"PGR",
+        category:"FARMING",
+        title:"Shrouded Requiem",
+        desc:"Full Clear All Difficulty.",
+        price:20000,
+        badge:"NEW"
+    },
+
+    {
+        game:"PGR",
+        category:"FARMING",
+        title:"The Goddfall Revelation",
+        desc:"Full Clear All Character Badges.",
+        price:25000,
+        badge:"NEW"
+    },
+
+    {
+        game:"PGR",
+        category:"FARMING",
+        title:"Recitativo di Fantasia",
+        desc:"Full Clear.",
+        price:18000,
+        badge:"NEW"
+    }
+
 ];
 
-const state = {
-  game:"ALL",
-  category:"ALL",
-  search:"",
-  cart:[],
-  detailIndex:null
-};
+let cart=[];
+let selectedPayment="DANA";
+let currentOrder=null;
 
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
 
-function rupiah(n){return "Rp"+n.toLocaleString("id-ID").replace(/\./g,".")}
-function escapeHTML(str){
-  return String(str).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-}
-function toast(msg){
-  const el=$("#toast"); el.textContent=msg; el.classList.add("show");
-  clearTimeout(window.toastTimer); window.toastTimer=setTimeout(()=>el.classList.remove("show"),2400);
-}
-function save(key,val){localStorage.setItem(key,JSON.stringify(val))}
-function load(key,fallback){try{return JSON.parse(localStorage.getItem(key)) ?? fallback}catch{return fallback}}
+/* ==============================
+   ENTRY
+================================ */
 
-function renderPackages(){
-  const grid=$("#packageGrid");
-  grid.innerHTML='<div class="loading"><div class="spinner"></div></div>';
-  setTimeout(()=>{
-    const q=state.search.trim().toLowerCase();
-    const list=packages.map((p,index)=>({...p,index})).filter(p=>{
-      const gameOK=state.game==="ALL"||p.game===state.game;
-      const catOK=state.category==="ALL"||p.category===state.category;
-      const searchOK=!q||`${p.name} ${p.category} ${p.game}`.toLowerCase().includes(q);
-      return gameOK&&catOK&&searchOK;
-    });
-    if(!list.length){grid.innerHTML='<div class="empty">Paket tidak ditemukan. Coba kata kunci atau filter lain.</div>';return}
-    grid.innerHTML=list.map((p,i)=>`
-      <article class="package">
-        <div class="category">${p.game} • ${escapeHTML(p.category)}</div>
-        ${p.badge?`<div class="badges"><span class="badge ${p.badge==="BEST VALUE"?"gold":"red"}">${escapeHTML(p.badge)}</span></div>`:""}
-        <h3>${escapeHTML(p.name)}</h3>
-        <div class="price">${rupiah(p.price)}</div>
-        <div class="package-actions">
-          <button class="order-btn" data-add="${p.index}">Tambah Order</button>
-          <button class="detail-btn" data-detail="${p.index}">Detail</button>
-        </div>
-        <div class="progress-wrap"><div class="progress-label"><span>Status layanan</span><span>Ready</span></div><div class="progress"><span></span></div></div>
-      </article>`).join("");
-    requestAnimationFrame(()=>$$(".package").forEach((el,i)=>setTimeout(()=>el.classList.add("show"),i*35)));
-  },120);
-}
+let entering=false;
 
-function addOrder(index){
-  const p=packages[index];
-  const found=state.cart.find(x=>x.index===index);
-  if(found) found.qty++;
-  else state.cart.push({index,qty:1});
-  renderCart();
-  save("fxnzz_cart",state.cart);
-  const cart=$("#cartBtn"); cart.classList.remove("pop"); void cart.offsetWidth; cart.classList.add("pop");
-  toast(`${p.name} ditambahkan ke order.`);
-}
-function renderCart(){
-  const count=state.cart.reduce((a,b)=>a+b.qty,0);
-  $("#cartCount").textContent=count;
-  const box=$("#cartItems");
-  if(!state.cart.length){box.innerHTML='<div class="empty">Keranjang masih kosong.</div>';$("#cartTotal").textContent="Rp0";return}
-  let total=0;
-  box.innerHTML=state.cart.map(item=>{
-    const p=packages[item.index]; const subtotal=p.price*item.qty; total+=subtotal;
-    return `<div class="cart-item">
-      <div class="row"><strong>${escapeHTML(p.name)}</strong><button class="remove" data-remove="${item.index}">Hapus</button></div>
-      <div style="color:#ff5276;margin-top:5px">${rupiah(p.price)}</div>
-      <div class="qty"><button data-minus="${item.index}">−</button><span>${item.qty}</span><button data-plus="${item.index}">+</button><span style="margin-left:auto;color:#bbb">${rupiah(subtotal)}</span></div>
-    </div>`;
-  }).join("");
-  $("#cartTotal").textContent=rupiah(total);
-}
-function openCart(){$("#cartPanel").classList.add("open");renderCart()}
-function closeCart(){$("#cartPanel").classList.remove("open")}
+function enterStore(){
 
-function openDetail(index){
-  state.detailIndex=index; const p=packages[index];
-  $("#detailTitle").textContent=p.name;
-  $("#detailBody").innerHTML=`<strong style="color:#ff5276">${rupiah(p.price)}</strong><br><br>${escapeHTML(p.desc)}<br><br><span style="color:#777">Game:</span> ${p.game}<br><span style="color:#777">Kategori:</span> ${escapeHTML(p.category)}`;
-  $("#detailModal").classList.add("open");
+    if(entering)return;
+
+    entering=true;
+
+    const title=document.getElementById("entryTitle");
+    const button=document.getElementById("enterButton");
+
+    /*
+       White Bloom Slash hanya dipicu saat ENTER.
+       Tidak mengubah struktur entrance.
+    */
+
+    title.classList.remove("slashing");
+
+    void title.offsetWidth;
+
+    title.classList.add("slashing");
+
+    button.style.pointerEvents="none";
+
+    setTimeout(()=>{
+
+        document.getElementById("entry")
+            .classList.add("hide");
+
+        document.getElementById("app")
+            .classList.add("ready");
+
+    },720);
+
+    setTimeout(()=>{
+
+        document.getElementById("entry")
+            .style.display="none";
+
+        button.style.pointerEvents="auto";
+
+        entering=false;
+
+    },900);
+
 }
 
-function checkout(){
-  if(!state.cart.length){toast("Keranjang masih kosong.");return}
-  $("#confirmModal").classList.add("open");
-}
-function buildWhatsApp(){
-  let total=0;
-  const lines=state.cart.map((item,i)=>{
-    const p=packages[item.index]; total+=p.price*item.qty;
-    return `${i+1}. ${p.name} x${item.qty} — ${rupiah(p.price*item.qty)}`;
-  });
-  const text=`Halo FXNZZ STORE, saya ingin order:%0A%0A${lines.join("%0A")}%0A%0ATotal: ${rupiah(total)}%0A%0AMohon konfirmasi ketersediaan dan detail pengerjaan.`;
-  return `https://wa.me/${WA_NUMBER}?text=${text}`;
+
+/* ==============================
+   UTIL
+================================ */
+
+function rupiah(number){
+
+    return "Rp"+number.toLocaleString("id-ID");
+
 }
 
-function renderTestimonials(){
-  const data=load("fxnzz_testimonials",[]);
-  const list=$("#testimonialList");
-  $("#statTestimonials").textContent=data.length;
-  if(!data.length){list.innerHTML='<div class="empty">Belum ada testimoni. Jadilah yang pertama.</div>';$("#statRating").textContent="5.0";return}
-  const avg=data.reduce((a,b)=>a+b.rating,0)/data.length;
-  $("#statRating").textContent=avg.toFixed(1);
-  list.innerHTML=data.slice().reverse().map(t=>`
-    <div class="comment-card">
-      <div class="top"><strong>${escapeHTML(t.name)}</strong><span class="stars">${"★".repeat(t.rating)}${"☆".repeat(5-t.rating)}</span></div>
-      ${t.photo?`<img src="${t.photo}" alt="Foto testimoni" style="width:100%;max-height:210px;object-fit:cover;border-radius:9px;margin-top:10px">`:""}
-      <p>${escapeHTML(t.comment)}</p>
-      <div class="comment-meta">${escapeHTML(t.date)}</div>
-    </div>`).join("");
-}
-function renderComments(){
-  const data=load("fxnzz_comments",[]);
-  const list=$("#commentList");
-  if(!data.length){list.innerHTML='<div class="empty">Belum ada komentar.</div>';return}
-  list.innerHTML=data.slice().reverse().map(c=>`<div class="comment-card"><strong>${escapeHTML(c.name)}</strong><p>${escapeHTML(c.text)}</p><div class="comment-meta">${escapeHTML(c.date)}</div></div>`).join("");
-}
+function scrollToId(id){
 
-function updateStats(){
-  const orders=load("fxnzz_total_orders",0);
-  $("#statOrders").textContent=orders;
-}
-function incrementOrders(){
-  const n=load("fxnzz_total_orders",0)+1;save("fxnzz_total_orders",n);updateStats();
-}
+    const target=document.getElementById(id);
 
-function setStoreStatus(){
-  const h=new Date().getHours();
-  const open=h>=8&&h<23;
-  $("#storeStatus").textContent=open?"OPEN":"CLOSED";
-  $("#heroStatus").textContent=open?"OPEN":"CLOSED";
-  $("#storeStatus").style.color=open?"var(--green)":"#ff6b82";
-}
+    if(!target)return;
 
-function startCountdown(){
-  let target=load("fxnzz_promo_target",null);
-  if(!target||target<Date.now()){target=Date.now()+((3*24+7)*60*60*1000);save("fxnzz_promo_target",target)}
-  const tick=()=>{
-    let d=Math.max(0,target-Date.now());
-    const days=Math.floor(d/86400000);d%=86400000;
-    const hrs=Math.floor(d/3600000);d%=3600000;
-    const min=Math.floor(d/60000);const sec=Math.floor((d%60000)/1000);
-    $("#countdown").textContent=`${String(days).padStart(2,"0")}:${String(hrs).padStart(2,"0")}:${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
-  };
-  tick();setInterval(tick,1000);
-}
-
-function setupReveal(){
-  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")}),{threshold:.08});
-  $$(".reveal").forEach(x=>obs.observe(x));
-}
-function setupActiveNav(){
-  const sections=["home","paket","testimoni","kontak","order"].map(id=>document.getElementById(id));
-  const links=$$(".nav-links a");
-  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
-    if(e.isIntersecting)links.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+e.target.id));
-  }),{rootMargin:"-35% 0px -55% 0px"});
-  sections.forEach(s=>s&&obs.observe(s));
-}
-
-document.addEventListener("click",e=>{
-  const btn=e.target.closest("button,.btn,.filter,.social a,.nav-links a");
-  if(btn){
-    const rect=btn.getBoundingClientRect();
-    const r=document.createElement("span");r.className="ripple";
-    const size=Math.max(rect.width,rect.height);r.style.width=r.style.height=size+"px";
-    r.style.left=(e.clientX-rect.left-size/2)+"px";r.style.top=(e.clientY-rect.top-size/2)+"px";
-    btn.appendChild(r);setTimeout(()=>r.remove(),520);
-  }
-  const add=e.target.closest("[data-add]"); if(add){addOrder(+add.dataset.add);return}
-  const detail=e.target.closest("[data-detail]"); if(detail){openDetail(+detail.dataset.detail);return}
-  const plus=e.target.closest("[data-plus]"); if(plus){const x=state.cart.find(i=>i.index===+plus.dataset.plus);if(x)x.qty++;renderCart();save("fxnzz_cart",state.cart);return}
-  const minus=e.target.closest("[data-minus]"); if(minus){const x=state.cart.find(i=>i.index===+minus.dataset.minus);if(x){x.qty--;if(x.qty<=0)state.cart=state.cart.filter(i=>i.index!==x.index)}renderCart();save("fxnzz_cart",state.cart);return}
-  const rem=e.target.closest("[data-remove]"); if(rem){state.cart=state.cart.filter(i=>i.index!==+rem.dataset.remove);renderCart();save("fxnzz_cart",state.cart);toast("Paket dihapus.");return}
-});
-
-$("#gameFilters").addEventListener("click",e=>{
-  const b=e.target.closest("[data-game]");if(!b)return;
-  state.game=b.dataset.game;
-  $$("#gameFilters .filter").forEach(x=>x.classList.toggle("active",x===b));
-  renderPackages();
-});
-$("#categoryFilters").addEventListener("click",e=>{
-  const b=e.target.closest("[data-category]");if(!b)return;
-  state.category=b.dataset.category;
-  $$("#categoryFilters .filter").forEach(x=>x.classList.toggle("active",x===b));
-  renderPackages();
-});
-$("#searchInput").addEventListener("input",e=>{state.search=e.target.value;renderPackages()});
-
-$("#cartBtn").onclick=()=>$("#cartPanel").classList.contains("open")?closeCart():openCart();
-$("#openCartFromSection").onclick=openCart;
-$("#closeCart").onclick=closeCart;
-$("#checkoutBtn").onclick=checkout;
-$("#confirmCheckout").onclick=()=>{
-  incrementOrders();
-  window.open(buildWhatsApp(),"_blank","noopener");
-  state.cart=[];save("fxnzz_cart",state.cart);renderCart();
-  $("#confirmModal").classList.remove("open");closeCart();toast("Order disiapkan untuk WhatsApp.");
-};
-$("#detailOrder").onclick=()=>{if(state.detailIndex!==null){addOrder(state.detailIndex);$("#detailModal").classList.remove("open")}};
-$$("[data-close-modal]").forEach(b=>b.onclick=()=>$("#detailModal").classList.remove("open"));
-$$("[data-close-confirm]").forEach(b=>b.onclick=()=>$("#confirmModal").classList.remove("open"));
-$$(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("open")}));
-
-$("#menuBtn").onclick=()=>$("#navLinks").classList.toggle("open");
-$$(".nav-links a").forEach(a=>a.onclick=()=>$("#navLinks").classList.remove("open"));
-
-$$(".faq-q").forEach(q=>q.onclick=()=>q.parentElement.classList.toggle("open"));
-
-$("#tPhoto").addEventListener("change",()=>{
-  const file=$("#tPhoto").files[0];const box=$("#photoPreview");
-  if(!file){box.textContent="Preview foto";return}
-  if(file.size>1.5*1024*1024){toast("Foto maksimal 1.5 MB.");$("#tPhoto").value="";return}
-  const reader=new FileReader();reader.onload=()=>box.innerHTML=`<img src="${reader.result}" alt="Preview">`;reader.readAsDataURL(file);
-});
-
-$("#testimonialForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const name=$("#tName").value.trim(),comment=$("#tComment").value.trim(),rating=+$('input[name="rating"]:checked').value;
-  const file=$("#tPhoto").files[0];
-  const saveTest=async photo=>{
-  try{
-   await window.firebaseAddDoc(window.firebaseCollection(window.db,"testimonials"),{
-      name:name,
-      comment:comment,
-      rating:rating,
-      photo:photo||"",
-      date:new Date().toLocaleDateString("id-ID"),
-      status:"pending"
+    target.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
     });
 
-    e.target.reset();
-    $("#photoPreview").textContent="Preview foto";
-    toast("Testimoni berhasil dikirim.");
-  }catch(error){
-    console.error(error);
-    toast("Gagal mengirim testimoni ke database.");
-  }
-};
-  if(file){const reader=new FileReader();reader.onload=()=>saveTest(reader.result);reader.readAsDataURL(file)}else saveTest("");
+}
+
+function toast(message){
+
+    const el=document.getElementById("toast");
+
+    el.textContent=message;
+
+    el.classList.add("show");
+
+    clearTimeout(window.toastTimer);
+
+    window.toastTimer=setTimeout(()=>{
+
+        el.classList.remove("show");
+
+    },2200);
+
+}
+
+
+/* ==============================
+   MICRO FEEDBACK / RIPPLE
+================================ */
+
+document.addEventListener("click",function(e){
+
+    const button=e.target.closest(
+        ".btn,.enter-btn,.nav-order,.close,.filter button,.payment-method"
+    );
+
+    if(!button)return;
+
+    if(
+        button.classList.contains("payment-method") ||
+        button.classList.contains("filter")
+    ){
+        return;
+    }
+
+    if(
+        button.classList.contains("enter-btn") ||
+        button.classList.contains("btn")
+    ){
+
+        const rect=button.getBoundingClientRect();
+
+        const ripple=document.createElement("span");
+
+        ripple.className="ripple";
+
+        ripple.style.left=(e.clientX-rect.left)+"px";
+        ripple.style.top=(e.clientY-rect.top)+"px";
+
+        button.appendChild(ripple);
+
+        setTimeout(()=>{
+            ripple.remove();
+        },320);
+
+    }
+
 });
 
-$("#commentForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const data=load("fxnzz_comments",[]);
-  data.push({name:$("#cName").value.trim(),text:$("#cText").value.trim(),date:new Date().toLocaleDateString("id-ID")});
-  save("fxnzz_comments",data);e.target.reset();renderComments();toast("Komentar tersimpan di browser.");
-});
 
-$("#copyWa").onclick=async()=>{
-  try{await navigator.clipboard.writeText(WA_NUMBER);toast("Nomor WhatsApp berhasil disalin.")}catch{toast("Clipboard tidak tersedia di browser ini.")}
-};
+/* ==============================
+   PACKAGE RENDER
+================================ */
 
-$("#backTop").onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
-window.addEventListener("scroll",()=>$("#backTop").classList.toggle("show",scrollY>500));
+function renderPackages(filter="ALL"){
 
-window.addEventListener("load",()=>{
-  state.cart=load("fxnzz_cart",[]);
-  renderPackages();renderCart();renderTestimonials();renderComments();updateStats();
-  setStoreStatus();startCountdown();setupReveal();setupActiveNav();
-});
+    const grid=document.getElementById("packageGrid");
+
+    let data=packages;
+
+    if(
+        filter==="ZZZ" ||
+        filter==="PGR"
+    ){
+
+        data=data.filter(
+            x=>x.game===filter
+        );
+
+    }
+
+    else if(
+        filter==="ENDGAME" ||
+        filter==="FARMING" ||
+        filter==="PULL"
+    ){
+
+        data=data.filter(
+            x=>x.category===filter
+        );
+
+    }
+
+    grid.classList.remove("spotlight-mode");
+
+    grid.innerHTML=data.map(item=>`
+
+        <article
+            class="package">
+
+            <div class="package-top">
+
+                <div class="package-category">
+                    ${item.game} / ${item.category}
+                </div>
+
+                ${
+                    item.badge
+                    ? `<div class="badge">${item.badge}</div>`
+                    : ""
+                }
+
+            </div>
+
+            <h3>
+                ${item.title}
+            </h3>
+
+            <p class="package-desc">
+                ${item.desc}
+            </p>
+
+            <div class="price">
+                ${rupiah(item.price)}
+                <span>/ service</span>
+            </div>
+
+            <button
+                class="btn primary"
+                onclick="addToCart(${packages.indexOf(item)})">
+
+                ADD TO ORDER
+
+            </button>
+
+        </article>
+
+    `).join("");
+
+    initCardSpotlight();
+
+}
+
+function filterCategory(category,button){
+
+    document.querySelectorAll(
+        ".filter button"
+    ).forEach(x=>{
+        x.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    renderPackages(category);
+
+    toast("Filter: "+category);
+
+}
+
+function filterGame(game){
+
+    scrollToId("services");
+
+    renderPackages(game);
+
+    document.querySelectorAll(
+        ".filter button"
+    ).forEach(x=>{
+        x.classList.remove("active");
+    });
+
+    toast(game+" services loaded.");
+
+}
+
+
+/* ==============================
+   CARD SPOTLIGHT
+================================ */
+
+function initCardSpotlight(){
+
+    const grid=document.getElementById("packageGrid");
+
+    const cards=[
+        ...grid.querySelectorAll(".package")
+    ];
+
+    cards.forEach(card=>{
+
+        card.addEventListener("pointerenter",()=>{
+
+            if(window.matchMedia("(hover:hover)").matches){
+
+                grid.classList.add("spotlight-mode");
+
+                cards.forEach(c=>{
+                    c.classList.remove("spotlight-active");
+                });
+
+                card.classList.add("spotlight-active");
+
+            }
+
+        });
+
+        card.addEventListener("pointermove",e=>{
+
+            const rect=card.getBoundingClientRect();
+
+            const x=e.clientX-rect.left;
+            const y=e.clientY-rect.top;
+
+            card.style.setProperty(
+                "--spot-x",
+                x+"px"
+            );
+
+            card.style.setProperty(
+                "--spot-y",
+                y+"px"
+            );
+
+        });
+
+        card.addEventListener("pointerleave",()=>{
+
+            card.classList.remove(
+                "spotlight-active"
+            );
+
+            grid.classList.remove(
+                "spotlight-mode"
+            );
+
+        });
+
+    });
+
+}
+
+
+/* ==============================
+   MAGNETIC BUTTON
+================================ */
+
+function initMagneticButtons(){
+
+    if(
+        !window.matchMedia("(hover:hover) and (pointer:fine)").matches
+    ){
+        return;
+    }
+
+    document.querySelectorAll(".magnetic")
+        .forEach(button=>{
+
+            button.addEventListener("pointermove",e=>{
+
+                const rect=
+                    button.getBoundingClientRect();
+
+                const x=
+                    e.clientX -
+                    rect.left -
+                    rect.width/2;
+
+                const y=
+                    e.clientY -
+                    rect.top -
+                    rect.height/2;
+
+                const strength=.16;
+
+                button.style.transform=
+                    `translate(${x*strength}px,${y*strength}px)`;
+
+            });
+
+            button.addEventListener("pointerleave",()=>{
+
+                button.style.transform="translate(0,0)";
+
+            });
+
+        });
+
+}
+
+
+/* ==============================
+   CART
+================================ */
+
+function addToCart(index){
+
+    const item=packages[index];
+
+    cart.push({
+        ...item,
+        id:Date.now()+Math.random()
+    });
+
+    updateCart();
+
+    toast(
+        item.title+
+        " ditambahkan."
+    );
+
+}
+
+function addSpecial(){
+
+    cart.push({
+
+        game:"ZZZ",
+        category:"SPECIAL",
+
+        title:
+            "Rawat Akun VIP — 3 Patch",
+
+        desc:
+            "All Content Endgame selama 3 patch.",
+
+        price:58000,
+
+        badge:"SPECIAL",
+
+        id:Date.now()
+
+    });
+
+    updateCart();
+
+    toast(
+        "Special service ditambahkan."
+    );
+
+}
+
+function updateCart(){
+
+    document.getElementById(
+        "cartCount"
+    ).textContent=cart.length;
+
+    const container=
+        document.getElementById(
+            "cartItems"
+        );
+
+    if(!cart.length){
+
+        container.innerHTML=`
+
+            <div class="cart-empty">
+
+                <div style="font-size:30px">
+                    □
+                </div>
+
+                <p>
+                    Belum ada layanan.
+                </p>
+
+            </div>
+
+        `;
+
+    }else{
+
+        container.innerHTML=
+            cart.map(item=>`
+
+                <div class="cart-item">
+
+                    <strong>
+                        ${item.title}
+                    </strong>
+
+                    <small>
+                        ${item.game} ·
+                        ${item.category}
+                    </small>
+
+                    <div class="cart-item-bottom">
+
+                        <strong>
+                            ${rupiah(item.price)}
+                        </strong>
+
+                        <button
+                            class="remove"
+                            onclick="removeFromCart('${item.id}')">
+
+                            REMOVE
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `).join("");
+
+    }
+
+    const total=
+        cart.reduce(
+            (sum,item)=>sum+item.price,
+            0
+        );
+
+    document.getElementById(
+        "cartTotal"
+    ).textContent=rupiah(total);
+
+    updateSummary();
+
+}
+
+function removeFromCart(id){
+
+    cart=cart.filter(
+        item=>String(item.id)!==
+        String(id)
+    );
+
+    updateCart();
+
+    toast("Item dihapus.");
+
+}
+
+function openCart(){
+
+    document.getElementById(
+        "cartOverlay"
+    ).classList.add("show");
+
+}
+
+function closeCart(){
+
+    document.getElementById(
+        "cartOverlay"
+    ).classList.remove("show");
+
+}
+
+function goCheckout(){
+
+    closeCart();
+
+    scrollToId("order");
+
+}
+
+
+/* ==============================
+   ORDER SUMMARY
+================================ */
+
+function updateSummary(){
+
+    const summary=
+        document.getElementById(
+            "orderSummary"
+        );
+
+    if(!cart.length){
+
+        summary.innerHTML=`
+
+            <p style="
+                color:#666;
+                font-size:13px">
+
+                Belum ada layanan dipilih.
+
+            </p>
+
+        `;
+
+    }else{
+
+        summary.innerHTML=
+            cart.map(item=>`
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    gap:15px;
+                    padding:10px 0;
+                    border-bottom:
+                        1px solid var(--line);
+                ">
+
+                    <span style="
+                        font-size:12px">
+
+                        ${item.title}
+
+                    </span>
+
+                    <strong style="
+                        font-size:12px">
+
+                        ${rupiah(item.price)}
+
+                    </strong>
+
+                </div>
+
+            `).join("");
+
+    }
+
+    const total=
+        cart.reduce(
+            (sum,item)=>sum+item.price,
+            0
+        );
+
+    document.getElementById(
+        "orderTotal"
+    ).textContent=rupiah(total);
+
+    document.getElementById(
+        "paymentAmount"
+    ).textContent=rupiah(total);
+
+}
+
+
+/* ==============================
+   CREATE ORDER
+================================ */
+
+function createOrder(){
+
+    if(!cart.length){
+
+        toast(
+            "Pilih minimal satu layanan."
+        );
+
+        return;
+
+    }
+
+    const name=
+        document.getElementById(
+            "customerName"
+        ).value.trim();
+
+    const wa=
+        document.getElementById(
+            "customerWA"
+        ).value.trim();
+
+    if(!name || !wa){
+
+        toast(
+            "Isi nama dan WhatsApp."
+        );
+
+        return;
+
+    }
+
+    const random=
+        Math.floor(
+            1000+
+            Math.random()*8999
+        );
+
+    currentOrder={
+
+        id:"FXNZZ-"+random,
+
+        name:name,
+
+        wa:wa,
+
+        note:
+            document.getElementById(
+                "customerNote"
+            ).value,
+
+        total:
+            cart.reduce(
+                (sum,item)=>sum+item.price,
+                0
+            ),
+
+        status:0
+
+    };
+
+    document.getElementById(
+        "paymentOrderId"
+    ).textContent=currentOrder.id;
+
+    document.getElementById(
+        "trackerId"
+    ).textContent=currentOrder.id;
+
+    document.getElementById(
+        "paymentStatus"
+    ).textContent="WAITING";
+
+    toast(
+        "Order dibuat."
+    );
+
+    scrollToId("payment");
+
+}
+
+
+/* ==============================
+   PAYMENT
+================================ */
+
+function selectPayment(
+    method,
+    element
+){
+
+    selectedPayment=method;
+
+    document.querySelectorAll(
+        ".payment-method"
+    ).forEach(x=>{
+        x.classList.remove("active");
+    });
+
+    element.classList.add("active");
+
+    document.getElementById(
+        "selectedPayment"
+    ).textContent=method;
+
+    const description=
+        document.getElementById(
+            "paymentDescription"
+        );
+
+    const qr=
+        document.getElementById(
+            "fakeQR"
+        );
+
+    if(method==="QRIS"){
+
+        description.textContent=
+            "Scan QRIS untuk menyelesaikan pembayaran.";
+
+        qr.style.display="block";
+
+    }else{
+
+        qr.style.display="none";
+
+        description.textContent=
+            method+
+            " payment wallet simulation.";
+
+    }
+
+    toast(
+        method+" dipilih."
+    );
+
+}
+
+function simulatePayment(){
+
+    if(!currentOrder){
+
+        toast(
+            "Buat order terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+    document.getElementById(
+        "paymentStatus"
+    ).textContent="PROCESSING";
+
+    toast(
+        "Memproses pembayaran..."
+    );
+
+    setTimeout(()=>{
+
+        document.getElementById(
+            "paymentStatus"
+        ).textContent="PAID";
+
+        document.getElementById(
+            "paymentStatus"
+        ).style.color=
+            "var(--good)";
+
+        currentOrder.status=1;
+
+        updateTracker(1);
+
+        toast(
+            "Pembayaran berhasil."
+        );
+
+        setTimeout(()=>{
+            updateTracker(2);
+        },1500);
+
+        setTimeout(()=>{
+            updateTracker(3);
+        },3500);
+
+        setTimeout(()=>{
+            updateTracker(4);
+        },5500);
+
+    },1800);
+
+}
+
+
+/* ==============================
+   TRACKER
+================================ */
+
+function updateTracker(level){
+
+    for(let i=1;i<=5;i++){
+
+        const step=
+            document.getElementById(
+                "step"+i
+            );
+
+        if(i<=level+1){
+
+            step.classList.add("done");
+
+        }else{
+
+            step.classList.remove("done");
+
+        }
+
+    }
+
+    const statuses=[
+
+        "PAYMENT",
+        "QUEUE",
+        "PROCESSING",
+        "QUALITY CHECK",
+        "COMPLETED"
+
+    ];
+
+    const status=
+        statuses[
+            Math.min(level,4)
+        ];
+
+    document.getElementById(
+        "trackerStatus"
+    ).textContent=status;
+
+}
+
+
+/* ==============================
+   FAQ
+================================ */
+
+function toggleFAQ(button){
+
+    const item=
+        button.parentElement;
+
+    item.classList.toggle("open");
+
+    const icon=
+        button.querySelector("span");
+
+    icon.textContent=
+        item.classList.contains("open")
+        ? "−"
+        : "+";
+
+}
+
+
+/* ==============================
+   COUNTERS
+================================ */
+
+function runCounters(){
+
+    document.querySelectorAll(
+        ".counter"
+    ).forEach(counter=>{
+
+        const target=
+            Number(counter.dataset.target);
+
+        let value=0;
+
+        const step=
+            Math.max(
+                1,
+                Math.ceil(target/60)
+            );
+
+        const timer=
+            setInterval(()=>{
+
+                value+=step;
+
+                if(value>=target){
+
+                    value=target;
+
+                    clearInterval(timer);
+
+                }
+
+                counter.textContent=
+                    value.toLocaleString(
+                        "id-ID"
+                    );
+
+            },20);
+
+    });
+
+}
+
+
+/* ==============================
+   LIVE SIMULATION
+================================ */
+
+function liveSimulation(){
+
+    const activity=
+        document.querySelector(
+            ".activity-list"
+        );
+
+    if(!activity)return;
+
+    const services=[
+
+        "Event Farming",
+        "10 Pull",
+        "Hollow Zero",
+        "Shiyu Defense",
+        "PGR Farming Service",
+        "Shrouded Requiem",
+        "Recitativo di Fantasia"
+
+    ];
+
+    setInterval(()=>{
+
+        const service=
+            services[
+                Math.floor(
+                    Math.random()*
+                    services.length
+                )
+            ];
+
+        const game=
+            service.includes("PGR") ||
+            service.includes("Shrouded") ||
+            service.includes("Recitativo")
+            ? "PGR"
+            : "ZZZ";
+
+        const item=
+            document.createElement(
+                "div"
+            );
+
+        item.className=
+            "activity-item";
+
+        item.innerHTML=`
+
+            <div class="activity-left">
+
+                <div class="activity-icon">
+                    ${game}
+                </div>
+
+                <div>
+
+                    <strong>
+                        ${service}
+                    </strong>
+
+                    <small>
+                        Just now
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="activity-price">
+                NEW
+            </div>
+
+        `;
+
+        activity.prepend(item);
+
+        while(
+            activity.children.length>4
+        ){
+
+            activity.lastElementChild.remove();
+
+        }
+
+    },9000);
+
+}
+
+
+/* ==============================
+   ACTIVE NAV INDICATOR
+============================== */
+
+function updateNavIndicator(){
+
+    const nav=
+        document.querySelector(
+            ".nav-links"
+        );
+
+    const indicator=
+        document.getElementById(
+            "navIndicator"
+        );
+
+    const buttons=
+        [...nav.querySelectorAll(
+            "button[data-section]"
+        )];
+
+    let active=null;
+
+    const current=
+        window.scrollY+
+        window.innerHeight*.25;
+
+    buttons.forEach(button=>{
+
+        const section=
+            document.getElementById(
+                button.dataset.section
+            );
+
+        if(
+            section &&
+            section.offsetTop<=current
+        ){
+
+            active=button;
+
+        }
+
+    });
+
+    if(!active){
+
+        active=buttons[0];
+
+    }
+
+    buttons.forEach(button=>{
+        button.classList.remove("active");
+    });
+
+    active.classList.add("active");
+
+    const navRect=
+        nav.getBoundingClientRect();
+
+    const rect=
+        active.getBoundingClientRect();
+
+    indicator.style.left=
+        (rect.left-navRect.left)+"px";
+
+    indicator.style.width=
+        rect.width+"px";
+
+}
+
+window.addEventListener(
+    "scroll",
+    updateNavIndicator,
+    {passive:true}
+);
+
+window.addEventListener(
+    "resize",
+    updateNavIndicator
+);
+
+
+/* ==============================
+   INIT
+================================ */
+
+renderPackages();
+
+updateCart();
+
+runCounters();
+
+liveSimulation();
+
+initMagneticButtons();
+
+setTimeout(
+    updateNavIndicator,
+    100
+);
+
 </script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
-  import {
-    getFirestore,
-    addDoc,
-    collection
-  } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCtCxNyahXr95GL0cyz0m8oRad4RZDLTQo",
-    authDomain: "fxnzz-store.firebaseapp.com",
-    projectId: "fxnzz-store",
-    storageBucket: "fxnzz-store.firebasestorage.app",
-    messagingSenderId: "561919946173",
-    appId: "1:561919946173:web:31e8e119eec9432cb1b6d4",
-    measurementId: "G-4L2K0J5ZTQ"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getFirestore(app);
-
-  window.db = db;
-  window.firebaseAddDoc = addDoc;
-  window.firebaseCollection = collection;
-</script>
 </body>
 </html>
