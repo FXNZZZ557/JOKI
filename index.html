@@ -36,11 +36,15 @@
 
 html{
     scroll-behavior:smooth;
+    overflow-x:clip;
+    overflow-y:auto;
 }
 
 body{
     min-height:100vh;
-    overflow-x:hidden;
+    overflow-x:clip;
+    overflow-y:auto;
+    touch-action:pan-y;
     background:
         radial-gradient(circle at 15% 10%,rgba(255,45,114,.13),transparent 28%),
         radial-gradient(circle at 85% 20%,rgba(168,85,247,.12),transparent 30%),
@@ -225,24 +229,233 @@ body::after{
     }
 }
 
-/* Existing FXNZZ glow retained */
+
+/* =========================
+   FXNZZ CINEMATIC ENTRY
+========================= */
+
 .entry h1{
     position:relative;
+    margin:0;
     font-size:clamp(48px,10vw,92px);
     line-height:.9;
     letter-spacing:-5px;
     font-weight:900;
-    background:linear-gradient(
-        120deg,
-        #fff,
-        #ff6d9b 45%,
-        #b875ff
-    );
-    -webkit-background-clip:text;
-    color:transparent;
-    filter:drop-shadow(
-        0 0 28px rgba(255,45,114,.2)
-    );
+    font-style:italic;
+    color:#fff;
+    filter:drop-shadow(0 0 24px rgba(255,255,255,.10));
+}
+
+.fx-title{
+    position:relative;
+    display:inline-block;
+    min-width:6ch;
+    isolation:isolate;
+}
+
+.fx-title .fx-f{
+    display:inline-block;
+    color:#fff;
+    text-shadow:
+        3px 0 0 #050505,
+        -2px 0 0 #050505,
+        0 0 22px rgba(255,255,255,.35);
+    opacity:0;
+    transform:translateY(22px) scale(.72) skewX(-8deg);
+    animation:fxFPop .78s cubic-bezier(.16,.82,.24,1) .12s forwards;
+}
+
+.fx-title .fx-full{
+    display:inline-flex;
+    align-items:baseline;
+    gap:0;
+    opacity:0;
+    transform:translateX(-42px) skewX(-12deg);
+    animation:fxFullReveal .72s cubic-bezier(.2,.75,.2,1) .86s forwards;
+}
+
+.fx-title .fx-brand{
+    color:#fff;
+    font-style:italic;
+    text-shadow:
+        4px 0 0 #050505,
+        -2px 0 0 #050505,
+        0 0 20px rgba(255,255,255,.18);
+}
+
+.fx-title .fx-dot{
+    color:#050505;
+    font-style:italic;
+    text-shadow:2px 0 0 #fff;
+}
+
+.fx-title .fx-store{
+    color:#ff2d72;
+    font-style:normal;
+    letter-spacing:-4px;
+    text-shadow:
+        3px 0 0 #050505,
+        0 0 24px rgba(255,45,114,.25);
+}
+
+/* Black lightning / slash layer */
+.fx-title::before{
+    content:"";
+    position:absolute;
+    z-index:8;
+    top:-32%;
+    left:-18%;
+    width:150%;
+    height:165%;
+    opacity:0;
+    pointer-events:none;
+    transform:translateX(-115%) skewX(-24deg);
+    background:
+        linear-gradient(
+            112deg,
+            transparent 0 40%,
+            rgba(0,0,0,0) 42%,
+            #050505 44%,
+            #000 46%,
+            rgba(0,0,0,.92) 48%,
+            transparent 50% 100%
+        ),
+        linear-gradient(
+            105deg,
+            transparent 0 51%,
+            rgba(0,0,0,.95) 52%,
+            transparent 54% 100%
+        );
+    filter:drop-shadow(0 0 5px rgba(0,0,0,.9));
+}
+
+.fx-title::after{
+    content:"";
+    position:absolute;
+    z-index:7;
+    left:-12%;
+    top:48%;
+    width:125%;
+    height:3px;
+    opacity:0;
+    pointer-events:none;
+    transform:translateX(-105%) rotate(-10deg);
+    background:#000;
+    box-shadow:
+        0 0 8px rgba(0,0,0,.9),
+        0 0 20px rgba(0,0,0,.55);
+}
+
+.fx-title.fx-slash::before{
+    animation:fxBlackLightning .66s cubic-bezier(.15,.7,.18,1) forwards;
+}
+
+.fx-title.fx-slash::after{
+    animation:fxBlackSlash .54s cubic-bezier(.18,.78,.18,1) .03s forwards;
+}
+
+.fx-title.fx-slash .fx-full{
+    animation:fxNameSlideOut .62s cubic-bezier(.2,.75,.12,1) forwards;
+}
+
+@keyframes fxFPop{
+    0%{
+        opacity:0;
+        transform:translateY(24px) scale(.62) skewX(-10deg);
+    }
+    55%{
+        opacity:1;
+        transform:translateY(-4px) scale(1.06) skewX(-8deg);
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1) skewX(-8deg);
+    }
+}
+
+@keyframes fxFullReveal{
+    0%{
+        opacity:0;
+        transform:translateX(-42px) skewX(-12deg);
+        clip-path:inset(0 100% 0 0);
+    }
+    45%{
+        opacity:1;
+    }
+    100%{
+        opacity:1;
+        transform:translateX(0) skewX(-8deg);
+        clip-path:inset(0 0 0 0);
+    }
+}
+
+@keyframes fxBlackLightning{
+    0%{
+        opacity:0;
+        transform:translateX(-115%) skewX(-24deg);
+    }
+    18%{opacity:1;}
+    35%{
+        opacity:1;
+        transform:translateX(-15%) skewX(-24deg);
+    }
+    55%{
+        opacity:.95;
+        transform:translateX(30%) skewX(-24deg);
+    }
+    100%{
+        opacity:0;
+        transform:translateX(120%) skewX(-24deg);
+    }
+}
+
+@keyframes fxBlackSlash{
+    0%{
+        opacity:0;
+        transform:translateX(-105%) rotate(-10deg);
+    }
+    18%{opacity:1;}
+    100%{
+        opacity:0;
+        transform:translateX(115%) rotate(-10deg);
+    }
+}
+
+@keyframes fxNameSlideOut{
+    0%{
+        opacity:1;
+        transform:translateX(0) skewX(-8deg);
+        filter:none;
+    }
+    45%{
+        opacity:1;
+        transform:translateX(26px) skewX(-12deg);
+    }
+    100%{
+        opacity:0;
+        transform:translateX(480px) skewX(-18deg);
+        filter:blur(3px);
+    }
+}
+
+.fx-title.fx-slash .fx-f{
+    animation:fxFExit .48s cubic-bezier(.2,.75,.15,1) forwards;
+}
+
+@keyframes fxFExit{
+    0%{opacity:1; transform:translateX(0) scale(1) skewX(-8deg);}
+    100%{opacity:0; transform:translateX(160px) scale(.9) skewX(-18deg);}
+}
+
+@media(max-width:650px){
+    .entry h1{
+        font-size:clamp(43px,15vw,70px);
+        letter-spacing:-3px;
+    }
+
+    .fx-title .fx-store{
+        letter-spacing:-3px;
+    }
 }
 
 /* =========================
@@ -298,9 +511,6 @@ body::after{
         );
     filter:blur(18px);
     mix-blend-mode:screen;
-}
-
-.entry-title-wrap.slashing::before{
     animation:bloomFlash .72s ease forwards;
 }
 
@@ -309,109 +519,137 @@ body::after{
 }
 
 @keyframes whiteBloomSlash{
-    0%{
-        opacity:0;
-        transform:skewX(-20deg) translateX(-90px);
-    }
-
-    10%{
-        opacity:1;
-    }
-
-    45%{
-        opacity:1;
-    }
-
-    100%{
-        opacity:0;
-        transform:skewX(-20deg) translateX(680px);
-    }
+    0%{opacity:0;transform:skewX(-20deg) translateX(-90px);}
+    10%{opacity:1;}
+    45%{opacity:1;}
+    100%{opacity:0;transform:skewX(-20deg) translateX(680px);}
 }
 
 @keyframes bloomFlash{
-    0%,15%{
-        opacity:0;
-        transform:scale(.96);
-    }
-
-    42%{
-        opacity:.95;
-        transform:scale(1.03);
-    }
-
-    65%{
-        opacity:.25;
-        transform:scale(1);
-    }
-
-    100%{
-        opacity:0;
-    }
+    0%,15%{opacity:0;transform:scale(.96);}
+    42%{opacity:.95;transform:scale(1.03);}
+    65%{opacity:.25;transform:scale(1);}
+    100%{opacity:0;}
 }
 
-@keyframes titleWhiteFlash{
-    0%,18%{
-        filter:drop-shadow(
-            0 0 28px rgba(255,45,114,.2)
-        );
-    }
 
-    43%{
-        color:#fff;
-        background:none;
-        -webkit-background-clip:initial;
-        filter:
-            brightness(2.2)
-            drop-shadow(0 0 32px rgba(255,255,255,.9));
-    }
 
-    62%{
-        filter:
-            brightness(1.35)
-            drop-shadow(0 0 35px rgba(255,255,255,.55));
-    }
+/* =========================
+   LOOPING NAV BRAND
+========================= */
 
-    100%{
-        background:linear-gradient(
-            120deg,
-            #fff,
-            #ff6d9b 45%,
-            #b875ff
-        );
-        -webkit-background-clip:text;
-        color:transparent;
-        filter:drop-shadow(
-            0 0 28px rgba(255,45,114,.2)
-        );
-    }
+.nav .brand{
+    position:relative;
+    display:inline-block;
+    overflow:visible;
+    font-style:italic;
+    font-weight:900;
+    letter-spacing:-1.5px;
+    color:#fff;
+    text-shadow:
+        2px 0 0 #050505,
+        -1px 0 0 #050505;
+    animation:navBrandPulse 3.8s ease-in-out infinite;
 }
 
-.entry p{
-    margin:25px auto 30px;
-    max-width:470px;
-    color:var(--muted);
-    line-height:1.7;
-}
-
-.enter-btn{
-    border:0;
-    cursor:pointer;
-    padding:16px 30px;
-    border-radius:14px;
-    color:white;
-    font-weight:800;
+.nav .brand::after{
+    content:"";
+    position:absolute;
+    z-index:2;
+    top:-35%;
+    left:-18%;
+    width:18%;
+    height:170%;
+    pointer-events:none;
+    opacity:0;
+    transform:translateX(-90px) skewX(-20deg);
     background:linear-gradient(
-        135deg,
-        var(--accent),
-        #b326ff
+        90deg,
+        transparent 0%,
+        rgba(0,0,0,.15) 15%,
+        #050505 45%,
+        #000 55%,
+        rgba(0,0,0,.15) 78%,
+        transparent 100%
     );
-    box-shadow:0 12px 40px rgba(255,45,114,.25);
-    transition:.25s;
+    filter:blur(2px);
+    animation:navBrandSlash 3.8s cubic-bezier(.18,.7,.18,1) infinite;
 }
 
-.enter-btn:hover{
-    transform:translateY(-3px);
-    box-shadow:0 18px 50px rgba(255,45,114,.38);
+.nav .brand::before{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    inset:-9px -12px;
+    pointer-events:none;
+    opacity:0;
+    background:radial-gradient(
+        ellipse at center,
+        rgba(255,45,114,.22),
+        transparent 68%
+    );
+    filter:blur(8px);
+    animation:navBrandGlow 3.8s ease-in-out infinite;
+}
+
+.nav .brand span{
+    color:#ff2d72;
+    font-style:italic;
+    text-shadow:
+        2px 0 0 #050505,
+        0 0 10px rgba(255,45,114,.18);
+}
+
+@keyframes navBrandPulse{
+    0%,68%,100%{
+        opacity:1;
+        transform:translateX(0) skewX(-8deg);
+        filter:none;
+    }
+    73%{
+        opacity:1;
+        transform:translateX(1px) skewX(-10deg);
+    }
+    78%{
+        opacity:.82;
+        transform:translateX(2px) skewX(-12deg);
+    }
+    84%{
+        opacity:1;
+        transform:translateX(0) skewX(-8deg);
+    }
+}
+
+@keyframes navBrandSlash{
+    0%,67%{
+        opacity:0;
+        transform:translateX(-95px) skewX(-20deg);
+    }
+    70%{
+        opacity:1;
+    }
+    77%{
+        opacity:1;
+        transform:translateX(125px) skewX(-20deg);
+    }
+    82%,100%{
+        opacity:0;
+        transform:translateX(125px) skewX(-20deg);
+    }
+}
+
+@keyframes navBrandGlow{
+    0%,67%,100%{opacity:0;transform:scale(.94);}
+    73%{opacity:.9;transform:scale(1.03);}
+    82%{opacity:.18;transform:scale(1);}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .nav .brand,
+    .nav .brand::before,
+    .nav .brand::after{
+        animation:none;
+    }
 }
 
 /* =========================
@@ -499,6 +737,12 @@ body::after{
         left .3s cubic-bezier(.2,.8,.2,1),
         width .3s cubic-bezier(.2,.8,.2,1);
     pointer-events:none;
+}
+
+.nav-actions{
+    display:flex;
+    align-items:center;
+    gap:0;
 }
 
 .nav-order{
@@ -880,7 +1124,7 @@ section{
 .package-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:15px;
+    gap:12px;
 }
 
 .package{
@@ -890,8 +1134,8 @@ section{
     position:relative;
     display:flex;
     flex-direction:column;
-    min-height:270px;
-    padding:22px;
+    min-height:245px;
+    padding:18px;
     border:1px solid var(--line);
     border-radius:20px;
     background:
@@ -932,9 +1176,9 @@ section{
 
 .package-category{
     color:#ff6c97;
-    font-size:10px;
+    font-size:9px;
     font-weight:900;
-    letter-spacing:1.5px;
+    letter-spacing:1.3px;
 }
 
 .badge{
@@ -1062,148 +1306,7 @@ section{
 }
 
 /* =========================
-   PAYMENT MEDIA
-========================= */
-
-.payment-methods{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-}
-
-.payment-method{
-    position:relative;
-    min-height:100px;
-    padding:15px 10px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    gap:6px;
-    text-align:center;
-    border:1px solid var(--line);
-    border-radius:15px;
-    cursor:pointer;
-    transition:
-        transform .2s ease,
-        border-color .2s ease,
-        background .2s ease,
-        box-shadow .2s ease;
-}
-
-.payment-method:hover{
-    transform:translateY(-2px);
-    border-color:rgba(255,255,255,.2);
-}
-
-.payment-method.active{
-    border-color:var(--accent);
-    background:rgba(255,45,114,.08);
-    box-shadow:
-        0 0 25px rgba(255,45,114,.08);
-}
-
-.payment-icon{
-    width:42px;
-    height:30px;
-    display:grid;
-    place-items:center;
-    border-radius:8px;
-    font-size:11px;
-    font-weight:1000;
-    letter-spacing:-.5px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.08);
-}
-
-.payment-method:nth-child(1) .payment-icon{
-    color:#66aaff;
-}
-
-.payment-method:nth-child(2) .payment-icon{
-    color:#63e8a9;
-}
-
-.payment-method:nth-child(3) .payment-icon{
-    color:#fff;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.12),
-            rgba(255,45,114,.12)
-        );
-}
-
-.payment-method strong{
-    display:block;
-    font-size:13px;
-}
-
-.payment-method small{
-    color:#777;
-    font-size:9px;
-}
-
-.checkout-total{
-    display:flex;
-    justify-content:space-between;
-    padding:20px 0;
-    margin-top:15px;
-    border-top:1px solid var(--line);
-}
-
-.checkout-total strong{
-    font-size:24px;
-}
-
-/* =========================
-   PAYMENT PREVIEW
-========================= */
-
-.payment-preview{
-    position:relative;
-    overflow:hidden;
-    margin-top:22px;
-    padding:25px;
-    border:1px solid var(--line);
-    border-radius:17px;
-    background:
-        radial-gradient(
-            circle at 50% 0,
-            rgba(255,45,114,.08),
-            transparent 55%
-        ),
-        rgba(255,255,255,.025);
-}
-
-.payment-preview::after{
-    content:"SECURE PAYMENT";
-    position:absolute;
-    right:-25px;
-    bottom:12px;
-    font-size:9px;
-    letter-spacing:2px;
-    color:rgba(255,255,255,.04);
-    transform:rotate(-15deg);
-}
-
-.payment-status-dot{
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:var(--warning);
-    box-shadow:0 0 12px rgba(255,200,87,.45);
-}
-
-/* =========================
-   QR
-========================= */
-
-#fakeQR{
-    box-shadow:
-        0 15px 35px rgba(0,0,0,.3);
-}
-
+   TRACKER
 /* =========================
    TRACKER
 ========================= */
@@ -1469,6 +1572,21 @@ footer{
     visibility:visible;
 }
 
+html.cart-open,
+body.cart-open{
+    overflow:hidden;
+    overscroll-behavior:none;
+}
+
+.overlay.show{
+    touch-action:none;
+}
+
+.drawer{
+    touch-action:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
 .drawer{
     position:absolute;
     right:0;
@@ -1570,12 +1688,146 @@ footer{
     transform:translate(-50%,0);
 }
 
+
+/* =========================
+   MUSIC CONTROL
+========================= */
+.music-control{
+    width:36px;
+    height:36px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-left:8px;
+    border:1px solid var(--line);
+    border-radius:11px;
+    background:rgba(255,255,255,.035);
+    color:#aaa;
+    cursor:pointer;
+    transition:transform .2s ease,border-color .2s ease,color .2s ease,background .2s ease;
+}
+.music-control:hover{
+    transform:translateY(-2px);
+    border-color:rgba(255,45,114,.4);
+    color:#fff;
+    background:rgba(255,45,114,.08);
+}
+.music-control.playing{
+    color:#ff5c8d;
+    border-color:rgba(255,45,114,.45);
+    box-shadow:0 0 18px rgba(255,45,114,.12);
+}
+.music-control span{
+    font-size:16px;
+    line-height:1;
+}
+
 /* =========================
    MOBILE NAV
 ========================= */
 
 .mobile-nav{
     display:none;
+}
+
+/* =========================
+   EMPTY PACKAGE SLOTS
+========================= */
+
+.package.empty-slot{
+    opacity:.62;
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.025),rgba(255,255,255,.012)),
+        var(--panel);
+    border-style:dashed;
+}
+
+.package.empty-slot:hover{
+    transform:none;
+    border-color:var(--line);
+    box-shadow:none;
+}
+
+.package.empty-slot .package-category{
+    color:#777;
+}
+
+.package.empty-slot .price{
+    color:#777;
+}
+
+.package .btn:disabled{
+    cursor:not-allowed;
+    opacity:.5;
+    transform:none !important;
+}
+
+/* =========================
+   SOCIAL MEDIA
+========================= */
+
+.social-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    justify-content:flex-end;
+}
+
+.social-link{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:9px 12px;
+    border:1px solid var(--line);
+    border-radius:11px;
+    color:#aaa;
+    text-decoration:none;
+    background:rgba(255,255,255,.03);
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        color .2s ease,
+        background .2s ease;
+}
+
+.social-link:hover{
+    transform:translateY(-2px);
+    color:white;
+    border-color:rgba(255,45,114,.3);
+    background:rgba(255,45,114,.06);
+}
+
+.social-link b{
+    color:#fff;
+    font-size:11px;
+}
+
+.social-link small{
+    color:#666;
+    font-size:9px;
+}
+
+@media(max-width:650px){
+    .nav{
+        padding:0 12px;
+    }
+    .brand{
+        font-size:12px;
+    }
+    .nav-order{
+        padding:9px 10px;
+        font-size:9px;
+    }
+    .music-control{
+        width:32px;
+        height:32px;
+        margin-left:5px;
+        border-radius:9px;
+    }
+
+    .social-links{
+        justify-content:flex-start;
+    }
 }
 
 /* =========================
@@ -1659,12 +1911,12 @@ footer{
 
     .package-grid{
         grid-template-columns:repeat(3,minmax(0,1fr));
-        gap:7px;
+        gap:6px;
     }
 
     .package{
-        min-height:255px;
-        padding:13px 9px;
+        min-height:225px;
+        padding:10px 7px;
         border-radius:14px;
     }
 
@@ -1675,21 +1927,21 @@ footer{
     }
 
     .package h3{
-        font-size:12px;
-        line-height:1.3;
-        margin-top:14px;
+        font-size:11px;
+        line-height:1.25;
+        margin-top:11px;
         letter-spacing:-.15px;
     }
 
     .package-desc{
-        font-size:9px;
-        line-height:1.42;
-        margin-top:7px;
+        font-size:8px;
+        line-height:1.35;
+        margin-top:5px;
     }
 
     .price{
-        font-size:14px;
-        padding-top:11px;
+        font-size:12px;
+        padding-top:8px;
         letter-spacing:-.3px;
     }
 
@@ -1849,6 +2101,78 @@ footer{
         transform:none;
     }
 }
+
+/* FINAL PACKAGE SCALE / MOBILE GRID OVERRIDE */
+.package-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:12px;
+}
+@media(max-width:650px){
+    .package-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+        gap:6px !important;
+    }
+    .package{
+        min-width:0;
+        min-height:225px;
+        padding:10px 7px;
+    }
+    .package h3{
+        font-size:11px;
+        line-height:1.25;
+    }
+    .package-desc{
+        font-size:8px;
+        line-height:1.35;
+    }
+    .price{
+        font-size:12px;
+    }
+}
+
+
+.hero-trust{
+    position:relative;
+    z-index:2;
+}
+
+.trust-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:11px 12px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.025);
+    border-radius:10px;
+}
+
+.trust-item strong{
+    flex:0 0 auto;
+    min-width:82px;
+    font-size:9px;
+    letter-spacing:1.2px;
+}
+
+.trust-item span{
+    color:#777;
+    font-size:9px;
+    line-height:1.5;
+}
+
+@media(max-width:650px){
+    .trust-item{
+        gap:8px;
+        padding:10px;
+    }
+    .trust-item strong{
+        min-width:72px;
+        font-size:8px;
+    }
+    .trust-item span{
+        font-size:8px;
+    }
+}
+
 </style>
 </head>
 
@@ -1875,15 +2199,18 @@ footer{
         </div>
 
         <div class="entry-title-wrap" id="entryTitle">
-            <h1>
-                FXNZZ<br>STORE
+            <h1 class="fx-title" aria-label="FXNZZ.STORE">
+                <span class="fx-f">F</span>
+                <span class="fx-full">
+                    <span class="fx-brand">FXNZZ</span><span class="fx-dot">.</span><span class="fx-store">STORE</span>
+                </span>
             </h1>
         </div>
 
         <p>
             Gaming service untuk Zenless Zone Zero dan
             Punishing: Gray Raven. Pilih layanan, checkout,
-            lalu pantau progres order langsung dari dashboard.
+            lalu lanjutkan order dan pembayaran langsung melalui chat admin.
         </p>
 
         <button
@@ -1945,19 +2272,35 @@ footer{
 
     </div>
 
-    <button
-        class="nav-order"
-        onclick="openCart()">
+    <div class="nav-actions">
+        <button
+            class="nav-order"
+            onclick="openCart()">
 
-        CART
+            CART
 
-        <span
-            class="cart-count"
-            id="cartCount">
-            0
-        </span>
+            <span
+                class="cart-count"
+                id="cartCount">
+                0
+            </span>
 
-    </button>
+        </button>
+
+        <button
+            class="music-control"
+            id="musicToggle"
+            type="button"
+            aria-label="Toggle background music"
+            title="Music"
+            onclick="toggleMusic()">
+            <span id="musicIcon">♫</span>
+        </button>
+
+        <audio id="bgMusic" preload="auto" autoplay playsinline loop>
+            <source src="fxnzz.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
 </nav>
 
@@ -2014,140 +2357,37 @@ footer{
         </div>
 
         <h3>
-            Ready to grind.
+            Joki Aman &amp; Terpercaya.
         </h3>
 
         <p>
-            Slot pengerjaan tersedia. Order akan masuk
-            ke antrean setelah pembayaran terverifikasi.
+            Layanan joki gaming dengan proses yang jelas,
+            komunikasi langsung melalui admin, dan pengerjaan
+            yang mengutamakan keamanan akun serta kualitas hasil.
         </p>
 
-        <div style="
+        <div class="hero-trust" style="
             margin-top:28px;
             display:grid;
-            grid-template-columns:1fr 1fr;
             gap:10px;
         ">
-
-            <div class="stat">
-                <div class="stat-label">
-                    ORDER TODAY
-                </div>
-
-                <div class="stat-value">
-                    08
-                </div>
+            <div class="trust-item">
+                <strong>AMAN</strong>
+                <span>Data akun dijaga dan digunakan sesuai kebutuhan pengerjaan.</span>
             </div>
 
-            <div class="stat">
-                <div class="stat-label">
-                    SLOT LEFT
-                </div>
-
-                <div class="stat-value">
-                    17
-                </div>
+            <div class="trust-item">
+                <strong>TERPERCAYA</strong>
+                <span>Order dan pembayaran dikonfirmasi langsung bersama admin.</span>
             </div>
 
+            <div class="trust-item">
+                <strong>PROFESSIONAL</strong>
+                <span>Setiap tindakan dipertimbangkan sebelum dilakukan. Progress, resource, dan risiko diperhatikan dari sisi customer maupun penjoki.</span>
+            </div>
         </div>
 
         <div class="fake-wave"></div>
-
-    </div>
-
-</section>
-
-<!-- =========================
-     STATS
-========================= -->
-
-<section>
-
-    <div class="section-head">
-
-        <div>
-
-            <div class="eyebrow">
-                LIVE SYSTEM
-            </div>
-
-            <h2>
-                Store Overview
-            </h2>
-
-        </div>
-
-        <p>
-            Data di bawah merupakan simulasi realtime
-            untuk prototype. Nantinya bagian ini dapat
-            langsung diganti dengan Firebase.
-        </p>
-
-    </div>
-
-    <div class="stats">
-
-        <div class="stat">
-            <div class="stat-label">
-                TOTAL ORDER
-            </div>
-
-            <div
-                class="stat-value counter"
-                data-target="1284">
-                0
-            </div>
-
-            <small>
-                All time
-            </small>
-        </div>
-
-        <div class="stat">
-            <div class="stat-label">
-                ORDER TODAY
-            </div>
-
-            <div
-                class="stat-value counter"
-                data-target="8">
-                0
-            </div>
-
-            <small>
-                Updated just now
-            </small>
-        </div>
-
-        <div class="stat">
-            <div class="stat-label">
-                COMPLETED
-            </div>
-
-            <div
-                class="stat-value counter"
-                data-target="97">
-                0
-            </div>
-
-            <small>
-                Completion rate
-            </small>
-        </div>
-
-        <div class="stat">
-            <div class="stat-label">
-                AVG. RESPONSE
-            </div>
-
-            <div class="stat-value">
-                12m
-            </div>
-
-            <small>
-                During active hours
-            </small>
-        </div>
 
     </div>
 
@@ -2323,9 +2563,7 @@ footer{
         </h3>
 
         <p>
-            All Content Endgame selama 3 patch.
-            Cocok untuk account yang ingin maintenance
-            jangka panjang.
+            Maintenance VIP selama 3 patch: aktivitas rutin, event, progression, build optimization, dan endgame sesuai kemampuan akun. Cocok untuk maintenance jangka panjang dengan scope yang jelas.
         </p>
 
         <div style="
@@ -2337,7 +2575,7 @@ footer{
         ">
 
             <strong style="font-size:28px">
-                Rp58.000
+                Rp150.000
             </strong>
 
             <button
@@ -2373,8 +2611,8 @@ footer{
         </div>
 
         <p>
-            Data ini masih bersifat simulasi.
-            Jangan memasukkan data akun asli ke prototype publik.
+            Isi data dasar order. Detail akun dan pembayaran dibahas langsung
+            bersama admin melalui chat WhatsApp.
         </p>
 
     </div>
@@ -2414,6 +2652,21 @@ footer{
             <div class="form-group">
 
                 <label>
+                    METODE PEMBAYARAN (PREFERENSI)
+                </label>
+
+                <select id="customerPayment">
+                    <option value="Belum menentukan">Belum menentukan</option>
+                    <option value="DANA">DANA</option>
+                    <option value="GoPay">GoPay</option>
+                    <option value="QRIS">QRIS</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
                     CATATAN ORDER
                 </label>
 
@@ -2427,7 +2680,7 @@ footer{
                 class="btn primary magnetic"
                 style="width:100%"
                 onclick="createOrder()">
-                LANJUT KE PEMBAYARAN
+                CHAT ADMIN & ORDER
             </button>
 
         </div>
@@ -2455,273 +2708,6 @@ footer{
                 <strong id="orderTotal">
                     Rp0
                 </strong>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =========================
-     PAYMENT
-========================= -->
-
-<section id="payment">
-
-    <div class="section-head">
-
-        <div>
-
-            <div class="eyebrow">
-                PAYMENT DASHBOARD
-            </div>
-
-            <h2>
-                Payment Center
-            </h2>
-
-        </div>
-
-        <p>
-            Pilih media pembayaran yang tersedia.
-            Payment gateway asli dapat diintegrasikan
-            pada tahap production.
-        </p>
-
-    </div>
-
-    <div class="order-layout">
-
-        <div class="panel">
-
-            <h3>
-                Select Payment Method
-            </h3>
-
-            <div class="payment-methods">
-
-                <div
-                    class="payment-method active"
-                    onclick="selectPayment('DANA',this)">
-
-                    <div class="payment-icon">
-                        DANA
-                    </div>
-
-                    <strong>
-                        DANA
-                    </strong>
-
-                    <small>
-                        Digital Wallet
-                    </small>
-
-                </div>
-
-                <div
-                    class="payment-method"
-                    onclick="selectPayment('GoPay',this)">
-
-                    <div class="payment-icon">
-                        GOPAY
-                    </div>
-
-                    <strong>
-                        GoPay
-                    </strong>
-
-                    <small>
-                        Digital Wallet
-                    </small>
-
-                </div>
-
-                <div
-                    class="payment-method"
-                    onclick="selectPayment('QRIS',this)">
-
-                    <div class="payment-icon">
-                        QRIS
-                    </div>
-
-                    <strong>
-                        QRIS
-                    </strong>
-
-                    <small>
-                        Scan Payment
-                    </small>
-
-                </div>
-
-            </div>
-
-            <div class="payment-preview">
-
-                <div style="
-                    display:flex;
-                    justify-content:space-between;
-                    align-items:center;
-                ">
-
-                    <div style="
-                        display:flex;
-                        align-items:center;
-                        gap:8px;
-                        color:#777;
-                        font-size:10px;
-                        letter-spacing:1px;
-                    ">
-
-                        <span class="payment-status-dot"></span>
-
-                        SELECTED METHOD
-
-                    </div>
-
-                    <span style="
-                        color:#555;
-                        font-size:9px;
-                    ">
-                        FXNZZ PAY
-                    </span>
-
-                </div>
-
-                <div
-                    id="selectedPayment"
-                    style="
-                        font-size:29px;
-                        font-weight:900;
-                        margin-top:15px;
-                    ">
-                    DANA
-                </div>
-
-                <p
-                    id="paymentDescription"
-                    style="
-                        color:#777;
-                        font-size:12px;
-                        margin-top:8px;
-                    ">
-                    Payment wallet simulation.
-                </p>
-
-                <div
-                    id="fakeQR"
-                    style="
-                        display:none;
-                        margin:20px auto 0;
-                        width:170px;
-                        height:170px;
-                        padding:10px;
-                        background:white;
-                    ">
-
-                    <svg
-                        viewBox="0 0 100 100"
-                        width="100%"
-                        height="100%">
-
-                        <rect
-                            width="100"
-                            height="100"
-                            fill="white"/>
-
-                        <path
-                            d="
-                            M5 5h30v30H5z
-                            M10 10v20h20V10z
-                            M65 5h30v30H65z
-                            M70 10v20h20V10z
-                            M5 65h30v30H5z
-                            M10 70v20h20V70z
-                            M45 5h8v8h-8z
-                            M55 15h8v8h-8z
-                            M42 28h8v8h-8z
-                            M52 38h8v8h-8z
-                            M65 45h8v8h-8z
-                            M78 43h8v8h-8z
-                            M40 55h8v8h-8z
-                            M52 58h8v8h-8z
-                            M65 65h8v8h-8z
-                            M78 58h8v8h-8z
-                            M45 75h8v8h-8z
-                            M57 82h8v8h-8z
-                            M70 75h8v8h-8z
-                            M82 82h8v8h-8z"
-                            fill="black"/>
-
-                    </svg>
-
-                </div>
-
-            </div>
-
-            <button
-                class="btn primary magnetic"
-                style="width:100%;margin-top:15px"
-                onclick="simulatePayment()">
-                SIMULATE PAYMENT
-            </button>
-
-        </div>
-
-        <div class="panel">
-
-            <h3>
-                Payment Information
-            </h3>
-
-            <div class="activity-item">
-
-                <div>
-                    <small>
-                        ORDER ID
-                    </small>
-
-                    <strong id="paymentOrderId">
-                        FXNZZ-DEMO
-                    </strong>
-                </div>
-
-            </div>
-
-            <div
-                class="activity-item"
-                style="margin-top:9px">
-
-                <div>
-                    <small>
-                        AMOUNT
-                    </small>
-
-                    <strong id="paymentAmount">
-                        Rp0
-                    </strong>
-                </div>
-
-            </div>
-
-            <div
-                class="activity-item"
-                style="margin-top:9px">
-
-                <div>
-                    <small>
-                        STATUS
-                    </small>
-
-                    <strong
-                        id="paymentStatus"
-                        style="color:var(--warning)">
-                        WAITING
-                    </strong>
-
-                </div>
 
             </div>
 
@@ -2785,7 +2771,7 @@ footer{
             <div style="text-align:right">
 
                 <small style="color:#666">
-                    CURRENT STATUS
+                    ORDER STATUS
                 </small>
 
                 <h3
@@ -2870,194 +2856,6 @@ footer{
                 <span>
                     Completed
                 </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =========================
-     ACTIVITY
-========================= -->
-
-<section>
-
-    <div class="section-head">
-
-        <div>
-
-            <div class="eyebrow">
-                STORE ACTIVITY
-            </div>
-
-            <h2>
-                Recent Activity
-            </h2>
-
-        </div>
-
-    </div>
-
-    <div class="activity">
-
-        <div class="panel">
-
-            <h3>
-                Recent Orders
-            </h3>
-
-            <div class="activity-list">
-
-                <div class="activity-item">
-
-                    <div class="activity-left">
-
-                        <div class="activity-icon">
-                            ZZZ
-                        </div>
-
-                        <div>
-                            <strong>
-                                Shiyu Defense
-                            </strong>
-
-                            <small>
-                                Order #FX-8214
-                            </small>
-                        </div>
-
-                    </div>
-
-                    <div class="activity-price">
-                        Rp28k
-                    </div>
-
-                </div>
-
-                <div class="activity-item">
-
-                    <div class="activity-left">
-
-                        <div class="activity-icon">
-                            PGR
-                        </div>
-
-                        <div>
-                            <strong>
-                                Endgame Service
-                            </strong>
-
-                            <small>
-                                Order #FX-8213
-                            </small>
-                        </div>
-
-                    </div>
-
-                    <div class="activity-price">
-                        Rp13k
-                    </div>
-
-                </div>
-
-                <div class="activity-item">
-
-                    <div class="activity-left">
-
-                        <div class="activity-icon">
-                            ZZZ
-                        </div>
-
-                        <div>
-                            <strong>
-                                10 Pull
-                            </strong>
-
-                            <small>
-                                Order #FX-8212
-                            </small>
-                        </div>
-
-                    </div>
-
-                    <div class="activity-price">
-                        Rp8k
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="panel">
-
-            <h3>
-                System Monitor
-            </h3>
-
-            <div class="activity-item">
-
-                <div>
-                    <small>
-                        STORE STATUS
-                    </small>
-
-                    <strong style="color:var(--good)">
-                        ONLINE
-                    </strong>
-                </div>
-
-            </div>
-
-            <div
-                class="activity-item"
-                style="margin-top:9px">
-
-                <div>
-                    <small>
-                        QUEUE
-                    </small>
-
-                    <strong>
-                        4 ORDERS
-                    </strong>
-                </div>
-
-            </div>
-
-            <div
-                class="activity-item"
-                style="margin-top:9px">
-
-                <div>
-                    <small>
-                        AVAILABLE SLOT
-                    </small>
-
-                    <strong>
-                        17 / 20
-                    </strong>
-                </div>
-
-            </div>
-
-            <div
-                class="activity-item"
-                style="margin-top:9px">
-
-                <div>
-                    <small>
-                        SYSTEM
-                    </small>
-
-                    <strong style="color:var(--good)">
-                        ALL SYSTEMS NORMAL
-                    </strong>
-                </div>
 
             </div>
 
@@ -3319,7 +3117,8 @@ footer{
 
             <button
                 class="btn primary magnetic"
-                style="margin-top:18px">
+                style="margin-top:18px"
+                onclick="openAdminChat()">
                 OPEN WHATSAPP
             </button>
 
@@ -3371,7 +3170,48 @@ footer{
     </div>
 
     <div>
-        © 2026 FXNZZ STORE
+        <div style="margin-bottom:9px;color:#aaa;font-weight:800">
+            SOCIAL MEDIA
+        </div>
+
+        <div class="social-links">
+            <a
+                class="social-link"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok FXNZZ STORE"
+                onclick="return openSocial('TikTok')">
+                <b>TikTok</b>
+                <small>@YOUR_TIKTOK</small>
+            </a>
+
+            <a
+                class="social-link"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram FXNZZ STORE"
+                onclick="return openSocial('Instagram')">
+                <b>Instagram</b>
+                <small>@YOUR_INSTAGRAM</small>
+            </a>
+
+            <a
+                class="social-link"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook FXNZZ STORE"
+                onclick="return openSocial('Facebook')">
+                <b>Facebook</b>
+                <small>YOUR_FACEBOOK</small>
+            </a>
+        </div>
+
+        <div style="margin-top:10px;color:#555;font-size:9px">
+            © 2026 FXNZZ STORE
+        </div>
     </div>
 
 </footer>
@@ -3392,7 +3232,7 @@ footer{
 
     <button onclick="openCart()">
         <span>□</span>
-        CART
+        ORDER
     </button>
 
     <button onclick="scrollToId('status')">
@@ -3465,221 +3305,262 @@ footer{
 
 const packages = [
 
-    {
-        game:"ZZZ",
-        category:"ENDGAME",
-        title:"Shiyu Defense — Full Clear",
-        desc:"Full clear Shiyu Defense.",
-        price:28000,
-        badge:"POPULAR"
-    },
+    /* ==============================
+       ZZZ — ENDGAME
+    ================================ */
 
     {
-        game:"ZZZ",
-        category:"ENDGAME",
-        title:"Deadly Assault — Full Clear",
-        desc:"Full clear Deadly Assault.",
-        price:28000,
-        badge:""
+        game:"ZZZ", category:"ENDGAME",
+        title:"Shiyu Defense — 3 STAR/Full Clear",
+        desc:"Pengerjaan Shiyu Defense sampai target clear yang disepakati. Hasil clear bergantung pada roster, build, dan kondisi akun.",
+        price:8000, badge:""
     },
-
     {
-        game:"ZZZ",
-        category:"ENDGAME",
+        game:"ZZZ", category:"ENDGAME",
+        title:"Deadly Assault — 3 STAR/Full Clear",
+        desc:"Pengerjaan Deadly Assault sesuai kemampuan akun dan target yang disepakati. Tidak menjamin skor tertentu jika akun belum memenuhi syarat.",
+        price:10000, badge:"POPULAR"
+    },
+    {
+        game:"ZZZ", category:"ENDGAME",
         title:"Battle Trial — 3 Floor",
-        desc:"Clear hingga 3 floor.",
-        price:8000,
-        badge:""
+        desc:"Pengerjaan Battle Trial hingga 5 floor sesuai kondisi akun dan target layanan.",
+        price:10000, badge:""
     },
-
     {
-        game:"ZZZ",
-        category:"ENDGAME",
+        game:"ZZZ", category:"ENDGAME",
         title:"Endgame Combat Event",
-        desc:"Pengerjaan combat event endgame.",
-        price:13000,
-        badge:""
+        desc:"Pengerjaan combat event Annihillation.",
+        price:10000, badge:""
     },
-
     {
-        game:"ZZZ",
-        category:"ENDGAME",
+        game:"ZZZ", category:"ENDGAME",
         title:"Hollow Zero — Max + Full Clear",
-        desc:"Difficulty max dan full clear.",
-        price:13000,
-        badge:""
+        desc:"Pengerjaan Hollow Zero pada difficulty maksimal yang tersedia, dengan target full clear sesuai kemampuan akun.",
+        price:15000, badge:""
     },
-
     {
-        game:"ZZZ",
-        category:"ENDGAME",
+        game:"ZZZ", category:"ENDGAME",
         title:"Event Combat",
-        desc:"Pengerjaan event combat.",
-        price:10000,
-        badge:""
+        desc:"Pengerjaan stage combat event sesuai target customer dan reward yang tersedia.",
+        price:7000, badge:""
     },
 
+    /* ==============================
+       ZZZ — ACCOUNT CARE / FARMING
+    ================================ */
+
     {
-        game:"ZZZ",
-        category:"FARMING",
+        game:"ZZZ", category:"FARMING",
+        title:"Rawat Akun — 1 Patch",
+        desc:"Maintenance akun selama 1 patch: daily utama, Battery/Stamina secara efisien, weekly, farming resource prioritas, event aktif, dan progression rutin sesuai kondisi akun.",
+        price:50000, badge:""
+    },
+    {
+        game:"ZZZ", category:"FARMING",
         title:"Rawat Akun — 2 Patch",
-        desc:"Maintenance account selama 2 patch.",
-        price:15000,
-        badge:""
+        desc:"Maintenance akun selama 2 patch. Mencakup aktivitas rutin, Battery/Stamina, weekly, farming prioritas, event aktif, dan progression yang dapat dilanjutkan antar-patch.",
+        price:75000, badge:"BEST VALUE"
     },
-
     {
-        game:"ZZZ",
-        category:"FARMING",
+        game:"ZZZ", category:"FARMING",
         title:"Rawat Akun VIP — 1 Patch",
-        desc:"All Content Endgame selama 1 patch.",
-        price:28000,
-        badge:"VIP"
+        desc:"Maintenance 1 patch dengan prioritas lebih tinggi: seluruh scope Rawat Akun, event, build/farming optimization, serta endgame seperti Shiyu, Deadly Assault, Hollow Zero, dan combat event sesuai kemampuan akun.",
+        price:85000, badge:"VIP"
     },
-
     {
-        game:"ZZZ",
-        category:"FARMING",
-        title:"Event Farming",
-        desc:"Farming material dari event.",
-        price:8000,
-        badge:""
+        game:"ZZZ", category:"FARMING",
+        title:"Rawat Akun VIP — 2 Patch",
+        desc:"Maintenance VIP selama 2 patch dengan scope rutin + event + progression + build optimization + endgame. Prioritas disesuaikan dengan perkembangan akun setiap patch.",
+        price:135000, badge:"VIP"
     },
-
     {
-        game:"ZZZ",
-        category:"FARMING",
-        title:"Hollow Zero",
-        desc:"Pengerjaan Hollow Zero.",
-        price:8000,
-        badge:""
+        game:"ZZZ", category:"FARMING",
+        title:"Event Pyrois 2 mindscape + signature",
+        desc:"Pengerjaan event khusunya pyrois untuk mendapatkan mindscape dan signature reward.",
+        price:35000, badge:"POPULAR"
     },
-
     {
-        game:"ZZZ",
-        category:"FARMING",
-        title:"Quest",
-        desc:"Pengerjaan quest account.",
-        price:6000,
-        badge:""
+        game:"ZZZ", category:"FARMING",
+        title:"Bonus paket tambahan",
+        desc:"Pengerjaan 2 chapter story dan 5 quest + 2 event combat.",
+        price:17000, badge:"BEST VALUE"
     },
-
     {
-        game:"ZZZ",
-        category:"FARMING",
-        title:"Event",
-        desc:"Pengerjaan event biasa.",
-        price:6000,
-        badge:""
+        game:"ZZZ", category:"FARMING",
+        title:"Bonus paket tambahan",
+        desc:"Mengerjakan 2 chapter story dan 5 quest.",
+        price:10000, badge:""
     },
-
     {
-        game:"ZZZ",
-        category:"FARMING",
+        game:"ZZZ", category:"FARMING",
+        title:"Bonus paket tambahan",
+        desc:"Pengerjaan 2 chapter story dan 2 event combat.",
+        price:7000, badge:""
+    },
+    {
+        game:"ZZZ", category:"FARMING",
         title:"Story — 2 Chapter",
-        desc:"Clear 2 chapter story.",
-        price:8000,
-        badge:""
+        desc:"Penyelesaian 4 chapter story + 5 area combat + 8 quest.",
+        price:25000, badge:"BEST VALUE"
     },
 
+    /* ==============================
+       ZZZ — PULL
+    ================================ */
+
     {
-        game:"ZZZ",
-        category:"PULL",
-        title:"10 Pull",
-        desc:"Joki pull 10 kali.",
-        price:8000,
-        badge:""
+        game:"ZZZ", category:"PULL",
+        title:"10 Pull", desc:"Joki pull hingga 10 kali sesuai resource yang tersedia pada akun.",
+        price:13000, badge:""
+    },
+    {
+        game:"ZZZ", category:"PULL",
+        title:"30 Pull", desc:"Joki pull hingga 30 kali sesuai resource yang tersedia pada akun.",
+        price:33000, badge:""
+    },
+    {
+        game:"ZZZ", category:"PULL",
+        title:"50 Pull", desc:"Joki pull hingga 50 kali sesuai resource yang tersedia pada akun.",
+        price:55000, badge:""
+    },
+    {
+        game:"ZZZ", category:"PULL",
+        title:"100 Pull", desc:"Joki pull hingga 100 kali sesuai resource yang tersedia pada akun. Hasil gacha tetap mengikuti sistem RNG game.",
+        price:100000, badge:"BEST VALUE"
     },
 
+    /* ==============================
+       PGR — ENDGAME / CORE
+    ================================ */
+
     {
-        game:"ZZZ",
-        category:"PULL",
-        title:"30 Pull",
-        desc:"Joki pull 30 kali.",
-        price:22000,
-        badge:""
+        game:"PGR", category:"ENDGAME",
+        title:"War Zone",
+        desc:"Pengerjaan War Zone sesuai target yang disepakati dan kemampuan akun.",
+        price:15000, badge:"POPULAR"
     },
-
     {
-        game:"ZZZ",
-        category:"PULL",
-        title:"50 Pull",
-        desc:"Joki pull 50 kali.",
-        price:35000,
-        badge:""
+        game:"PGR", category:"ENDGAME",
+        title:"Phantom Pain Cage",
+        desc:"Pengerjaan Phantom Pain Cage sesuai kondisi roster dan target layanan. Skor tidak dijamin jika build belum memadai.",
+        price:10000, badge:""
     },
-
     {
-        game:"ZZZ",
-        category:"PULL",
-        title:"100 Pull",
-        desc:"Joki pull 100 kali.",
-        price:65000,
-        badge:"POPULAR"
+        game:"PGR", category:"ENDGAME",
+        title:"Norman Revival Plan",
+        desc:"Progress Norman Revival Plan sesuai stage yang dapat dicapai oleh akun dan target layanan.",
+        price:13000, badge:"BEST VALUE"
     },
-
-    /* PGR EXISTING */
-
     {
-        game:"PGR",
-        category:"ENDGAME",
+        game:"PGR", category:"ENDGAME",
+        title:"Babel Tower",
+        desc:"Pengerjaan Babel Tower sesuai target dan kemampuan roster akun.",
+        price:10000, badge:""
+    },
+    {
+        game:"PGR", category:"ENDGAME",
         title:"PGR Endgame Service",
-        desc:"Layanan pengerjaan content endgame PGR.",
-        price:13000,
-        badge:""
+        desc:"Pengerjaan content endgame PGR yang tersedia dan disepakati sebelum order, dengan hasil menyesuaikan kondisi akun.",
+        price:15000, badge:"BEST VALUE"
     },
 
+    /* ==============================
+       PGR — FARMING / EVENT
+    ================================ */
+
     {
-        game:"PGR",
-        category:"FARMING",
-        title:"PGR Farming Service",
-        desc:"Farming material dan progression.",
-        price:8000,
-        badge:""
+        game:"PGR", category:"FARMING",
+        title:"Derived from matrix",
+        desc:"farming stage DFM dengan /20 levelnya.",
+        price:8000, badge:""
     },
-
     {
-        game:"PGR",
-        category:"FARMING",
-        title:"PGR Event Service",
-        desc:"Pengerjaan event PGR.",
-        price:10000,
-        badge:""
+        game:"PGR", category:"FARMING",
+        title:"Cursed Waves",
+        desc:"Mengerjakan stage event Cursed Waves dengan /20 levelnya.",
+        price:10000, badge:"POPULAR"
     },
-
-    /* PGR NEW */
-
     {
-        game:"PGR",
-        category:"FARMING",
+        game:"PGR", category:"FARMING",
+        title:"Awakening Thundra",
+        desc:"Pengerjaan stage event Awakening thundra dengan /20 levelnya.",
+        price:5000, badge:""
+    },
+    {
+        game:"PGR", category:"FARMING",
         title:"Shrouded Requiem",
-        desc:"Full Clear All Difficulty.",
-        price:20000,
-        badge:"NEW"
+        desc:"Pengerjaan dan clear difficulty yang tersedia sesuai kondisi akun dan target layanan.",
+        price:20000, badge:""
     },
-
     {
-        game:"PGR",
-        category:"FARMING",
+        game:"PGR", category:"FARMING",
         title:"The Goddfall Revelation",
-        desc:"Full Clear All Character Badges.",
-        price:25000,
-        badge:"NEW"
+        desc:"Pengerjaan content dan target Character Badges sesuai akses serta kondisi akun.",
+        price:25000, badge:""
+    },
+    {
+        game:"PGR", category:"FARMING",
+        title:"Recitativo di Fantasia",
+        desc:"Pengerjaan progress dan clear content sesuai target yang disepakati.",
+        price:18000, badge:""
+    },
+    {
+        game:"PGR", category:"FARMING",
+        title:"Story — 2 Chapter",
+        desc:"Penyelesaian hingga 2 chapter story sesuai akses akun. Quest tambahan di luar scope tidak otomatis termasuk.",
+        price:10000, badge:""
+    },
+    {
+        game:"PGR", category:"FARMING",
+        title:"Quest",
+        desc:"Penyelesaian quest yang ditentukan customer sesuai kondisi akun.",
+        price:8000, badge:""
+    },
+    {
+        game:"PGR", category:"FARMING",
+        title:"Event Farming",
+        desc:"Farming reward atau resource event sesuai target selama event masih tersedia.",
+        price:12000, badge:""
     },
 
-    {
-        game:"PGR",
-        category:"FARMING",
-        title:"Recitativo di Fantasia",
-        desc:"Full Clear.",
-        price:18000,
-        badge:"NEW"
-    }
+    /* ==============================
+       PGR — ACCOUNT CARE
+    ================================ */
 
+    {
+        game:"PGR", category:"FARMING",
+        title:"Rawat Akun — 1 Patch",
+        desc:"Maintenance akun selama 1 patch: aktivitas rutin, resource farming prioritas, weekly, event aktif, dan progression sesuai kondisi akun.",
+        price:35000, badge:""
+    },
+    {
+        game:"PGR", category:"FARMING",
+        title:"Rawat Akun — 2 Patch",
+        desc:"Maintenance akun selama 2 patch dengan aktivitas rutin, farming prioritas, weekly, event aktif, dan progression yang dapat dilanjutkan antar-patch.",
+        price:55000, badge:"BEST VALUE"
+    },
+    {
+        game:"PGR", category:"FARMING",
+        title:"Rawat Akun VIP — 1 Patch",
+        desc:"Maintenance VIP 1 patch: seluruh scope Rawat Akun, event, progression, build/farming optimization, serta endgame seperti War Zone, Phantom Pain Cage, Norman Revival Plan, dan Babel Tower sesuai kemampuan akun.",
+        price:75000, badge:"VIP"
+    },
+    {
+        game:"PGR", category:"FARMING",
+        title:"Rawat Akun VIP — 2 Patch",
+        desc:"Maintenance VIP selama 2 patch dengan scope rutin + event + progression + build optimization + endgame, diprioritaskan berdasarkan perkembangan akun.",
+        price:125000, badge:"VIP"
+    },
+    {
+        game:"PGR", category:"FARMING",
+        title:"Rawat Akun VIP — 3 Patch",
+        desc:"Maintenance VIP selama 3 patch dengan scope rutin, event, progression, build optimization, dan endgame sesuai kemampuan akun.",
+        price:140000, badge:"VIP"
+    }
 ];
 
 let cart=[];
-let selectedPayment="DANA";
 let currentOrder=null;
 
 
@@ -3689,47 +3570,57 @@ let currentOrder=null;
 
 let entering=false;
 
+function startBackgroundMusic(){
+    const audio=document.getElementById("bgMusic");
+    const button=document.getElementById("musicToggle");
+    const icon=document.getElementById("musicIcon");
+    if(!audio)return;
+    audio.volume=0.45;
+    const playPromise=audio.play();
+    if(playPromise && typeof playPromise.then==="function"){
+        playPromise.then(()=>{
+            button?.classList.add("playing");
+            if(icon)icon.textContent="♫";
+        }).catch(()=>{});
+    }
+}
+
 function enterStore(){
 
     if(entering)return;
 
     entering=true;
 
-    const title=document.getElementById("entryTitle");
-    const button=document.getElementById("enterButton");
+    /* ENTER STORE is a user gesture; retry audible autoplay here. */
+    startBackgroundMusic();
 
-    /*
-       White Bloom Slash hanya dipicu saat ENTER.
-       Tidak mengubah struktur entrance.
-    */
+    const title=document.getElementById("entryTitle");
+    const fxTitle=title.querySelector(".fx-title");
+    const button=document.getElementById("enterButton");
+    const entry=document.getElementById("entry");
+    const app=document.getElementById("app");
 
     title.classList.remove("slashing");
+    fxTitle.classList.remove("fx-slash");
 
     void title.offsetWidth;
+    void fxTitle.offsetWidth;
 
+    /* Black lightning + slash drives the logo out. */
+    fxTitle.classList.add("fx-slash");
     title.classList.add("slashing");
 
     button.style.pointerEvents="none";
 
     setTimeout(()=>{
-
-        document.getElementById("entry")
-            .classList.add("hide");
-
-        document.getElementById("app")
-            .classList.add("ready");
-
-    },720);
+        entry.classList.add("hide");
+        app.classList.add("ready");
+    },620);
 
     setTimeout(()=>{
-
-        document.getElementById("entry")
-            .style.display="none";
-
+        entry.style.display="none";
         button.style.pointerEvents="auto";
-
         entering=false;
-
     },900);
 
 }
@@ -3761,6 +3652,7 @@ function scrollToId(id){
 function toast(message){
 
     const el=document.getElementById("toast");
+    if(!el)return;
 
     el.textContent=message;
 
@@ -3773,6 +3665,13 @@ function toast(message){
         el.classList.remove("show");
 
     },2200);
+
+}
+
+function openSocial(platform){
+
+    toast("Link "+platform+" belum diisi.");
+    return false;
 
 }
 
@@ -3858,8 +3757,7 @@ function renderPackages(filter="ALL"){
 
     grid.innerHTML=data.map(item=>`
 
-        <article
-            class="package">
+        <article class="package ${item.empty ? "empty-slot" : ""}">
 
             <div class="package-top">
 
@@ -3884,17 +3782,20 @@ function renderPackages(filter="ALL"){
             </p>
 
             <div class="price">
-                ${rupiah(item.price)}
-                <span>/ service</span>
+                ${item.empty ? "—" : rupiah(item.price)}
+                ${item.empty ? "" : `<span>/ service</span>`}
             </div>
 
-            <button
-                class="btn primary"
-                onclick="addToCart(${packages.indexOf(item)})">
-
-                ADD TO ORDER
-
-            </button>
+            ${
+                item.empty
+                ? `<button class="btn" type="button" disabled>COMING SOON</button>`
+                : `<button
+                        class="btn primary"
+                        type="button"
+                        onclick="addToCart(${packages.indexOf(item)})">
+                        ADD TO ORDER
+                   </button>`
+            }
 
         </article>
 
@@ -3903,7 +3804,6 @@ function renderPackages(filter="ALL"){
     initCardSpotlight();
 
 }
-
 function filterCategory(category,button){
 
     document.querySelectorAll(
@@ -3922,16 +3822,18 @@ function filterCategory(category,button){
 
 function filterGame(game){
 
-    scrollToId("services");
-
     renderPackages(game);
 
     document.querySelectorAll(
         ".filter button"
     ).forEach(x=>{
-        x.classList.remove("active");
+        x.classList.toggle(
+            "active",
+            x.textContent.trim()===game
+        );
     });
 
+    scrollToId("services");
     toast(game+" services loaded.");
 
 }
@@ -3944,6 +3846,7 @@ function filterGame(game){
 function initCardSpotlight(){
 
     const grid=document.getElementById("packageGrid");
+    if(!grid)return;
 
     const cards=[
         ...grid.querySelectorAll(".package")
@@ -4084,9 +3987,9 @@ function addSpecial(){
             "Rawat Akun VIP — 3 Patch",
 
         desc:
-            "All Content Endgame selama 3 patch.",
+            "Maintenance VIP selama 3 patch: aktivitas rutin, event, progression, build optimization, dan endgame sesuai kemampuan akun.",
 
-        price:58000,
+        price:150000,
 
         badge:"SPECIAL",
 
@@ -4104,14 +4007,11 @@ function addSpecial(){
 
 function updateCart(){
 
-    document.getElementById(
-        "cartCount"
-    ).textContent=cart.length;
-
-    const container=
-        document.getElementById(
-            "cartItems"
-        );
+    const cartCount=document.getElementById("cartCount");
+    const container=document.getElementById("cartItems");
+    const cartTotal=document.getElementById("cartTotal");
+    if(!container)return;
+    if(cartCount)cartCount.textContent=cart.length;
 
     if(!cart.length){
 
@@ -4175,9 +4075,7 @@ function updateCart(){
             0
         );
 
-    document.getElementById(
-        "cartTotal"
-    ).textContent=rupiah(total);
+    if(cartTotal)cartTotal.textContent=rupiah(total);
 
     updateSummary();
 
@@ -4198,17 +4096,32 @@ function removeFromCart(id){
 
 function openCart(){
 
-    document.getElementById(
-        "cartOverlay"
-    ).classList.add("show");
+    const overlay=document.getElementById("cartOverlay");
+    if(!overlay)return;
+    overlay.classList.add("show");
+
+    document.documentElement.classList.add("cart-open");
+    document.body.classList.add("cart-open");
 
 }
 
-function closeCart(){
+function closeCart(event){
 
-    document.getElementById(
-        "cartOverlay"
-    ).classList.remove("show");
+    const overlay=document.getElementById("cartOverlay");
+    if(!overlay)return;
+
+    if(
+        event &&
+        event.target !== overlay &&
+        event.currentTarget === overlay
+    ){
+        return;
+    }
+
+    overlay.classList.remove("show");
+
+    document.documentElement.classList.remove("cart-open");
+    document.body.classList.remove("cart-open");
 
 }
 
@@ -4227,10 +4140,9 @@ function goCheckout(){
 
 function updateSummary(){
 
-    const summary=
-        document.getElementById(
-            "orderSummary"
-        );
+    const summary=document.getElementById("orderSummary");
+    const orderTotal=document.getElementById("orderTotal");
+    if(!summary)return;
 
     if(!cart.length){
 
@@ -4286,212 +4198,78 @@ function updateSummary(){
             0
         );
 
-    document.getElementById(
-        "orderTotal"
-    ).textContent=rupiah(total);
-
-    document.getElementById(
-        "paymentAmount"
-    ).textContent=rupiah(total);
+    if(orderTotal)orderTotal.textContent=rupiah(total);
 
 }
 
 
 /* ==============================
-   CREATE ORDER
+   CHAT ORDER
 ================================ */
+
+const ADMIN_WHATSAPP = "";
+// Isi dengan nomor WhatsApp admin format internasional, tanpa + atau spasi.
 
 function createOrder(){
 
     if(!cart.length){
-
-        toast(
-            "Pilih minimal satu layanan."
-        );
-
+        toast("Pilih minimal satu layanan.");
         return;
-
     }
 
-    const name=
-        document.getElementById(
-            "customerName"
-        ).value.trim();
-
-    const wa=
-        document.getElementById(
-            "customerWA"
-        ).value.trim();
+    const name=document.getElementById("customerName")?.value.trim();
+    const wa=document.getElementById("customerWA")?.value.trim();
+    const payment=document.getElementById("customerPayment")?.value || "Belum menentukan";
+    const note=document.getElementById("customerNote")?.value.trim() || "-";
 
     if(!name || !wa){
-
-        toast(
-            "Isi nama dan WhatsApp."
-        );
-
+        toast("Isi nama dan WhatsApp.");
         return;
-
     }
 
-    const random=
-        Math.floor(
-            1000+
-            Math.random()*8999
-        );
+    const random=Math.floor(1000+Math.random()*9000);
+    const total=cart.reduce((sum,item)=>sum+item.price,0);
 
     currentOrder={
-
         id:"FXNZZ-"+random,
-
-        name:name,
-
-        wa:wa,
-
-        note:
-            document.getElementById(
-                "customerNote"
-            ).value,
-
-        total:
-            cart.reduce(
-                (sum,item)=>sum+item.price,
-                0
-            ),
-
+        name,
+        wa,
+        payment,
+        note,
+        total,
         status:0
-
     };
 
-    document.getElementById(
-        "paymentOrderId"
-    ).textContent=currentOrder.id;
+    const items=cart.map((item,i)=>
+        `${i+1}. ${item.game} — ${item.title} — ${rupiah(item.price)}`
+    ).join("%0A");
 
-    document.getElementById(
-        "trackerId"
-    ).textContent=currentOrder.id;
+    const message=
+        `Halo Admin FXNZZ STORE,%0A%0A`+
+        `Saya ingin order.%0A`+
+        `Order ID: ${encodeURIComponent(currentOrder.id)}%0A`+
+        `Nama: ${encodeURIComponent(name)}%0A`+
+        `WhatsApp: ${encodeURIComponent(wa)}%0A%0A`+
+        `Layanan:%0A${items}%0A%0A`+
+        `Total: ${encodeURIComponent(rupiah(total))}%0A`+
+        `Preferensi pembayaran: ${encodeURIComponent(payment)}%0A`+
+        `Catatan: ${encodeURIComponent(note)}%0A%0A`+
+        `Mohon konfirmasi order dan instruksi pembayaran.`;
 
-    document.getElementById(
-        "paymentStatus"
-    ).textContent="WAITING";
-
-    toast(
-        "Order dibuat."
-    );
-
-    scrollToId("payment");
-
-}
-
-
-/* ==============================
-   PAYMENT
-================================ */
-
-function selectPayment(
-    method,
-    element
-){
-
-    selectedPayment=method;
-
-    document.querySelectorAll(
-        ".payment-method"
-    ).forEach(x=>{
-        x.classList.remove("active");
-    });
-
-    element.classList.add("active");
-
-    document.getElementById(
-        "selectedPayment"
-    ).textContent=method;
-
-    const description=
-        document.getElementById(
-            "paymentDescription"
-        );
-
-    const qr=
-        document.getElementById(
-            "fakeQR"
-        );
-
-    if(method==="QRIS"){
-
-        description.textContent=
-            "Scan QRIS untuk menyelesaikan pembayaran.";
-
-        qr.style.display="block";
-
+    if(ADMIN_WHATSAPP.trim()){
+        window.open(`https://wa.me/${ADMIN_WHATSAPP.replace(/\D/g,"")}?text=${message}`,"_blank","noopener,noreferrer");
     }else{
-
-        qr.style.display="none";
-
-        description.textContent=
-            method+
-            " payment wallet simulation.";
-
+        window.open(`https://wa.me/?text=${message}`,"_blank","noopener,noreferrer");
+        toast("WhatsApp dibuka. Isi nomor admin di ADMIN_WHATSAPP untuk direct chat.");
     }
 
-    toast(
-        method+" dipilih."
-    );
+    const trackerId=document.getElementById("trackerId");
+    const trackerStatus=document.getElementById("trackerStatus");
+    if(trackerId)trackerId.textContent=currentOrder.id;
+    if(trackerStatus)trackerStatus.textContent="WAITING FOR ADMIN";
 
-}
-
-function simulatePayment(){
-
-    if(!currentOrder){
-
-        toast(
-            "Buat order terlebih dahulu."
-        );
-
-        return;
-
-    }
-
-    document.getElementById(
-        "paymentStatus"
-    ).textContent="PROCESSING";
-
-    toast(
-        "Memproses pembayaran..."
-    );
-
-    setTimeout(()=>{
-
-        document.getElementById(
-            "paymentStatus"
-        ).textContent="PAID";
-
-        document.getElementById(
-            "paymentStatus"
-        ).style.color=
-            "var(--good)";
-
-        currentOrder.status=1;
-
-        updateTracker(1);
-
-        toast(
-            "Pembayaran berhasil."
-        );
-
-        setTimeout(()=>{
-            updateTracker(2);
-        },1500);
-
-        setTimeout(()=>{
-            updateTracker(3);
-        },3500);
-
-        setTimeout(()=>{
-            updateTracker(4);
-        },5500);
-
-    },1800);
-
+    updateTracker(0);
+    scrollToId("status");
 }
 
 
@@ -4507,6 +4285,8 @@ function updateTracker(level){
             document.getElementById(
                 "step"+i
             );
+
+        if(!step)continue;
 
         if(i<=level+1){
 
@@ -4565,147 +4345,8 @@ function toggleFAQ(button){
 
 
 /* ==============================
-   COUNTERS
-================================ */
-
-function runCounters(){
-
-    document.querySelectorAll(
-        ".counter"
-    ).forEach(counter=>{
-
-        const target=
-            Number(counter.dataset.target);
-
-        let value=0;
-
-        const step=
-            Math.max(
-                1,
-                Math.ceil(target/60)
-            );
-
-        const timer=
-            setInterval(()=>{
-
-                value+=step;
-
-                if(value>=target){
-
-                    value=target;
-
-                    clearInterval(timer);
-
-                }
-
-                counter.textContent=
-                    value.toLocaleString(
-                        "id-ID"
-                    );
-
-            },20);
-
-    });
-
-}
-
-
-/* ==============================
-   LIVE SIMULATION
-================================ */
-
-function liveSimulation(){
-
-    const activity=
-        document.querySelector(
-            ".activity-list"
-        );
-
-    if(!activity)return;
-
-    const services=[
-
-        "Event Farming",
-        "10 Pull",
-        "Hollow Zero",
-        "Shiyu Defense",
-        "PGR Farming Service",
-        "Shrouded Requiem",
-        "Recitativo di Fantasia"
-
-    ];
-
-    setInterval(()=>{
-
-        const service=
-            services[
-                Math.floor(
-                    Math.random()*
-                    services.length
-                )
-            ];
-
-        const game=
-            service.includes("PGR") ||
-            service.includes("Shrouded") ||
-            service.includes("Recitativo")
-            ? "PGR"
-            : "ZZZ";
-
-        const item=
-            document.createElement(
-                "div"
-            );
-
-        item.className=
-            "activity-item";
-
-        item.innerHTML=`
-
-            <div class="activity-left">
-
-                <div class="activity-icon">
-                    ${game}
-                </div>
-
-                <div>
-
-                    <strong>
-                        ${service}
-                    </strong>
-
-                    <small>
-                        Just now
-                    </small>
-
-                </div>
-
-            </div>
-
-            <div class="activity-price">
-                NEW
-            </div>
-
-        `;
-
-        activity.prepend(item);
-
-        while(
-            activity.children.length>4
-        ){
-
-            activity.lastElementChild.remove();
-
-        }
-
-    },9000);
-
-}
-
-
-/* ==============================
    ACTIVE NAV INDICATOR
-============================== */
+================================ */
 
 function updateNavIndicator(){
 
@@ -4787,16 +4428,47 @@ window.addEventListener(
 
 
 /* ==============================
+   SCROLL / MODAL SAFETY
+================================ */
+
+function releaseScrollLock(){
+
+    document.documentElement.classList.remove("cart-open");
+    document.body.classList.remove("cart-open");
+
+}
+
+window.addEventListener("pageshow",releaseScrollLock);
+
+document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible"){
+        releaseScrollLock();
+    }
+});
+
+
+/* ==============================
+   ADMIN CHAT
+================================ */
+
+function openAdminChat(){
+    const text=encodeURIComponent("Halo Admin FXNZZ STORE, saya ingin bertanya mengenai layanan.");
+    if(ADMIN_WHATSAPP.trim()){
+        window.open(`https://wa.me/${ADMIN_WHATSAPP.replace(/\D/g,"")}?text=${text}`,"_blank","noopener,noreferrer");
+    }else{
+        window.open(`https://wa.me/?text=${text}`,"_blank","noopener,noreferrer");
+        toast("Isi ADMIN_WHATSAPP untuk direct chat admin.");
+    }
+}
+
+
+/* ==============================
    INIT
 ================================ */
 
 renderPackages();
 
 updateCart();
-
-runCounters();
-
-liveSimulation();
 
 initMagneticButtons();
 
@@ -4805,6 +4477,44 @@ setTimeout(
     100
 );
 
+
+/* ==============================
+   BACKGROUND MUSIC
+   fxnzz.mp3 harus berada di folder yang sama dengan HTML.
+   Autoplay dicoba saat load dan diulang saat ENTER STORE,
+   karena browser dapat memblokir audio bersuara sebelum user gesture.
+================================ */
+function toggleMusic(){
+    const audio=document.getElementById("bgMusic");
+    const button=document.getElementById("musicToggle");
+    const icon=document.getElementById("musicIcon");
+    if(!audio)return;
+
+    if(audio.paused){
+        const playPromise=audio.play();
+        if(playPromise && typeof playPromise.then==="function"){
+            playPromise.then(()=>{
+                button?.classList.add("playing");
+                if(icon)icon.textContent="♫";
+            }).catch(()=>{});
+        }
+    }else{
+        audio.pause();
+        button?.classList.remove("playing");
+        if(icon)icon.textContent="♫";
+    }
+}
+
+window.addEventListener("DOMContentLoaded",()=>{
+    const audio=document.getElementById("bgMusic");
+    if(!audio)return;
+
+    audio.addEventListener("error",()=>{
+        toast("File fxnzz.mp3 tidak ditemukan atau gagal dimuat.");
+    },{once:true});
+
+    startBackgroundMusic();
+});
 </script>
 
 </body>
