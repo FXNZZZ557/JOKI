@@ -671,10 +671,13 @@ body::after{
 ========================= */
 
 .nav{
-    position:sticky;
+    position:fixed;
     top:0;
-    z-index:100;
+    left:0;
+    right:0;
+    z-index:1000;
     height:72px;
+    box-sizing:border-box;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -778,10 +781,50 @@ body::after{
 main{
     width:min(1400px,90%);
     margin:auto;
+    padding-top:72px;
 }
 
 section{
     padding:90px 0;
+    scroll-margin-top:88px;
+}
+
+/* Floating cart: checkout stays reachable from every scroll position. */
+.floating-cart{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    z-index:1100;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 18px;
+    border:1px solid rgba(255,45,114,.48);
+    border-radius:15px;
+    color:#fff;
+    background:linear-gradient(135deg,rgba(255,45,114,.96),rgba(123,44,255,.94));
+    box-shadow:0 12px 36px rgba(0,0,0,.4),0 0 22px rgba(255,45,114,.18);
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.7px;
+    cursor:pointer;
+    transition:transform .2s ease,box-shadow .2s ease;
+}
+.floating-cart:hover{
+    transform:translateY(-3px);
+    box-shadow:0 16px 42px rgba(0,0,0,.46),0 0 28px rgba(255,45,114,.25);
+}
+.floating-cart-count{
+    display:grid;
+    place-items:center;
+    min-width:22px;
+    height:22px;
+    padding:0 5px;
+    border-radius:50px;
+    background:#fff;
+    color:#151018;
+    font-size:11px;
+    font-weight:900;
 }
 
 .hero{
@@ -818,8 +861,18 @@ section{
     color:transparent;
 }
 
+.hero-hook{
+    margin-top:17px;
+    max-width:610px;
+    color:#f4f0f4;
+    font-size:clamp(15px,1.6vw,19px);
+    line-height:1.55;
+    font-weight:750;
+    letter-spacing:-.25px;
+}
+
 .hero-text{
-    margin-top:24px;
+    margin-top:12px;
     max-width:630px;
     color:var(--muted);
     line-height:1.8;
@@ -1810,6 +1863,16 @@ body.cart-open{
 @media(max-width:650px){
     .nav{
         padding:0 12px;
+        height:64px;
+    }
+    main{padding-top:64px;}
+    section{scroll-margin-top:76px;}
+    .floating-cart{
+        right:12px;
+        bottom:calc(12px + env(safe-area-inset-bottom, 0px));
+        padding:12px 14px;
+        border-radius:13px;
+        font-size:11px;
     }
     .brand{
         font-size:12px;
@@ -2173,6 +2236,74 @@ body.cart-open{
     }
 }
 
+
+/* =========================
+   TEAM / MODULE STATUS / CHANGELOG
+========================= */
+.team-grid,.module-grid,.changelog-list{
+    display:grid;
+    gap:14px;
+}
+.team-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.team-card{
+    position:relative;overflow:hidden;padding:24px;
+    border:1px solid var(--line);border-radius:20px;
+    background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.02));
+}
+.team-card.owner{
+    border-color:rgba(255,45,114,.36);
+    background:radial-gradient(circle at 100% 0,rgba(255,45,114,.14),transparent 46%),var(--panel);
+}
+.team-card.worker{
+    border-color:rgba(168,85,247,.25);
+    background:radial-gradient(circle at 100% 0,rgba(168,85,247,.12),transparent 46%),var(--panel);
+}
+.team-role{
+    display:inline-flex;align-items:center;gap:7px;
+    padding:6px 9px;border-radius:8px;margin-bottom:16px;
+    font-size:9px;font-weight:900;letter-spacing:1.2px;
+    color:#ff9ab8;background:rgba(255,45,114,.1);
+    border:1px solid rgba(255,45,114,.2);
+}
+.team-card.worker .team-role{
+    color:#d4a7ff;background:rgba(168,85,247,.1);
+    border-color:rgba(168,85,247,.25);
+}
+.team-card h3{font-size:24px;letter-spacing:-.6px}
+.team-card p{margin-top:9px;color:var(--muted);font-size:13px;line-height:1.7}
+.team-specialty{
+    margin-top:17px;padding-top:14px;border-top:1px solid var(--line);
+    color:#ddd;font-size:11px;line-height:1.6;
+}
+.module-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.module-card{
+    padding:17px;border:1px solid var(--line);border-radius:15px;background:var(--panel);
+}
+.module-card strong{display:block;font-size:13px;margin-bottom:8px}
+.module-card p{color:var(--muted);font-size:11px;line-height:1.55}
+.module-status{
+    display:inline-flex;padding:5px 8px;border-radius:7px;margin-bottom:12px;
+    font-size:9px;font-weight:900;letter-spacing:.7px;
+}
+.module-status.active{color:#79edbb;background:rgba(53,230,154,.09);border:1px solid rgba(53,230,154,.2)}
+.module-status.dev{color:#ffd27c;background:rgba(255,200,87,.09);border:1px solid rgba(255,200,87,.2)}
+.module-status.soon{color:#c9a0ff;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2)}
+.changelog-list{grid-template-columns:1fr}
+.change-item{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.change-date{color:#ff83a6;font-size:11px;font-weight:800}
+.change-item strong{font-size:12px}
+.change-item p{margin-top:5px;color:var(--muted);font-size:11px;line-height:1.6}
+.config-note{margin-top:15px;padding:16px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025);color:var(--muted);font-size:11px;line-height:1.7}
+@media(max-width:950px){
+    .team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:650px){
+    .team-grid,.module-grid{grid-template-columns:1fr}
+    .team-card{padding:19px}
+    .change-item{grid-template-columns:1fr;gap:5px}
+}
+
 </style>
 </head>
 
@@ -2257,6 +2388,18 @@ body.cart-open{
         </button>
 
         <button
+            data-section="team"
+            onclick="scrollToId('team')">
+            Team
+        </button>
+
+        <button
+            data-section="changelog"
+            onclick="scrollToId('changelog')">
+            Changelog
+        </button>
+
+        <button
             data-section="order"
             onclick="scrollToId('order')">
             Order
@@ -2304,6 +2447,12 @@ body.cart-open{
 
 </nav>
 
+<button class="floating-cart" type="button" onclick="openCart()" aria-label="Open shopping cart">
+    <span aria-hidden="true">▣</span>
+    <span>OPEN CART</span>
+    <span class="floating-cart-count" id="floatingCartCount">0</span>
+</button>
+
 <main>
 
 <!-- =========================
@@ -2324,6 +2473,10 @@ body.cart-open{
             Your account.<br>
             Our <span>grind.</span>
         </h2>
+
+        <p class="hero-hook">
+            Clear targets. Careful execution. Progress with purpose.
+        </p>
 
         <p class="hero-text">
             Pilih layanan gaming yang lu butuhkan tanpa
@@ -2475,6 +2628,89 @@ body.cart-open{
 
     </div>
 
+</section>
+
+<!-- =========================
+     FXNZZ TEAM & OPERATIONS
+========================= -->
+<section id="team">
+    <div class="section-head">
+        <div>
+            <div class="eyebrow">PEOPLE BEHIND FXNZZ</div>
+            <h2>Team &amp; Operations</h2>
+        </div>
+        <p>Identitas tim ditampilkan secara jelas. Spesialisasi worker membantu customer mengetahui fokus pengerjaan setiap game.</p>
+    </div>
+
+    <div class="team-grid">
+        <article class="team-card owner">
+            <div class="team-role">◆ OWNER / FOUNDER</div>
+            <h3>FXNZZZ</h3>
+            <p>Pemilik FXNZZ STORE dan penanggung jawab arah layanan, operasional, serta koordinasi tim.</p>
+            <div class="team-specialty">ROLE <strong>Owner FXNZZZ</strong></div>
+        </article>
+        <article class="team-card worker">
+            <div class="team-role">✦ SPECIALIST WORKER</div>
+            <h3>DEON</h3>
+            <p>Worker dengan fokus layanan <strong>Punishing: Gray Raven</strong>.</p>
+            <div class="team-specialty">SPECIALTY <strong>PGR — Punishing: Gray Raven</strong></div>
+        </article>
+        <article class="team-card worker">
+            <div class="team-role">✦ SPECIALIST WORKER</div>
+            <h3>MR PARIZ</h3>
+            <p>Worker dengan fokus layanan <strong>Zenless Zone Zero</strong>.</p>
+            <div class="team-specialty">SPECIALTY <strong>ZZZ — Zenless Zone Zero</strong></div>
+        </article>
+    </div>
+</section>
+
+<section id="operations">
+    <div class="section-head">
+        <div>
+            <div class="eyebrow">SYSTEM OVERVIEW</div>
+            <h2>Module Status</h2>
+        </div>
+        <p>Status ditulis sesuai fungsi yang tersedia saat ini agar fitur simulasi tidak disalahartikan sebagai sistem backend realtime.</p>
+    </div>
+    <div class="module-grid">
+        <article class="module-card">
+            <span class="module-status active">ACTIVE</span>
+            <strong>Service Catalog</strong>
+            <p>Daftar layanan dan harga tersedia di halaman store.</p>
+        </article>
+        <article class="module-card">
+            <span class="module-status active">ACTIVE</span>
+            <strong>Cart &amp; WhatsApp Order</strong>
+            <p>Pilih paket, rangkum order, lalu lanjutkan detail melalui chat WhatsApp.</p>
+        </article>
+        <article class="module-card">
+            <span class="module-status dev">IN DEVELOPMENT</span>
+            <strong>Live Order Tracker</strong>
+            <p>Tracker di halaman ini belum terhubung ke database atau update order realtime.</p>
+        </article>
+        <article class="module-card">
+            <span class="module-status dev">IN DEVELOPMENT</span>
+            <strong>FXNZZ OS</strong>
+            <p>Lapisan operasional internal akan dikembangkan terpisah dari checkout publik.</p>
+        </article>
+    </div>
+</section>
+
+<section id="changelog">
+    <div class="section-head">
+        <div>
+            <div class="eyebrow">MAINTENANCE LOG</div>
+            <h2>Changelog</h2>
+        </div>
+        <p>Catatan perubahan manual, urut dari yang terbaru.</p>
+    </div>
+    <div class="changelog-list">
+        <article class="change-item">
+            <div class="change-date">2026-10-15</div>
+            <div><strong>Sticky checkout, package presets &amp; service hook</strong><p>Adjustment harga dan mengupgrade otoritas website. stay tunes.</p></div>
+        </article>
+    </div>
+    <div class="config-note"><strong style="color:#ddd">Update sederhana:</strong> paket reguler dan harga dikelola di array <code>packages</code>. Tujuh preset paket custom ada di <code>packageTemplates</code>; ubah nama dan deskripsinya di satu daftar itu tanpa menyalin struktur object. Preset custom mengarahkan customer ke admin untuk konfirmasi harga. Situs ini belum memakai database/backend.</div>
 </section>
 
 <!-- =========================
@@ -2738,8 +2974,7 @@ body.cart-open{
         </div>
 
         <p>
-            Progress tracker ini nantinya dapat membaca
-            status order langsung dari database.
+            Tracker saat ini merupakan tampilan progres contoh dan belum tersambung ke database atau status order realtime.
         </p>
 
     </div>
@@ -2763,7 +2998,7 @@ body.cart-open{
                 <h3
                     id="trackerId"
                     style="margin:5px 0 0">
-                    FXNZZ-DEMO
+                    TRACKER-IN-DEV
                 </h3>
 
             </div>
@@ -2780,7 +3015,7 @@ body.cart-open{
                         margin:5px 0 0;
                         color:var(--warning);
                     ">
-                    WAITING
+                    IN DEVELOPMENT
                 </h3>
 
             </div>
@@ -2790,7 +3025,7 @@ body.cart-open{
         <div class="tracker">
 
             <div
-                class="step done"
+                class="step"
                 id="step1">
 
                 <div class="step-dot">
@@ -2876,11 +3111,11 @@ body.cart-open{
         <div>
 
             <div class="eyebrow">
-                CUSTOMER FEEDBACK
+                SERVICE COMMITMENT
             </div>
 
             <h2>
-                Testimonials
+                Komitmen Layanan
             </h2>
 
         </div>
@@ -2891,18 +3126,13 @@ body.cart-open{
 
         <div class="testimonial">
 
-            <div class="stars">
-                ★★★★★
-            </div>
-
             <p>
-                Pengerjaan sesuai request. Status order
-                juga jelas, jadi gak perlu spam admin.
+                Scope layanan dan target pengerjaan dikonfirmasi sebelum order dimulai.
             </p>
 
             <div class="user">
                 <strong>
-                    Anonymous
+                    FXNZZ STORE
                 </strong>
 
                 <span>
@@ -2914,18 +3144,13 @@ body.cart-open{
 
         <div class="testimonial">
 
-            <div class="stars">
-                ★★★★★
-            </div>
-
             <p>
-                Order simple dan prosesnya gampang dipahami.
-                Yang paling berguna bagian tracker-nya.
+                Customer dapat menghubungi admin untuk konfirmasi paket dan progres pengerjaan.
             </p>
 
             <div class="user">
                 <strong>
-                    Anonymous
+                    FXNZZ STORE
                 </strong>
 
                 <span>
@@ -2937,18 +3162,13 @@ body.cart-open{
 
         <div class="testimonial">
 
-            <div class="stars">
-                ★★★★★
-            </div>
-
             <p>
-                Harga paket jelas dari awal. Tinggal pilih,
-                checkout, lalu tunggu status selesai.
+                Harga paket ditampilkan sebelum checkout. Hasil pengerjaan mengikuti kondisi akun dan target yang disepakati.
             </p>
 
             <div class="user">
                 <strong>
-                    Anonymous
+                    FXNZZ STORE
                 </strong>
 
                 <span>
@@ -3043,9 +3263,7 @@ body.cart-open{
             </button>
 
             <div class="faq-a">
-                Prototype ini hanya mensimulasikan payment flow.
-                Payment gateway asli membutuhkan backend dan provider
-                pembayaran pada tahap production.
+                Pembayaran dikonfirmasi langsung bersama admin. Website ini belum memproses pembayaran otomatis atau terhubung ke payment gateway.
             </div>
 
         </div>
@@ -3065,9 +3283,7 @@ body.cart-open{
             </button>
 
             <div class="faq-a">
-                Belum. Dashboard saat ini menggunakan data dummy.
-                Struktur UI dibuat agar nantinya mudah dihubungkan
-                ke Firebase atau backend sendiri.
+                Belum. Tracker pada website ini belum terhubung ke database dan tidak menampilkan pembaruan order secara realtime.
             </div>
 
         </div>
@@ -3127,22 +3343,22 @@ body.cart-open{
         <div class="support-card">
 
             <div class="eyebrow">
-                DISCORD
+                FXNZZ TEAM
             </div>
 
             <h3>
-                Join Community
+                Kenali Tim Kami
             </h3>
 
             <p>
-                Discord dapat digunakan sebagai channel komunitas,
-                update store, dan support tambahan.
+                Lihat owner dan spesialis worker berdasarkan game untuk mengetahui fokus layanan FXNZZ STORE.
             </p>
 
             <button
                 class="btn magnetic"
-                style="margin-top:18px">
-                OPEN DISCORD
+                style="margin-top:18px"
+                onclick="scrollToId('team')">
+                LIHAT TIM FXNZZ
             </button>
 
         </div>
@@ -3162,7 +3378,7 @@ body.cart-open{
 
         <br>
 
-        Gaming service prototype.
+        Gaming service untuk Zenless Zone Zero &amp; Punishing: Gray Raven.
     </div>
 
     <div>
@@ -3177,35 +3393,32 @@ body.cart-open{
         <div class="social-links">
             <a
                 class="social-link"
-                href="#"
+                href="https://www.tiktok.com/@fxnzzz_store"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="TikTok FXNZZ STORE"
-                onclick="return openSocial('TikTok')">
+                aria-label="TikTok FXNZZ STORE">
                 <b>TikTok</b>
-                <small>@YOUR_TIKTOK</small>
+                <small>@fxnzzz_store</small>
             </a>
 
             <a
                 class="social-link"
-                href="#"
+                href="https://www.instagram.com/fxnzz_storee/"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram FXNZZ STORE"
-                onclick="return openSocial('Instagram')">
+                aria-label="Instagram FXNZZ STORE">
                 <b>Instagram</b>
-                <small>@YOUR_INSTAGRAM</small>
+                <small>@fxnzz_storee</small>
             </a>
 
             <a
                 class="social-link"
-                href="#"
+                href="https://saweria.co/Feynsan"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Facebook FXNZZ STORE"
-                onclick="return openSocial('Facebook')">
-                <b>Facebook</b>
-                <small>YOUR_FACEBOOK</small>
+                aria-label="Saweria FXNZZ STORE">
+                <b>Saweria</b>
+                <small>saweria.co/Feynsan</small>
             </a>
         </div>
 
@@ -3238,6 +3451,10 @@ body.cart-open{
     <button onclick="scrollToId('status')">
         <span>◌</span>
         STATUS
+    </button>
+    <button onclick="scrollToId('team')">
+        <span>✦</span>
+        TEAM
     </button>
 
 </div>
@@ -3312,14 +3529,14 @@ const packages = [
     {
         game:"ZZZ", category:"ENDGAME",
         title:"Shiyu Defense — 3 STAR/Full Clear",
-        desc:"Pengerjaan Shiyu Defense sampai target clear yang disepakati. Hasil clear bergantung pada roster, build, dan kondisi akun.",
+        desc:"Shiyu defense mulai dari per 3 stage sampai target clear yang disepakati. Hasil clear bergantung pada roster, build, dan kondisi akun.",
         price:10000, badge:""
     },
     {
         game:"ZZZ", category:"ENDGAME",
         title:"Deadly Assault — 3 STAR/Full Clear",
-        desc:"Pengerjaan Deadly Assault sesuai kemampuan akun dan target yang disepakati. Tidak menjamin skor tertentu jika akun belum memenuhi syarat.",
-        price:12000, badge:"POPULAR"
+        desc:"Pengerjaan Deadly Assault mulai dari per bintang dan target yang disepakati. Tidak menjamin skor tertentu jika akun belum memenuhi syarat.",
+        price:17000, badge:"POPULAR"
     },
     {
         game:"ZZZ", category:"ENDGAME",
@@ -3329,15 +3546,15 @@ const packages = [
     },
     {
         game:"ZZZ", category:"ENDGAME",
-        title:"Endgame Combat Event",
-        desc:"Pengerjaan combat event Annihillation.",
-        price:10000, badge:""
+        title:"Operation bagel",
+        desc:"Pengerjaan tergantung zona mana yang harus di konfirmasi. jika memilih zona easy/medium, negosiasi diperbolehkan.",
+        price:45000, badge:"BEST VALUE"
     },
     {
         game:"ZZZ", category:"ENDGAME",
-        title:"Hollow Zero — Max + Full Clear",
-        desc:"Pengerjaan Hollow Zero pada difficulty maksimal yang tersedia, dengan target full clear sesuai kemampuan akun.",
-        price:18000, badge:""
+        title:"Hollow Zero — per difficulty",
+        desc:"Pengerjaan Hollow Zero memberikan per 3 difficulty hingga maksimal, dengan target full clear sesuai kemampuan akun.",
+        price:5000, badge:""
     },
     {
         game:"ZZZ", category:"ENDGAME",
@@ -3354,31 +3571,31 @@ const packages = [
         game:"ZZZ", category:"FARMING",
         title:"Rawat Akun — 1 Patch",
         desc:"Maintenance akun selama 1 patch: daily utama, Battery/Stamina secara efisien, weekly, farming resource prioritas, event aktif, dan progression rutin sesuai kondisi akun.",
-        price:65000, badge:""
+        price:55000, badge:""
     },
     {
         game:"ZZZ", category:"FARMING",
         title:"Rawat Akun — 2 Patch",
         desc:"Maintenance akun selama 2 patch. Mencakup aktivitas rutin, Battery/Stamina, weekly, farming prioritas, event aktif, dan progression yang dapat dilanjutkan antar-patch.",
-        price:110000, badge:"BEST VALUE"
+        price:75000, badge:"BEST VALUE"
     },
     {
         game:"ZZZ", category:"FARMING",
         title:"Rawat Akun VIP — 1 Patch",
         desc:"Maintenance 1 patch dengan prioritas lebih tinggi: seluruh scope Rawat Akun, event, build/farming optimization, serta endgame seperti Shiyu, Deadly Assault, Hollow Zero, dan combat event sesuai kemampuan akun.",
-        price:85000, badge:"VIP"
+        price:95000, badge:"VIP"
     },
     {
         game:"ZZZ", category:"FARMING",
         title:"Rawat Akun VIP — 2 Patch",
         desc:"Maintenance VIP selama 2 patch dengan scope rutin + event + progression + build optimization + endgame. Prioritas disesuaikan dengan perkembangan akun setiap patch.",
-        price:135000, badge:"VIP"
+        price:140000, badge:"VIP"
     },
     {
         game:"ZZZ", category:"FARMING",
-        title:"Event Pyrois 2 mindscape + signature",
+        title:"ZZZ STORY",
         desc:"Pengerjaan event khusunya pyrois untuk mendapatkan mindscape dan signature reward.",
-        price:35000, badge:"POPULAR"
+        price:7500, badge:"POPULAR"
     },
     {
         game:"ZZZ", category:"FARMING",
@@ -3412,22 +3629,22 @@ const packages = [
     {
         game:"ZZZ", category:"PULL",
         title:"10 Pull", desc:"Joki pull hingga 10 kali sesuai resource yang tersedia pada akun.",
-        price:13000, badge:""
+        price:15000, badge:""
     },
     {
         game:"ZZZ", category:"PULL",
         title:"30 Pull", desc:"Joki pull hingga 30 kali sesuai resource yang tersedia pada akun.",
-        price:33000, badge:""
+        price:36000, badge:"BEST VALUE"
     },
     {
         game:"ZZZ", category:"PULL",
         title:"50 Pull", desc:"Joki pull hingga 50 kali sesuai resource yang tersedia pada akun.",
-        price:55000, badge:""
+        price:58000, badge:""
     },
     {
         game:"ZZZ", category:"PULL",
         title:"100 Pull", desc:"Joki pull hingga 100 kali sesuai resource yang tersedia pada akun. Hasil gacha tetap mengikuti sistem RNG game.",
-        price:140000, badge:"BEST VALUE"
+        price:145000, badge:"BEST VALUE"
     },
 
     /* ==============================
@@ -3438,7 +3655,7 @@ const packages = [
         game:"PGR", category:"ENDGAME",
         title:"War Zone",
         desc:"Pengerjaan War Zone sesuai target yang disepakati dan kemampuan akun.",
-        price:10000, badge:"POPULAR"
+        price:15000, badge:"POPULAR"
     },
     {
         game:"PGR", category:"ENDGAME",
@@ -3454,15 +3671,15 @@ const packages = [
     },
     {
         game:"PGR", category:"ENDGAME",
-        title:"Babel Tower",
+        title:"Weekly basic",
         desc:"Pengerjaan Babel Tower sesuai target dan kemampuan roster akun.",
-        price:10000, badge:""
+        price:23000, badge:""
     },
     {
         game:"PGR", category:"ENDGAME",
-        title:"PGR STRONGHOLD STAGE",
-        desc:"Pengerjaan STRONGHOLD PGR yang tersedia dan disepakati sebelum order, dengan hasil menyesuaikan kondisi akun.",
-        price:4000, badge:"BEST VALUE"
+        title:"Weekly VIP",
+        desc:"Pengerjaan content endgame PGR yang tersedia dan disepakati sebelum order, dengan hasil menyesuaikan kondisi akun.",
+        price:32000, badge:"BEST VALUE"
     },
 
     /* ==============================
@@ -3507,15 +3724,15 @@ const packages = [
     },
     {
         game:"PGR", category:"FARMING",
-        title:"WEEKLY",
-        desc:"Joki weekly casual.",
-        price:20000, badge:""
+        title:"Story — 2 Chapter",
+        desc:"Penyelesaian hingga 2 chapter story sesuai akses akun. Quest tambahan di luar scope tidak otomatis termasuk.",
+        price:6000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
-        title:"Weekly VIP",
-        desc:"JOKI WEEKLY MALDING,ALL CONTENT.",
-        price:40000, badge:"BEST VALUE"
+        title:"Stronghold",
+        desc:"Penyelesaian stronghold per 3 stage yang ditentukan customer sesuai kondisi akun.",
+        price:8000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
@@ -3556,9 +3773,32 @@ const packages = [
         game:"PGR", category:"FARMING",
         title:"Rawat Akun VIP — 3 Patch",
         desc:"Maintenance VIP selama 3 patch dengan scope rutin, event, progression, build optimization, dan endgame sesuai kemampuan akun.",
-        price:140000, badge:"VIP"
+        price:165000, badge:"VIP"
     }
 ];
+
+/* =========================================================
+   7 QUICK-EDIT PACKAGE PRESETS
+   Ubah teks di bawah ini saja untuk menyesuaikan template.
+   Struktur object dikelola oleh makePackageTemplate(), jadi
+   tidak perlu menyalin ulang format package setiap kali.
+   Paket preset memakai sistem penawaran harga via admin.
+========================================================= */
+const makePackageTemplate = (game, category, title, desc, badge="CUSTOM") => ({
+    game, category, title, desc, price:null, badge, quoteOnly:true
+});
+
+const packageTemplates = [
+    makePackageTemplate("ZZZ", "ENDGAME", "ZZZ — Custom Endgame Target", "Tentukan target Shiyu Defense, Deadly Assault, Hollow Zero, atau combat endgame lain bersama admin."),
+    makePackageTemplate("ZZZ", "FARMING", "ZZZ — Event & Reward Clear", "Paket pengerjaan event dan reward sesuai event aktif, akses akun, serta target yang disepakati."),
+    makePackageTemplate("ZZZ", "FARMING", "ZZZ — Story & Quest Bundle", "Pilih chapter story dan quest yang ingin diselesaikan. Scope final dikonfirmasi sebelum pengerjaan."),
+    makePackageTemplate("ZZZ", "FARMING", "ZZZ — Resource Farming", "Farming material, resource, atau progression sesuai kebutuhan akun dan prioritas customer."),
+    makePackageTemplate("ZZZ", "FARMING", "ZZZ — Custom Account Care", "Maintenance akun dengan daftar aktivitas khusus yang ditentukan customer dan dikonfirmasi admin."),
+    makePackageTemplate("PGR", "ENDGAME", "PGR — Custom Endgame Target", "Tentukan target War Zone, Phantom Pain Cage, Norman Revival Plan, Babel Tower, atau content endgame lain."),
+    makePackageTemplate("PGR", "FARMING", "PGR — Event & Resource Bundle", "Paket event, farming, story, atau resource PGR dengan scope yang disepakati bersama admin.")
+];
+
+packages.push(...packageTemplates);
 
 let cart=[];
 let currentOrder=null;
@@ -3669,10 +3909,18 @@ function toast(message){
 }
 
 function openSocial(platform){
-
-    toast("Link "+platform+" belum diisi.");
+    const links={
+        TikTok:"https://www.tiktok.com/@fxnzzz_store",
+        Instagram:"https://www.instagram.com/fxnzz_storee/",
+        Saweria:"https://saweria.co/Feynsan"
+    };
+    const url=links[platform];
+    if(!url){
+        toast("Link "+platform+" belum tersedia.");
+        return false;
+    }
+    window.open(url,"_blank","noopener,noreferrer");
     return false;
-
 }
 
 
@@ -3782,14 +4030,16 @@ function renderPackages(filter="ALL"){
             </p>
 
             <div class="price">
-                ${item.empty ? "—" : rupiah(item.price)}
-                ${item.empty ? "" : `<span>/ service</span>`}
+                ${item.empty ? "—" : item.quoteOnly ? "KONFIRMASI ADMIN" : rupiah(item.price)}
+                ${item.empty || item.quoteOnly ? "" : `<span>/ service</span>`}
             </div>
 
             ${
                 item.empty
                 ? `<button class="btn" type="button" disabled>COMING SOON</button>`
-                : `<button
+                : item.quoteOnly
+                    ? `<button class="btn primary" type="button" onclick="askPackage(${packages.indexOf(item)})">TANYA ADMIN</button>`
+                    : `<button
                         class="btn primary"
                         type="button"
                         onclick="addToCart(${packages.indexOf(item)})">
@@ -3958,6 +4208,25 @@ function initMagneticButtons(){
    CART
 ================================ */
 
+function askPackage(index){
+    const item=packages[index];
+    if(!item)return;
+    const message=encodeURIComponent(
+        `Halo Admin FXNZZ STORE, saya ingin konsultasi paket:
+
+`+
+        `Game: ${item.game}
+Paket: ${item.title}
+Scope: ${item.desc}
+
+`+
+        `Mohon info harga dan estimasi pengerjaan.`
+    );
+    const phone=(typeof ADMIN_WHATSAPP!=="undefined" ? ADMIN_WHATSAPP : "").replace(/\D/g,"");
+    const url=phone ? `https://wa.me/${phone}?text=${message}` : `https://wa.me/?text=${message}`;
+    window.open(url,"_blank","noopener,noreferrer");
+}
+
 function addToCart(index){
 
     const item=packages[index];
@@ -4008,10 +4277,12 @@ function addSpecial(){
 function updateCart(){
 
     const cartCount=document.getElementById("cartCount");
+    const floatingCartCount=document.getElementById("floatingCartCount");
     const container=document.getElementById("cartItems");
     const cartTotal=document.getElementById("cartTotal");
     if(!container)return;
     if(cartCount)cartCount.textContent=cart.length;
+    if(floatingCartCount)floatingCartCount.textContent=cart.length;
 
     if(!cart.length){
 
@@ -4207,7 +4478,7 @@ function updateSummary(){
    CHAT ORDER
 ================================ */
 
-const ADMIN_WHATSAPP = "";
+const ADMIN_WHATSAPP = "6285850654348";
 // Isi dengan nomor WhatsApp admin format internasional, tanpa + atau spasi.
 
 function createOrder(){
