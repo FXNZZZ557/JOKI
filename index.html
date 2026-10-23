@@ -1479,47 +1479,6 @@ section{
 }
 
 /* =========================
-   TESTIMONIAL
-========================= */
-
-.testimonial-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-}
-
-.testimonial{
-    padding:23px;
-    border:1px solid var(--line);
-    border-radius:19px;
-    background:var(--panel);
-}
-
-.stars{
-    color:#ffc857;
-    letter-spacing:2px;
-}
-
-.testimonial p{
-    margin-top:17px;
-    color:#a5a5b0;
-    line-height:1.7;
-    font-size:13px;
-}
-
-.user{
-    margin-top:20px;
-    display:flex;
-    justify-content:space-between;
-    color:#ddd;
-    font-size:12px;
-}
-
-.user span{
-    color:#666;
-}
-
-/* =========================
    FAQ
 ========================= */
 
@@ -1869,7 +1828,8 @@ body.cart-open{
     section{scroll-margin-top:76px;}
     .floating-cart{
         right:12px;
-        bottom:calc(12px + env(safe-area-inset-bottom, 0px));
+        /* Keep the fixed cart above the mobile navigation instead of covering its buttons. */
+        bottom:calc(82px + env(safe-area-inset-bottom, 0px));
         padding:12px 14px;
         border-radius:13px;
         font-size:11px;
@@ -1916,10 +1876,6 @@ body.cart-open{
     }
 
     .order-layout{
-        grid-template-columns:1fr;
-    }
-
-    .testimonial-grid{
         grid-template-columns:1fr;
     }
 
@@ -2304,6 +2260,89 @@ body.cart-open{
     .change-item{grid-template-columns:1fr;gap:5px}
 }
 
+
+/* Team hierarchy highlights roles and game focus, not unverified performance rankings. */
+.team-card.owner{
+    isolation:isolate;
+    border-color:rgba(255,45,114,.72);
+    background:linear-gradient(145deg,rgba(22,5,10,.96),rgba(8,8,12,.98));
+    box-shadow:0 0 0 1px rgba(255,45,114,.12),0 16px 48px rgba(0,0,0,.38);
+    animation:ownerAura 4.8s ease-in-out infinite;
+}
+.team-card.owner::before{
+    content:"";position:absolute;inset:-2px;border-radius:inherit;padding:2px;
+    background:conic-gradient(from 0deg,transparent 0 22%,rgba(255,30,65,.95) 32%,rgba(30,0,8,.95) 43%,transparent 56%,rgba(120,0,20,.8) 72%,transparent 88% 100%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+    pointer-events:none;z-index:0;animation:ownerRing 5.5s linear infinite;filter:drop-shadow(0 0 9px rgba(190,0,35,.45));
+}
+.team-card.owner>*{position:relative;z-index:1}
+.team-card.worker{
+    box-shadow:0 0 0 1px rgba(168,85,247,.08),0 14px 38px rgba(168,85,247,.07);
+    transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease;
+}
+.team-card.worker:hover{
+    border-color:rgba(168,85,247,.65);
+    box-shadow:0 0 30px rgba(168,85,247,.16);
+    transform:translateY(-3px);
+}
+.team-card.night45k{
+    border-color:rgba(73,220,255,.58);
+    background:radial-gradient(circle at 100% 0,rgba(73,220,255,.15),transparent 48%),var(--panel);
+    box-shadow:0 0 0 1px rgba(73,220,255,.08),0 16px 42px rgba(73,220,255,.08);
+}
+.team-card.night45k .team-role{
+    color:#91efff;background:rgba(73,220,255,.09);border-color:rgba(73,220,255,.28);
+}
+.team-proofline{
+    margin-top:12px;color:#ff9ab8;font-size:9px;font-weight:900;letter-spacing:1.1px;
+}
+.pgr-specialist-inline{display:block;margin-top:8px;color:#91efff;font-size:11px;letter-spacing:.2px}
+@keyframes ownerAura{
+    0%,100%{box-shadow:0 0 0 1px rgba(110,0,18,.22),0 16px 42px rgba(0,0,0,.38),0 0 18px rgba(150,0,30,.12)}
+    50%{box-shadow:0 0 0 1px rgba(255,30,65,.28),0 18px 50px rgba(0,0,0,.48),0 0 30px rgba(180,0,35,.24)}
+}
+@keyframes ownerRing{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){
+    .team-card.owner{animation:none}
+    .team-card.owner::before{animation:none}
+    .team-card.worker{transition:none}
+}
+.pull-promo-overlay{
+    position:fixed;inset:0;z-index:10020;display:flex;align-items:center;justify-content:center;
+    padding:18px;background:rgba(3,3,8,.78);backdrop-filter:blur(12px);
+    opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .38s ease,visibility .38s ease,backdrop-filter .38s ease;
+}
+.pull-promo-overlay.show{opacity:1;visibility:visible;pointer-events:auto}
+.pull-promo-modal{
+    position:relative;width:min(610px,100%);max-height:min(86vh,760px);overflow:auto;
+    padding:clamp(22px,4vw,34px);border:1px solid rgba(168,85,247,.35);border-radius:22px;
+    background:linear-gradient(145deg,rgba(25,20,38,.98),rgba(10,10,17,.98));
+    box-shadow:0 28px 100px rgba(0,0,0,.55),0 0 38px rgba(168,85,247,.12);
+    opacity:0;transform:translateY(24px) scale(.97);
+    transition:opacity .42s cubic-bezier(.2,.75,.2,1),transform .48s cubic-bezier(.2,.75,.2,1);
+}
+.pull-promo-overlay.show .pull-promo-modal{opacity:1;transform:translateY(0) scale(1)}
+.pull-promo-overlay.closing{opacity:0;visibility:visible;pointer-events:none}
+.pull-promo-overlay.closing .pull-promo-modal{opacity:0;transform:translateY(16px) scale(.985)}
+.pull-promo-close{position:absolute;top:12px;right:14px;width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font-size:24px;cursor:pointer}
+.pull-promo-modal h2{font-size:clamp(22px,4vw,30px);letter-spacing:-.7px;margin:12px 38px 10px 0}
+.pull-promo-intro,.pull-promo-note{color:var(--muted);font-size:12px;line-height:1.65}
+.pull-promo-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}
+.pull-promo-option{padding:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}
+.pull-promo-option strong{display:block;font-size:15px}
+.pull-promo-option .pull-promo-price{display:block;margin:7px 0;color:#e8caff;font-size:18px;font-weight:900}
+.pull-promo-option p{color:var(--muted);font-size:11px;line-height:1.5}
+.pull-promo-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.pull-promo-actions .btn{flex:1;min-width:140px}
+
+@media(max-width:480px){.pull-promo-options{grid-template-columns:1fr}.pull-promo-modal{padding:22px 17px}}
+@media(prefers-reduced-motion:reduce){
+    .pull-promo-overlay,.pull-promo-modal{transition:none!important}
+    .team-card.owner,.team-card.owner::before{animation:none!important}
+}
+
 </style>
 </head>
 
@@ -2339,9 +2378,8 @@ body.cart-open{
         </div>
 
         <p>
-            Gaming service untuk Zenless Zone Zero dan
-            Punishing: Gray Raven. Pilih layanan, checkout,
-            lalu lanjutkan order dan pembayaran langsung melalui chat admin.
+            ZZZ & PGR account services dengan scope yang dikonfirmasi sebelum pengerjaan.
+            Pilih target, cek detail paket, lalu konfirmasi order dan pembayaran langsung ke owner.
         </p>
 
         <button
@@ -2470,18 +2508,16 @@ body.cart-open{
         </div>
 
         <h2>
-            Your account.<br>
-            Our <span>grind.</span>
+            Target jelas.<br>
+            Progress <span>terarah.</span>
         </h2>
 
         <p class="hero-hook">
-            Clear targets. Careful execution. Progress with purpose.
+            NO ORIGIN. NO END. — Gaming services with clear scope.
         </p>
 
         <p class="hero-text">
-            Pilih layanan gaming yang lu butuhkan tanpa
-            muter-muter. Semua paket, checkout, pembayaran,
-            dan status order dirancang dalam satu dashboard.
+            Pilih layanan ZZZ atau PGR sesuai target akun. Scope dan harga terlihat sebelum order; detail pengerjaan, ketersediaan worker, serta instruksi pembayaran dikonfirmasi langsung oleh owner.
         </p>
 
         <div class="actions">
@@ -2506,17 +2542,15 @@ body.cart-open{
 
         <div class="status-pill">
             <span class="live-dot"></span>
-            STORE ONLINE
+            OWNER-CONFIRMED ORDER
         </div>
 
         <h3>
-            Joki Aman &amp; Terpercaya.
+            Order jelas. Scope terukur.
         </h3>
 
         <p>
-            Layanan joki gaming dengan proses yang jelas,
-            komunikasi langsung melalui admin, dan pengerjaan
-            yang mengutamakan keamanan akun serta kualitas hasil.
+            Pilih target yang sesuai kebutuhan akun. Setiap order dikonfirmasi bersama owner agar scope, harga, dan batas pengerjaan dipahami sebelum dimulai.
         </p>
 
         <div class="hero-trust" style="
@@ -2525,18 +2559,18 @@ body.cart-open{
             gap:10px;
         ">
             <div class="trust-item">
-                <strong>AMAN</strong>
-                <span>Data akun dijaga dan digunakan sesuai kebutuhan pengerjaan.</span>
+                <strong>ACCOUNT CARE</strong>
+                <span>Detail akun hanya diminta sejauh diperlukan untuk scope yang disepakati.</span>
             </div>
 
             <div class="trust-item">
-                <strong>TERPERCAYA</strong>
-                <span>Order dan pembayaran dikonfirmasi langsung bersama admin.</span>
+                <strong>TRANSPARAN</strong>
+                <span>Scope, harga tertera, dan instruksi pembayaran dikonfirmasi langsung oleh owner.</span>
             </div>
 
             <div class="trust-item">
-                <strong>PROFESSIONAL</strong>
-                <span>Setiap tindakan dipertimbangkan sebelum dilakukan. Progress, resource, dan risiko diperhatikan dari sisi customer maupun penjoki.</span>
+                <strong>SCOPE FIRST</strong>
+                <span>Target, kondisi akun, dan batas pekerjaan dibahas sebelum worker mulai.</span>
             </div>
         </div>
 
@@ -2613,8 +2647,7 @@ body.cart-open{
             </h3>
 
             <p>
-                Layanan progression, midgame,
-                farming dan content PGR.
+                Layanan progression, midgame, farming, dan konten PGR.
             </p>
 
             <button
@@ -2647,13 +2680,20 @@ body.cart-open{
             <div class="team-role">◆ OWNER / FOUNDER</div>
             <h3>FXNZZZ</h3>
             <p>Pemilik FXNZZ STORE dan penanggung jawab arah layanan, operasional, serta koordinasi tim.</p>
-            <div class="team-specialty">ROLE <strong>Owner FXNZZZ</strong></div>
+            <div class="team-specialty">RESPONSIBILITY <strong>Store direction · order coordination · customer confirmation</strong></div>
+            <div class="team-proofline">OWNER CONTROL · DIRECT CONFIRMATION</div>
         </article>
         <article class="team-card worker">
             <div class="team-role">✦ SPECIALIST WORKER</div>
             <h3>DEON</h3>
             <p>Worker dengan fokus layanan <strong>Punishing: Gray Raven</strong>.</p>
             <div class="team-specialty">SPECIALTY <strong>PGR — Punishing: Gray Raven</strong></div>
+        </article>
+        <article class="team-card worker night45k">
+            <div class="team-role">✦ PGR SPECIALIST</div>
+            <h3>NIGHT45K</h3>
+            <p>Kontak layanan khusus PGR. Detail pekerjaan dan ketersediaan dikonfirmasi terlebih dahulu agar scope sesuai kebutuhan akun.</p>
+            <div class="team-specialty">GAME FOCUS <strong>Punishing: Gray Raven</strong></div>
         </article>
         <article class="team-card worker">
             <div class="team-role">✦ SPECIALIST WORKER</div>
@@ -2783,50 +2823,6 @@ body.cart-open{
 </section>
 
 <!-- =========================
-     SPECIAL
-========================= -->
-
-<section>
-
-    <div class="special">
-
-        <div class="eyebrow">
-            SPECIAL SERVICE
-        </div>
-
-        <h3>
-            Rawat Akun VIP — 3 Patch
-        </h3>
-
-        <p>
-            Maintenance VIP selama 3 patch: aktivitas rutin, event, progression, build optimization, dan endgame sesuai kemampuan akun. Cocok untuk maintenance jangka panjang dengan scope yang jelas.
-        </p>
-
-        <div style="
-            margin-top:20px;
-            display:flex;
-            align-items:center;
-            gap:15px;
-            flex-wrap:wrap;
-        ">
-
-            <strong style="font-size:28px">
-                Rp150.000
-            </strong>
-
-            <button
-                class="btn primary magnetic"
-                onclick="addSpecial()">
-                Tambahkan ke Order
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =========================
      ORDER
 ========================= -->
 
@@ -2847,8 +2843,7 @@ body.cart-open{
         </div>
 
         <p>
-            Isi data dasar order. Detail akun dan pembayaran dibahas langsung
-            bersama admin melalui chat WhatsApp.
+            Ringkasan order akan dikirim ke WhatsApp owner. Harga final, ketersediaan worker, dan instruksi pembayaran dikonfirmasi lewat chat. Keranjang tidak dikosongkan otomatis.
         </p>
 
     </div>
@@ -2888,7 +2883,7 @@ body.cart-open{
             <div class="form-group">
 
                 <label>
-                    METODE PEMBAYARAN (PREFERENSI)
+                    PREFERENSI PEMBAYARAN (OPSIONAL — FINAL VIA OWNER)
                 </label>
 
                 <select id="customerPayment">
@@ -2916,7 +2911,7 @@ body.cart-open{
                 class="btn primary magnetic"
                 style="width:100%"
                 onclick="createOrder()">
-                CHAT ADMIN & ORDER
+                KONFIRMASI VIA WHATSAPP
             </button>
 
         </div>
@@ -3092,88 +3087,6 @@ body.cart-open{
                     Completed
                 </span>
 
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =========================
-     TESTIMONIALS
-========================= -->
-
-<section>
-
-    <div class="section-head">
-
-        <div>
-
-            <div class="eyebrow">
-                SERVICE COMMITMENT
-            </div>
-
-            <h2>
-                Komitmen Layanan
-            </h2>
-
-        </div>
-
-    </div>
-
-    <div class="testimonial-grid">
-
-        <div class="testimonial">
-
-            <p>
-                Scope layanan dan target pengerjaan dikonfirmasi sebelum order dimulai.
-            </p>
-
-            <div class="user">
-                <strong>
-                    FXNZZ STORE
-                </strong>
-
-                <span>
-                    ZZZ
-                </span>
-            </div>
-
-        </div>
-
-        <div class="testimonial">
-
-            <p>
-                Customer dapat menghubungi admin untuk konfirmasi paket dan progres pengerjaan.
-            </p>
-
-            <div class="user">
-                <strong>
-                    FXNZZ STORE
-                </strong>
-
-                <span>
-                    PGR
-                </span>
-            </div>
-
-        </div>
-
-        <div class="testimonial">
-
-            <p>
-                Harga paket ditampilkan sebelum checkout. Hasil pengerjaan mengikuti kondisi akun dan target yang disepakati.
-            </p>
-
-            <div class="user">
-                <strong>
-                    FXNZZ STORE
-                </strong>
-
-                <span>
-                    ZZZ
-                </span>
             </div>
 
         </div>
@@ -3382,7 +3295,7 @@ body.cart-open{
     </div>
 
     <div>
-        ZZZ · PGR · DANA · GoPay · QRIS
+        ZZZ · PGR · OWNER-CONFIRMED ORDERS
     </div>
 
     <div>
@@ -3459,6 +3372,22 @@ body.cart-open{
 
 </div>
 
+<!-- JOKI PULL DISCOVERY POPUP: neutral comparison, no unsupported winner -->
+<div class="pull-promo-overlay" id="pullPromoOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pullPromoTitle">
+  <div class="pull-promo-modal">
+    <button class="pull-promo-close" type="button" onclick="closePullPromo()" aria-label="Tutup popup">×</button>
+    <div class="eyebrow">SERVICE SPOTLIGHT · ZZZ</div>
+    <h2 id="pullPromoTitle">Joki Pull — pilih sesuai target</h2>
+    <p class="pull-promo-intro">Bandingkan jumlah pengerjaan dan harga tertera. Tidak ada paket yang ditandai paling unggul tanpa data operasional yang cukup; hasil gacha tetap mengikuti RNG game.</p>
+    <div id="pullPromoOptions" class="pull-promo-options"></div>
+    <p class="pull-promo-note">Resource akun, target pull, dan batas pengerjaan dikonfirmasi sebelum order.</p>
+    <div class="pull-promo-actions">
+      <button class="btn primary" type="button" onclick="showPullPackages()">LIHAT DETAIL</button>
+      <button class="btn" type="button" onclick="consultPullService()">KONSULTASI</button>
+    </div>
+  </div>
+</div>
+
 <!-- CART -->
 
 <div
@@ -3529,32 +3458,38 @@ const packages = [
     {
         game:"ZZZ", category:"ENDGAME",
         title:"Shiyu Defense — 3 STAR/Full Clear",
-        desc:"Shiyu defense mulai dari per 3 stage sampai target clear yang disepakati. Hasil clear bergantung pada roster, build, dan kondisi akun.",
-        price:10000, badge:""
+        desc:"Full clear Shiyu Defense sesuai roster dan target akun.",
+        price:20000, badge:""
     },
     {
         game:"ZZZ", category:"ENDGAME",
         title:"Deadly Assault — 3 STAR/Full Clear",
-        desc:"Pengerjaan Deadly Assault mulai dari per bintang dan target yang disepakati. Tidak menjamin skor tertentu jika akun belum memenuhi syarat.",
-        price:17000, badge:"POPULAR"
+        desc:"Full clear Deadly Assault sesuai roster, build, dan target akun. Skor tidak dijamin jika akun belum memadai.",
+        price:30000, badge:""
     },
     {
         game:"ZZZ", category:"ENDGAME",
         title:"Weekly 2 Non-VIP",
         desc:"Penyelesaian aktivitas mingguan lanjutan sesuai scope paket.",
-        price:5000, badge:""
+        price:32000, badge:""
+    },
+    {
+        game:"ZZZ", category:"ENDGAME",
+        title:"Weekly 2 VIP",
+        desc:"Penyelesaian aktivitas mingguan lanjutan dengan cakupan VIP sesuai scope yang dikonfirmasi.",
+        price:75000, badge:"VIP"
     },
     {
         game:"ZZZ", category:"ENDGAME",
         title:"Weekly 1 VIP",
         desc:"Penyelesaian aktivitas mingguan dengan cakupan tambahan sesuai paket VIP.",
-        price:45000, badge:"BEST VALUE"
+        price:32500, badge:"VIP"
     },
     {
         game:"ZZZ", category:"FARMING",
         title:"Weekly 1 Non-VIP",
         desc:"Penyelesaian aktivitas mingguan dasar sesuai scope paket.",
-        price:5000, badge:""
+        price:15000, badge:""
     },
     {
         game:"ZZZ", category:"FARMING",
@@ -3570,44 +3505,92 @@ const packages = [
     {
         game:"ZZZ", category:"FARMING",
         title:"Rawat Akun — 1 Patch",
-        desc:"Maintenance akun selama 1 patch: daily utama, Battery/Stamina secara efisien, weekly, farming resource prioritas, event aktif, dan progression rutin sesuai kondisi akun.",
-        price:65000, badge:""
+        desc:"Maintenance akun selama 1 patch: aktivitas rutin, farming prioritas, weekly, event aktif, dan progression sesuai kondisi akun.",
+        price:150000, badge:""
     },
     {
         game:"ZZZ", category:"FARMING",
         title:"Rawat Akun — 2 Patch",
-        desc:"Maintenance akun selama 2 patch. Mencakup aktivitas rutin, Battery/Stamina, weekly, farming prioritas, event aktif, dan progression yang dapat dilanjutkan antar-patch.",
-        price:85000, badge:"BEST VALUE"
+        desc:"Maintenance akun selama 2 patch dengan aktivitas rutin, farming prioritas, weekly, event aktif, dan progression antar-patch.",
+        price:280000, badge:""
+    },
+    {
+        game:"ZZZ", category:"FARMING",
+        title:"Rawat Akun — 3 Patch",
+        desc:"Maintenance akun selama 3 patch dengan aktivitas rutin, farming prioritas, weekly, event aktif, dan progression antar-patch.",
+        price:390000, badge:""
     },
     {
         game:"ZZZ", category:"FARMING",
         title:"Rawat Akun VIP — 1 Patch",
-        desc:"Maintenance 1 patch dengan prioritas lebih tinggi: seluruh scope Rawat Akun, event, build/farming optimization, serta endgame seperti Shiyu, Deadly Assault, Hollow Zero, dan combat event sesuai kemampuan akun.",
-        price:120000, badge:"VIP"
+        desc:"Maintenance VIP 1 patch: scope rutin, event, progression, optimasi farming/build, dan endgame sesuai kemampuan akun.",
+        price:240000, badge:"VIP"
     },
     {
         game:"ZZZ", category:"FARMING",
         title:"Rawat Akun VIP — 2 Patch",
-        desc:"Maintenance VIP selama 2 patch dengan scope rutin + event + progression + build optimization + endgame. Prioritas disesuaikan dengan perkembangan akun setiap patch.",
-        price:150000, badge:"VIP"
+        desc:"Maintenance VIP 2 patch dengan scope rutin, event, progression, optimasi build/farming, dan endgame sesuai kemampuan akun.",
+        price:420000, badge:"VIP"
+    },
+    {
+        game:"ZZZ", category:"FARMING",
+        title:"Rawat Akun VIP — 3 Patch",
+        desc:"Maintenance VIP 3 patch dengan scope rutin, event, progression, optimasi build/farming, dan endgame sesuai kemampuan akun.",
+        price:630000, badge:"VIP"
+    },
+    {
+        game:"ZZZ", category:"FARMING",
+        title:"Event",
+        desc:"Pengerjaan battle, event, atau Hollow content basic sesuai target yang disepakati.",
+        price:25000, badge:""
+    },
+    {
+        game:"ZZZ", category:"FARMING",
+        title:"Exploration Completion",
+        desc:"Eksplorasi area, collectible, dan reward sesuai wilayah yang dipilih.",
+        price:35000, displayPrice:"35000–75000/area", badge:"VIP"
+    },
+    {
+        game:"ZZZ", category:"ENDGAME",
+        title:"Agent Build Optimization",
+        desc:"Analisis stat, Drive Disc, W-Engine, skill, dan optimasi build per karakter.",
+        price:25000, displayPrice:"25000/karakter", badge:""
+    },
+    {
+        game:"ZZZ", category:"ENDGAME",
+        title:"Combat Challenge / Special Challenge",
+        desc:"Penyelesaian tantangan combat khusus di luar Shiyu Defense, Deadly Assault, dan Battle Tower, sesuai konten yang tersedia.",
+        price:25000, displayPrice:"25000–60000/challenge", badge:""
+    },
+    {
+        game:"ZZZ", category:"ENDGAME",
+        title:"Hollow Zero Max + Full Clear",
+        desc:"Pengerjaan Hollow Zero dengan target max progression dan full clear sesuai kemampuan akun.",
+        price:22000, badge:""
+    },
+    {
+        game:"ZZZ", category:"FARMING",
+        title:"Event Combat Annihilation",
+        desc:"Pengerjaan combat event atau Annihilation sesuai target yang disepakati.",
+        price:15000, badge:""
     },
     {
         game:"ZZZ", category:"FARMING",
         title:"ZZZ STORY",
-        desc:" Penyelesaian chapter cerita mencakup eksplorasi, dialog, misi, dan combat sesuai kebutuhan chapter.",
-        price:7500, badge:"POPULAR"
+        desc:"Penyelesaian story per chapter sesuai akses akun dan target yang disepakati.",
+        price:8000, badge:""
     },
     {
         game:"ZZZ", category:"FARMING",
-        title:"Operation: Bagel",
+        title:"Operation: Bagel/full clear",
         desc:"Pengerjaan konten event, objective, dan combat sesuai progres serta tingkat kesulitan akun.",
-        price:17000, badge:"BEST VALUE"
+        price:75000, badge:""
     },
     {
         game:"ZZZ", category:"FARMING",
         title:"Battle Tower",
         desc:"Mengerjakan stage battle tower per 3 Tower",
-        price:10000, badge:""
+        price:6000, badge:""
     },
     {
         game:"ZZZ", category:"FARMING",
@@ -3618,8 +3601,8 @@ const packages = [
     {
         game:"ZZZ", category:"FARMING",
         title:"Permanent Event",
-        desc:"Penyelesaian konten event permanen, termasuk objective, tantangan combat, dan reward sesuai scope paket.",
-        price:25000, badge:"BEST VALUE"
+        desc:"Penyelesaian konten event permanen, objective, tantangan combat, dan reward sesuai scope paket.",
+        price:12000, badge:""
     },
 
     /* ==============================
@@ -3629,22 +3612,22 @@ const packages = [
     {
         game:"ZZZ", category:"PULL",
         title:"10 Pull", desc:"Joki pull hingga 10 kali sesuai resource yang tersedia pada akun.",
-        price:15000, badge:""
+        price:16000, badge:""
     },
     {
         game:"ZZZ", category:"PULL",
         title:"30 Pull", desc:"Joki pull hingga 30 kali sesuai resource yang tersedia pada akun.",
-        price:36000, badge:"BEST VALUE"
+        price:32000, badge:""
     },
     {
         game:"ZZZ", category:"PULL",
         title:"50 Pull", desc:"Joki pull hingga 50 kali sesuai resource yang tersedia pada akun.",
-        price:58000, badge:""
+        price:56000, badge:""
     },
     {
         game:"ZZZ", category:"PULL",
         title:"100 Pull", desc:"Joki pull hingga 100 kali sesuai resource yang tersedia pada akun. Hasil gacha tetap mengikuti sistem RNG game.",
-        price:145000, badge:"BEST VALUE"
+        price:155000, badge:""
     },
 
     /* ==============================
@@ -3653,33 +3636,33 @@ const packages = [
 
     {
         game:"PGR", category:"ENDGAME",
-        title:"War Zone",
+        title:"War Zone basic/malding",
         desc:"Pengerjaan War Zone sesuai target yang disepakati dan kemampuan akun.",
-        price:15000, badge:"POPULAR"
+        price:10000, displayPrice:"10000-20000", badge:""
     },
     {
         game:"PGR", category:"ENDGAME",
-        title:"Phantom Pain Cage",
+        title:"Phantom Pain Cage Basic/intesive",
         desc:"Pengerjaan Phantom Pain Cage sesuai kondisi roster dan target layanan. Skor tidak dijamin jika build belum memadai.",
-        price:8000, badge:""
+        price:22000, badge:""
     },
     {
         game:"PGR", category:"ENDGAME",
         title:"Norman Revival Plan",
         desc:"Progress Norman Revival Plan sesuai stage yang dapat dicapai oleh akun dan target layanan.",
-        price:13000, badge:"BEST VALUE"
+        price:22000, badge:""
     },
     {
         game:"PGR", category:"ENDGAME",
         title:"Weekly basic",
         desc:"Pengerjaan Babel Tower sesuai target dan kemampuan roster akun.",
-        price:23000, badge:""
+        price:20000, badge:""
     },
     {
         game:"PGR", category:"ENDGAME",
         title:"Weekly VIP",
         desc:"Pengerjaan content endgame PGR yang tersedia dan disepakati sebelum order, dengan hasil menyesuaikan kondisi akun.",
-        price:32000, badge:"BEST VALUE"
+        price:30000, badge:"VIP"
     },
 
     /* ==============================
@@ -3688,39 +3671,39 @@ const packages = [
 
     {
         game:"PGR", category:"FARMING",
-        title:"Derived from matrix",
-        desc:"farming stage DFM dengan /5 levelnya.",
+        title:"Derived from Matrix — 5 Level",
+        desc:"Long progression dengan durasi dan effort tinggi, target level, kondisi akun, dan estimasi waktu dikonfirmasi sebelum pengerjaan.",
+        price:9000, badge:"BEST VALUE"
+    },
+    {
+        game:"PGR", category:"FARMING",
+        title:"Cursed Waves — per 5 Level",
+        desc:"Progress event bertahap dengan effort dan waktu pengerjaan tinggi. jumlah level dan estimasi dikonfirmasi sebelum order.",
+        price:12000, badge:"BEST VALUE"
+    },
+    {
+        game:"PGR", category:"FARMING",
+        title:"Thundra Awakening — 5 Level",
+        desc:"Pengerjaan target /5 level sesuai akses dan kondisi akun.",
         price:5000, badge:""
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Cursed Waves",
-        desc:"Mengerjakan stage event Cursed Waves dengan /5 levelnya.",
-        price:6000, badge:"POPULAR"
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Awakening Thundra",
-        desc:"Pengerjaan stage event Awakening thundra dengan /5 levelnya.",
-        price:3000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
         title:"Shrouded Requiem",
         desc:"Pengerjaan dan clear difficulty yang tersedia sesuai kondisi akun dan target layanan.",
-        price:30000, badge:""
+        price:20000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
         title:"The Goddfall Revelation",
         desc:"Pengerjaan content dan target Character Badges sesuai akses serta kondisi akun.",
-        price:25000, badge:""
+        price:35000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
         title:"Recitativo di Fantasia",
         desc:"Pengerjaan progress dan clear content sesuai target yang disepakati.",
-        price:18000, badge:""
+        price:45000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
@@ -3730,9 +3713,9 @@ const packages = [
     },
     {
         game:"PGR", category:"FARMING",
-        title:"Stronghold",
-        desc:"Penyelesaian stronghold per 3 stage yang ditentukan customer sesuai kondisi akun.",
-        price:8000, badge:""
+        title:"Stronghold — 7 Stage",
+        desc:"Penyelesaian hingga 7 stage Stronghold sesuai kondisi akun.",
+        price:12000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
@@ -3748,32 +3731,44 @@ const packages = [
     {
         game:"PGR", category:"FARMING",
         title:"Rawat Akun — 1 Patch",
-        desc:"Maintenance akun selama 1 patch: aktivitas rutin, resource farming prioritas, weekly, event aktif, dan progression sesuai kondisi akun.",
+        desc:"Maintenance akun 1 patch: aktivitas rutin, farming prioritas, weekly, event aktif, dan progression sesuai kondisi akun.",
         price:65000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
         title:"Rawat Akun — 2 Patch",
-        desc:"Maintenance akun selama 2 patch dengan aktivitas rutin, farming prioritas, weekly, event aktif, dan progression yang dapat dilanjutkan antar-patch.",
-        price:90000, badge:"BEST VALUE"
+        desc:"Maintenance akun 2 patch dengan aktivitas rutin, farming prioritas, weekly, event aktif, dan progression antar-patch.",
+        price:110000, badge:""
+    },
+    {
+        game:"PGR", category:"FARMING",
+        title:"Rawat Akun — 3 Patch",
+        desc:"Maintenance akun selama 3 patch dengan aktivitas rutin, farming prioritas, weekly, event aktif, dan progression antar-patch.",
+        price:185000, badge:""
+    },
+    {
+        game:"PGR", category:"FARMING",
+        title:"Weekly — Non-VIP",
+        desc:"Pengerjaan weekly PGR sesuai target dan kemampuan akun.",
+        price:20000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
         title:"Rawat Akun VIP — 1 Patch",
-        desc:"Maintenance VIP 1 patch: seluruh scope Rawat Akun, event, progression, build/farming optimization, serta endgame seperti War Zone, Phantom Pain Cage, Norman Revival Plan, dan Babel Tower sesuai kemampuan akun.",
-        price:75000, badge:"VIP"
+        desc:"Maintenance VIP 1 patch: scope rutin, event, progression, optimasi build/farming, dan endgame sesuai kemampuan akun.",
+        price:135000, badge:"VIP"
     },
     {
         game:"PGR", category:"FARMING",
         title:"Rawat Akun VIP — 2 Patch",
-        desc:"Maintenance VIP selama 2 patch dengan scope rutin + event + progression + build optimization + endgame, diprioritaskan berdasarkan perkembangan akun.",
-        price:125000, badge:"VIP"
+        desc:"Maintenance VIP 2 patch dengan scope rutin, event, progression, optimasi build/farming, dan endgame sesuai kemampuan akun.",
+        price:170000, badge:"VIP"
     },
     {
         game:"PGR", category:"FARMING",
         title:"Rawat Akun VIP — 3 Patch",
-        desc:"Maintenance VIP selama 3 patch dengan scope rutin, event, progression, build optimization, dan endgame sesuai kemampuan akun.",
-        price:165000, badge:"VIP"
+        desc:"Maintenance VIP 3 patch dengan scope rutin, event, progression, optimasi build/farming, dan endgame sesuai kemampuan akun.",
+        price:285000, badge:"VIP"
     }
 ];
 
@@ -3855,6 +3850,7 @@ function enterStore(){
     setTimeout(()=>{
         entry.classList.add("hide");
         app.classList.add("ready");
+        setTimeout(showPullPromo,1800);
     },620);
 
     setTimeout(()=>{
@@ -4014,7 +4010,7 @@ function renderPackages(filter="ALL"){
                 </div>
 
                 ${
-                    item.badge
+                    item.badge && item.badgeVerified === true
                     ? `<div class="badge">${item.badge}</div>`
                     : ""
                 }
@@ -4030,7 +4026,7 @@ function renderPackages(filter="ALL"){
             </p>
 
             <div class="price">
-                ${item.empty ? "—" : item.quoteOnly ? "KONFIRMASI ADMIN" : rupiah(item.price)}
+                ${item.empty ? "—" : item.quoteOnly ? "KONFIRMASI ADMIN" : item.displayPrice || rupiah(item.price)}
                 ${item.empty || item.quoteOnly ? "" : `<span>/ service</span>`}
             </div>
 
@@ -4245,35 +4241,6 @@ function addToCart(index){
 
 }
 
-function addSpecial(){
-
-    cart.push({
-
-        game:"ZZZ",
-        category:"SPECIAL",
-
-        title:
-            "Rawat Akun VIP — 3 Patch",
-
-        desc:
-            "Maintenance VIP selama 3 patch: aktivitas rutin, event, progression, build optimization, dan endgame sesuai kemampuan akun.",
-
-        price:150000,
-
-        badge:"SPECIAL",
-
-        id:Date.now()
-
-    });
-
-    updateCart();
-
-    toast(
-        "Special service ditambahkan."
-    );
-
-}
-
 function updateCart(){
 
     const cartCount=document.getElementById("cartCount");
@@ -4482,7 +4449,6 @@ const ADMIN_WHATSAPP = "6285850654348";
 // Isi dengan nomor WhatsApp admin format internasional, tanpa + atau spasi.
 
 function createOrder(){
-
     if(!cart.length){
         toast("Pilih minimal satu layanan.");
         return;
@@ -4499,50 +4465,34 @@ function createOrder(){
     }
 
     const random=Math.floor(1000+Math.random()*9000);
-    const total=cart.reduce((sum,item)=>sum+item.price,0);
+    const total=cart.reduce((sum,item)=>sum+(Number(item.price)||0),0);
+    currentOrder={id:"FXNZZ-"+random,name,wa,payment,note,total,status:0};
 
-    currentOrder={
-        id:"FXNZZ-"+random,
-        name,
-        wa,
-        payment,
-        note,
-        total,
-        status:0
-    };
+    const itemLines=cart.map((item,i)=>
+        `${i+1}. ${item.game} — ${item.title} — ${item.quoteOnly ? "Konfirmasi harga via owner" : rupiah(item.price)}`+
+        `\nScope: ${item.desc}`
+    ).join("\n\n");
 
-    const items=cart.map((item,i)=>
-        `${i+1}. ${item.game} — ${item.title} — ${rupiah(item.price)}`
-    ).join("%0A");
+    const message=`Halo FXNZZ STORE, saya ingin mengonfirmasi pesanan.\n\n`+
+        `Order ID: ${currentOrder.id}\nNama: ${name}\nWhatsApp customer: ${wa}\n\n`+
+        `Daftar layanan:\n${itemLines}\n\n`+
+        `Total harga tertera: ${rupiah(total)}\n`+
+        `Preferensi pembayaran: ${payment}\nCatatan tambahan: ${note}\n\n`+
+        `Mohon konfirmasi ketersediaan layanan, scope final, total biaya, dan instruksi pembayaran. Saya memahami bahwa membuka WhatsApp bukan berarti pembayaran telah berhasil.`;
 
-    const message=
-        `Halo Admin FXNZZ STORE,%0A%0A`+
-        `Saya ingin order.%0A`+
-        `Order ID: ${encodeURIComponent(currentOrder.id)}%0A`+
-        `Nama: ${encodeURIComponent(name)}%0A`+
-        `WhatsApp: ${encodeURIComponent(wa)}%0A%0A`+
-        `Layanan:%0A${items}%0A%0A`+
-        `Total: ${encodeURIComponent(rupiah(total))}%0A`+
-        `Preferensi pembayaran: ${encodeURIComponent(payment)}%0A`+
-        `Catatan: ${encodeURIComponent(note)}%0A%0A`+
-        `Mohon konfirmasi order dan instruksi pembayaran.`;
-
-    if(ADMIN_WHATSAPP.trim()){
-        window.open(`https://wa.me/${ADMIN_WHATSAPP.replace(/\D/g,"")}?text=${message}`,"_blank","noopener,noreferrer");
-    }else{
-        window.open(`https://wa.me/?text=${message}`,"_blank","noopener,noreferrer");
-        toast("WhatsApp dibuka. Isi nomor admin di ADMIN_WHATSAPP untuk direct chat.");
-    }
+    const phone=ADMIN_WHATSAPP.replace(/\D/g,"");
+    const url=phone ? `https://wa.me/${phone}?text=${encodeURIComponent(message)}` : `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(url,"_blank","noopener,noreferrer");
 
     const trackerId=document.getElementById("trackerId");
     const trackerStatus=document.getElementById("trackerStatus");
     if(trackerId)trackerId.textContent=currentOrder.id;
-    if(trackerStatus)trackerStatus.textContent="WAITING FOR ADMIN";
-
     updateTracker(0);
+    // Keep the order's actual confirmation state; the tracker step is not an owner response.
+    if(trackerStatus)trackerStatus.textContent="WAITING FOR OWNER";
+    // Cart intentionally remains intact until the owner confirms the order.
     scrollToId("status");
 }
-
 
 /* ==============================
    TRACKER
@@ -4722,6 +4672,65 @@ document.addEventListener("visibilitychange",()=>{
    ADMIN CHAT
 ================================ */
 
+
+function consultNight45K(){
+    const message="Halo FXNZZ STORE, saya ingin konsultasi layanan NIGHT45K untuk Punishing: Gray Raven. Mohon konfirmasi scope, ketersediaan worker, harga, dan estimasi setelah detail akun saya jelaskan.";
+    const phone=ADMIN_WHATSAPP.replace(/\D/g,"");
+    window.open(phone ? `https://wa.me/${phone}?text=${encodeURIComponent(message)}` : `https://wa.me/?text=${encodeURIComponent(message)}`,"_blank","noopener,noreferrer");
+}
+
+function consultPullService(){
+    const message="Halo FXNZZ STORE, saya ingin konsultasi layanan Joki Pull ZZZ. Mohon bantu cek target pull, resource akun, scope pengerjaan, dan total harga sebelum order.";
+    const phone=ADMIN_WHATSAPP.replace(/\D/g,"");
+    window.open(phone ? `https://wa.me/${phone}?text=${encodeURIComponent(message)}` : `https://wa.me/?text=${encodeURIComponent(message)}`,"_blank","noopener,noreferrer");
+    closePullPromo();
+}
+
+function populatePullPromo(){
+    const container=document.getElementById("pullPromoOptions");
+    if(!container)return;
+    const pullPackages=packages.filter(item=>item.game==="ZZZ" && item.category==="PULL" && Number.isFinite(item.price));
+    container.innerHTML=pullPackages.map(item=>{
+      const pullCount=Number((item.title.match(/\d+/)||[])[0])||0;
+      const unitPrice=pullCount ? `${rupiah(Math.round(item.price/pullCount))} per pull` : "Konfirmasi scope";
+      return `
+        <article class="pull-promo-option">
+          <strong>${item.title}</strong>
+          <span class="pull-promo-price">${rupiah(item.price)}</span>
+          <p>${item.desc}</p>
+          <p><strong>Pembanding unit:</strong> ${unitPrice}. Pilih berdasarkan target dan resource akun; tidak ada hasil gacha yang dijamin.</p>
+        </article>
+      `;
+    }).join("") || '<p class="pull-promo-note">Detail paket pull belum tersedia. Hubungi owner untuk konsultasi.</p>';
+}
+
+function showPullPromo(){
+    const overlay=document.getElementById("pullPromoOverlay");
+    if(!overlay)return;
+    try{if(sessionStorage.getItem("fxnzzPullPromoDismissed")==="1")return;}catch(e){}
+    populatePullPromo();
+    overlay.classList.remove("closing");
+    overlay.classList.add("show");
+    overlay.setAttribute("aria-hidden","false");
+}
+
+function closePullPromo(){
+    const overlay=document.getElementById("pullPromoOverlay");
+    if(!overlay || (!overlay.classList.contains("show") && overlay.classList.contains("closing")))return;
+    overlay.classList.remove("show");
+    overlay.classList.add("closing");
+    overlay.setAttribute("aria-hidden","true");
+    window.setTimeout(()=>overlay.classList.remove("closing"),480);
+    try{sessionStorage.setItem("fxnzzPullPromoDismissed","1");}catch(e){}
+}
+
+function showPullPackages(){
+    closePullPromo();
+    renderPackages("PULL");
+    document.querySelectorAll(".filter button").forEach(button=>button.classList.remove("active"));
+    scrollToId("services");
+}
+
 function openAdminChat(){
     const text=encodeURIComponent("Halo Admin FXNZZ STORE, saya ingin bertanya mengenai layanan.");
     if(ADMIN_WHATSAPP.trim()){
@@ -4775,6 +4784,13 @@ function toggleMusic(){
         if(icon)icon.textContent="♫";
     }
 }
+
+document.getElementById("pullPromoOverlay")?.addEventListener("click",event=>{
+    if(event.target.id==="pullPromoOverlay")closePullPromo();
+});
+document.addEventListener("keydown",event=>{
+    if(event.key==="Escape")closePullPromo();
+});
 
 window.addEventListener("DOMContentLoaded",()=>{
     const audio=document.getElementById("bgMusic");
