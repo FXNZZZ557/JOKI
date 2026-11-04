@@ -646,7 +646,7 @@ body::after{
     82%{opacity:.18;transform:scale(1);}
 }
 
-@media(prefers-reduced-motion:reduce){
+@media(prefers-reduced-motion:reduce) and (hover:none){
     .nav .brand,
     .nav .brand::before,
     .nav .brand::after{
@@ -2369,13 +2369,13 @@ body.cart-open{
 .pull-promo-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .pull-promo-actions .btn{flex:1;min-width:140px}
 @media(max-width:480px){.pull-promo-options{grid-template-columns:1fr}.pull-promo-modal{padding:22px 17px}}
-@media(prefers-reduced-motion:reduce){
+@media(prefers-reduced-motion:reduce) and (hover:none){
     .pull-promo-overlay,.pull-promo-modal{transition:none!important}
     .team-card.night45k{transition:none!important}
 }
 
 html{scroll-behavior:smooth;scroll-padding-top:88px}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+@media(prefers-reduced-motion:reduce) and (hover:none){html{scroll-behavior:auto!important}}
 </style>
 <style id="fxnzz-evolution-styles">
 
@@ -2492,7 +2492,7 @@ html{scroll-behavior:smooth;scroll-padding-top:88px}
 .ds-toast{position:fixed;left:50%;bottom:20px;z-index:2450;max-width:calc(100% - 30px);padding:11px 15px;background:#eee;color:#090909;font-size:10px;opacity:0;transform:translate(-50%,12px);pointer-events:none;transition:.25s}.ds-toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:850px){.ds-nav{gap:12px}.ds-hero-grid{grid-template-columns:1fr 210px;gap:25px}.ds-manifesto{grid-template-columns:120px 1fr 50px}.ds-product-grid{gap:24px 13px}}
 @media(max-width:680px){.ds-container,.ds-hero{width:calc(100% - 36px)}.ds-announcement{padding:0 18px;font-size:7px}.ds-announcement span:last-child{display:none}.ds-header{height:62px;padding:0 18px;gap:8px}.ds-brand{font-size:20px}.ds-brand small{font-size:6px;margin-left:5px}.ds-nav{gap:8px}.ds-nav button{font-size:9px;padding:7px 0}.ds-header-actions{display:none}.ds-hero{padding-top:42px}.ds-hero-kicker{font-size:7px}.ds-hero-grid{display:block;padding:34px 0 8px}.ds-hero h1{font-size:clamp(52px,13vw,80px)}.ds-hero-note{max-width:300px;margin-top:25px}.ds-hero-bottom{height:160px;padding-bottom:18px}.ds-orbit-art{width:175px;height:135px}.ds-orbit-one{width:165px;height:70px}.ds-orbit-two{width:130px;height:115px}.ds-orbit-art strong{font-size:43px}.ds-orbit-art small{font-size:6px;right:-4px}.ds-hero-bottom{font-size:6px}.ds-intro-inner{min-height:130px;grid-template-columns:1fr 42px;gap:7px}.ds-intro-inner .ds-eyebrow{grid-column:1/-1;align-self:end}.ds-intro-inner p{font-size:22px;padding-bottom:13px}.ds-intro-inner .ds-mono{align-self:end;padding-bottom:17px}.ds-section{padding-top:65px;padding-bottom:70px}.ds-section-heading{align-items:flex-start;flex-direction:column;gap:13px}.ds-section-heading h2{font-size:36px}.ds-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:23px 11px}.ds-visual-mark{font-size:38px}.ds-visual-index,.ds-visual-type{font-size:6px}.ds-product-title{font-size:17px}.ds-product-description{font-size:9px}.ds-category-band,.ds-coming-band{padding:60px 0 68px}.ds-category-list button{grid-template-columns:27px 1fr 20px;gap:8px;padding:15px 0}.ds-category-list button strong{font-size:23px}.ds-category-list button small{display:none}.ds-manifesto{grid-template-columns:1fr 40px;gap:12px;padding-top:65px;padding-bottom:68px}.ds-manifesto-label{grid-column:1/-1;flex-direction:row}.ds-manifesto-content h2{font-size:42px}.ds-manifesto-content p{font-size:10px}.ds-manifesto-stamp{font-size:35px}.ds-coming-grid{grid-template-columns:1fr;gap:8px}.ds-coming-grid article{min-height:auto;padding:16px}.ds-coming-grid h3{margin-top:14px}.ds-newsletter{display:block;padding-top:35px;padding-bottom:38px}.ds-newsletter h2{font-size:30px}.ds-newsletter .ds-button{margin-top:17px}.ds-footer-top{grid-template-columns:1fr 1fr;gap:20px;padding-top:30px}.ds-footer-top>p{font-size:18px}.ds-footer-links{grid-column:1/-1;justify-content:flex-start}.ds-footer-bottom{flex-wrap:wrap;padding:12px 0;font-size:6px}.ds-page-topline{padding-top:26px}.ds-page-intro{display:block;padding:39px 0 33px}.ds-page-intro h1{font-size:58px}.ds-page-intro p{margin-top:17px}.ds-catalog-toolbar{display:block}.ds-filter-tabs{margin-bottom:12px}.ds-catalog-controls input{width:60%;min-width:0}.ds-catalog-controls select{min-width:100px}.ds-catalog-meta{font-size:6px}.ds-detail-grid{grid-template-columns:1fr;gap:25px;padding-top:25px}.ds-detail-visual{min-height:250px}.ds-detail-visual strong{font-size:76px}.ds-detail-copy h1{font-size:40px}.ds-about-grid{grid-template-columns:1fr;gap:20px;padding:20px 0 65px}.ds-faq-list summary{font-size:18px}}
-@media(prefers-reduced-motion:reduce){.entry::after,.entry-evolve,.entry-evolve::before,.entry-evolve::after,.store-view.is-leaving,#digitalStoreView .ds-page{animation:none!important;transition:none!important}.store-view.is-active{animation:none!important;opacity:1!important;transform:none!important;filter:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce) and (hover:none){.entry::after,.entry-evolve,.entry-evolve::before,.entry-evolve::after,.store-view.is-leaving,#digitalStoreView .ds-page{animation:none!important;transition:none!important}.store-view.is-active{animation:none!important;opacity:1!important;transform:none!important;filter:none!important;transition:none!important}}
 
 </style>
 
@@ -2596,7 +2596,7 @@ img{max-width:100%}
  .package-desc{font-size:9px}
  .price{font-size:13px}
 }
-@media(prefers-reduced-motion:reduce){
+@media(prefers-reduced-motion:reduce) and (hover:none){
  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 </style>
@@ -2624,7 +2624,7 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
 .ds-hero-note,.ds-newsletter{animation:fxContentFloat 8s ease-in-out infinite}
 @keyframes fxContentFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 @media(hover:none){.product-card:hover,.service-card:hover,.category-card:hover,.game-card:hover,.digital-card:hover,.ds-product-card:hover .ds-product-visual{transform:none;box-shadow:none}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body{animation:none!important}.fx-motion-ready [data-fx-reveal]{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}.ds-hero-note,.ds-newsletter{animation:none!important}*{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media(prefers-reduced-motion:reduce) and (hover:none){html{scroll-behavior:auto}body{animation:none!important}.fx-motion-ready [data-fx-reveal]{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}.ds-hero-note,.ds-newsletter{animation:none!important}*{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 
 </head>
@@ -3903,7 +3903,7 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
         <div class="ds-filter-tabs" id="ds-filter-tabs">
           <button class="active" type="button" data-ds-filter="All">All resources</button>
           <button type="button" data-ds-filter="Development">Development</button>
-          <button type="button" data-ds-filter="AI & Automation">AI &amp; AI</button>
+          <button type="button" data-ds-filter="AI & Automation">AI &amp; Automation</button>
           <button type="button" data-ds-filter="Design">Design</button>
           <button type="button" data-ds-filter="Business">Business</button>
         </div>
@@ -4301,7 +4301,7 @@ function enterStore(){
     setTimeout(()=>{
         entry.classList.add("hide");
         app.classList.add("ready");
-        window.setTimeout(showPullPromo,1800);
+        window.setTimeout(showPullPromo,600);
     },620);
 
     setTimeout(()=>{
@@ -5485,8 +5485,7 @@ window.addEventListener("DOMContentLoaded",()=>{
 
 <script id="fxnzz-motion-engine">
 (() => {
-  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) return;
+  // Run the reveal engine on desktop as well; reduced-motion CSS remains scoped to touch devices.
   const selectors = [
     'main section','section.hero','section:not(.entry)',' .product-card',
     '.service-card','.category-card','.game-card','.digital-card',
