@@ -2267,7 +2267,7 @@ body.cart-open{
     display:grid;
     gap:14px;
 }
-.team-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.team-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .team-card{
     position:relative;overflow:hidden;padding:24px;
     border:1px solid var(--line);border-radius:20px;
@@ -2327,6 +2327,55 @@ body.cart-open{
     .change-item{grid-template-columns:1fr;gap:5px}
 }
 
+
+
+
+/* Integrated source extensions: monochrome worker highlight + pull discovery modal. */
+.team-card.night45k{
+    border-color:rgba(255,255,255,.48);
+    background:radial-gradient(circle at 100% 0,rgba(255,255,255,.12),transparent 48%),var(--panel);
+    box-shadow:0 0 0 1px rgba(255,255,255,.06),0 16px 42px rgba(255,255,255,.045);
+}
+.team-card.night45k .team-role{
+    color:#f0f0f2;background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.24);
+}
+.team-card.night45k .btn{margin-top:14px}
+.pull-promo-overlay{
+    position:fixed;inset:0;z-index:10020;display:flex;align-items:center;justify-content:center;
+    padding:18px;background:rgba(3,3,8,.78);backdrop-filter:blur(12px);
+    opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .38s ease,visibility .38s ease;
+}
+.pull-promo-overlay.show{opacity:1;visibility:visible;pointer-events:auto}
+.pull-promo-modal{
+    position:relative;width:min(610px,100%);max-height:min(86vh,760px);overflow:auto;
+    padding:clamp(22px,4vw,34px);border:1px solid rgba(255,255,255,.24);border-radius:22px;
+    background:linear-gradient(145deg,rgba(30,30,34,.98),rgba(10,10,12,.99));
+    box-shadow:0 28px 100px rgba(0,0,0,.55),0 0 38px rgba(255,255,255,.055);
+    opacity:0;transform:translateY(24px) scale(.97);
+    transition:opacity .42s cubic-bezier(.2,.75,.2,1),transform .48s cubic-bezier(.2,.75,.2,1);
+}
+.pull-promo-overlay.show .pull-promo-modal{opacity:1;transform:translateY(0) scale(1)}
+.pull-promo-overlay.closing{opacity:0;visibility:visible;pointer-events:none}
+.pull-promo-overlay.closing .pull-promo-modal{opacity:0;transform:translateY(16px) scale(.985)}
+.pull-promo-close{position:absolute;top:12px;right:14px;width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font-size:24px;cursor:pointer}
+.pull-promo-modal h2{font-size:clamp(22px,4vw,30px);letter-spacing:-.7px;margin:12px 38px 10px 0}
+.pull-promo-intro,.pull-promo-note{color:var(--muted);font-size:12px;line-height:1.65}
+.pull-promo-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}
+.pull-promo-option{padding:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}
+.pull-promo-option strong{display:block;font-size:15px}
+.pull-promo-option .pull-promo-price{display:block;margin:7px 0;color:#f0f0f2;font-size:18px;font-weight:900}
+.pull-promo-option p{color:var(--muted);font-size:11px;line-height:1.5;margin-top:5px}
+.pull-promo-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.pull-promo-actions .btn{flex:1;min-width:140px}
+@media(max-width:480px){.pull-promo-options{grid-template-columns:1fr}.pull-promo-modal{padding:22px 17px}}
+@media(prefers-reduced-motion:reduce){
+    .pull-promo-overlay,.pull-promo-modal{transition:none!important}
+    .team-card.night45k{transition:none!important}
+}
+
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
 </style>
 <style id="fxnzz-evolution-styles">
 
@@ -2920,6 +2969,13 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
             <h3>DEON</h3>
             <p>Worker dengan fokus layanan <strong>Punishing: Gray Raven</strong>.</p>
             <div class="team-specialty">SPECIALTY <strong>PGR — Punishing: Gray Raven</strong></div>
+        </article>
+        <article class="team-card worker night45k">
+            <div class="team-role">✦ PGR SPECIALIST</div>
+            <h3>NIGHT45K</h3>
+            <p>Kontak layanan khusus PGR. Detail pekerjaan dan ketersediaan dikonfirmasi terlebih dahulu agar scope sesuai kebutuhan akun.</p>
+            <div class="team-specialty">GAME FOCUS <strong>Punishing: Gray Raven</strong></div>
+            <button class="btn" type="button" onclick="consultNight45K()">KONSULTASI PGR</button>
         </article>
         <article class="team-card worker">
             <div class="team-role">✦ SPECIALIST WORKER</div>
@@ -3687,6 +3743,22 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
 
 <!-- CART -->
 
+<!-- Integrated JOKI PULL SERVICE DISCOVERY -->
+<div class="pull-promo-overlay" id="pullPromoOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pullPromoTitle" onclick="if(event.target===this)closePullPromo()">
+  <div class="pull-promo-modal">
+    <button class="pull-promo-close" type="button" onclick="closePullPromo()" aria-label="Tutup popup">×</button>
+    <div class="eyebrow">SERVICE SPOTLIGHT · ZZZ</div>
+    <h2 id="pullPromoTitle">Joki Pull — pilih sesuai target</h2>
+    <p class="pull-promo-intro">Bandingkan jumlah pengerjaan dan harga tertera. Tidak ada paket yang ditandai paling unggul tanpa data operasional yang cukup; hasil gacha tetap mengikuti RNG game.</p>
+    <div id="pullPromoOptions" class="pull-promo-options"></div>
+    <p class="pull-promo-note">Resource akun, target pull, dan batas pengerjaan dikonfirmasi sebelum order.</p>
+    <div class="pull-promo-actions">
+      <button class="btn primary" type="button" onclick="showPullPackages()">LIHAT DETAIL</button>
+      <button class="btn" type="button" onclick="consultPullService()">KONSULTASI</button>
+    </div>
+  </div>
+</div>
+
 <div
     class="overlay"
     id="cartOverlay"
@@ -3904,13 +3976,13 @@ const packages = [
         game:"ZZZ", category:"ENDGAME",
         title:"Shiyu Defense — 3 STAR/Full Clear", image:"https://ik.imagekit.io/fans5/zzz_shiyu_defense_3_star_full_clear.png",
         desc:"Pengerjaan Shiyu Defense sampai target clear yang disepakati. Hasil clear bergantung pada roster, build, dan kondisi akun.",
-        price:8000, badge:""
+        price:20000, badge:""
     },
     {
         game:"ZZZ", category:"ENDGAME",
         title:"Deadly Assault — 3 STAR/Full Clear", image:"https://ik.imagekit.io/fans5/zzz_deadly_assault_3_star_full_clear.png",
         desc:"Pengerjaan Deadly Assault sesuai kemampuan akun dan target yang disepakati. Tidak menjamin skor tertentu jika akun belum memenuhi syarat.",
-        price:10000, badge:"POPULAR"
+        price:30000, badge:"POPULAR"
     },
     {
         game:"ZZZ", category:"ENDGAME",
@@ -3922,13 +3994,13 @@ const packages = [
         game:"ZZZ", category:"ENDGAME",
         title:"Endgame Combat Event", image:"https://ik.imagekit.io/fans5/zzz_endgame_combat_event.png",
         desc:"Pengerjaan combat event Annihillation.",
-        price:10000, badge:""
+        price:15000, badge:""
     },
     {
         game:"ZZZ", category:"ENDGAME",
         title:"Hollow Zero — Max + Full Clear", image:"https://ik.imagekit.io/fans5/zzz_hollow_zero_max_full_clear.png",
         desc:"Pengerjaan Hollow Zero pada difficulty maksimal yang tersedia, dengan target full clear sesuai kemampuan akun.",
-        price:15000, badge:""
+        price:22000, badge:""
     },
     {
         game:"ZZZ", category:"ENDGAME",
@@ -3945,25 +4017,25 @@ const packages = [
         game:"ZZZ", category:"FARMING",
         title:"Rawat Akun — 1 Patch", image:"https://ik.imagekit.io/fans5/zzz_rawat_akun_1_patch.png",
         desc:"Maintenance akun selama 1 patch: daily utama, Battery/Stamina secara efisien, weekly, farming resource prioritas, event aktif, dan progression rutin sesuai kondisi akun.",
-        price:50000, badge:""
+        price:150000, badge:""
     },
     {
         game:"ZZZ", category:"FARMING",
         title:"Rawat Akun — 2 Patch", image:"https://ik.imagekit.io/fans5/zzz_rawat_akun_2_patch.png",
         desc:"Maintenance akun selama 2 patch. Mencakup aktivitas rutin, Battery/Stamina, weekly, farming prioritas, event aktif, dan progression yang dapat dilanjutkan antar-patch.",
-        price:75000, badge:"BEST VALUE"
+        price:280000, badge:"BEST VALUE"
     },
     {
         game:"ZZZ", category:"FARMING",
         title:"Rawat Akun VIP — 1 Patch", image:"https://ik.imagekit.io/fans5/zzz_rawat_akun_vip_1_patch.png",
         desc:"Maintenance 1 patch dengan prioritas lebih tinggi: seluruh scope Rawat Akun, event, build/farming optimization, serta endgame seperti Shiyu, Deadly Assault, Hollow Zero, dan combat event sesuai kemampuan akun.",
-        price:85000, badge:"VIP"
+        price:240000, badge:"VIP"
     },
     {
         game:"ZZZ", category:"FARMING",
         title:"Rawat Akun VIP — 2 Patch", image:"https://ik.imagekit.io/fans5/zzz_rawat_akun_vip_2_patch.png",
         desc:"Maintenance VIP selama 2 patch dengan scope rutin + event + progression + build optimization + endgame. Prioritas disesuaikan dengan perkembangan akun setiap patch.",
-        price:135000, badge:"VIP"
+        price:420000, badge:"VIP"
     },
     {
         game:"ZZZ", category:"FARMING",
@@ -4003,22 +4075,22 @@ const packages = [
     {
         game:"ZZZ", category:"PULL",
         title:"10 Pull", image:"https://ik.imagekit.io/fans5/zzz_10_pull.png", desc:"Joki pull hingga 10 kali sesuai resource yang tersedia pada akun.",
-        price:13000, badge:""
+        price:16000, badge:""
     },
     {
         game:"ZZZ", category:"PULL",
         title:"30 Pull", image:"https://ik.imagekit.io/fans5/zzz_30_pull.png", desc:"Joki pull hingga 30 kali sesuai resource yang tersedia pada akun.",
-        price:33000, badge:""
+        price:32000, badge:""
     },
     {
         game:"ZZZ", category:"PULL",
         title:"50 Pull", image:"https://ik.imagekit.io/fans5/zzz_50_pull.png", desc:"Joki pull hingga 50 kali sesuai resource yang tersedia pada akun.",
-        price:55000, badge:""
+        price:56000, badge:""
     },
     {
         game:"ZZZ", category:"PULL",
         title:"100 Pull", image:"https://ik.imagekit.io/fans5/zzz_100_pull.png", desc:"Joki pull hingga 100 kali sesuai resource yang tersedia pada akun. Hasil gacha tetap mengikuti sistem RNG game.",
-        price:100000, badge:"BEST VALUE"
+        price:155000, badge:"BEST VALUE"
     },
 
     /* ==============================
@@ -4029,31 +4101,31 @@ const packages = [
         game:"PGR", category:"ENDGAME",
         title:"War Zone", image:"https://ik.imagekit.io/fans5/pgr_war_zone.png",
         desc:"Pengerjaan War Zone sesuai target yang disepakati dan kemampuan akun.",
-        price:15000, badge:"POPULAR"
+        price:10000, displayPrice:"10000-20000", badge:"POPULAR"
     },
     {
         game:"PGR", category:"ENDGAME",
         title:"Phantom Pain Cage", image:"https://ik.imagekit.io/fans5/pgr_phantom_pain_cage.png",
         desc:"Pengerjaan Phantom Pain Cage sesuai kondisi roster dan target layanan. Skor tidak dijamin jika build belum memadai.",
-        price:10000, badge:""
+        price:22000, badge:""
     },
     {
         game:"PGR", category:"ENDGAME",
         title:"Norman Revival Plan", image:"https://ik.imagekit.io/fans5/pgr_norman_revival_plan.png",
         desc:"Progress Norman Revival Plan sesuai stage yang dapat dicapai oleh akun dan target layanan.",
-        price:13000, badge:"BEST VALUE"
+        price:22000, badge:"BEST VALUE"
     },
     {
         game:"PGR", category:"ENDGAME",
         title:"Babel Tower", image:"https://ik.imagekit.io/fans5/pgr_babel_tower.png",
         desc:"Pengerjaan Babel Tower sesuai target dan kemampuan roster akun.",
-        price:10000, badge:""
+        price:20000, badge:""
     },
     {
         game:"PGR", category:"ENDGAME",
         title:"PGR Endgame Service", image:"https://ik.imagekit.io/fans5/pgr_pgr_endgame_service.png",
         desc:"Pengerjaan content endgame PGR yang tersedia dan disepakati sebelum order, dengan hasil menyesuaikan kondisi akun.",
-        price:15000, badge:"BEST VALUE"
+        price:30000, badge:"BEST VALUE"
     },
 
     /* ==============================
@@ -4064,13 +4136,13 @@ const packages = [
         game:"PGR", category:"FARMING",
         title:"Derived from matrix", image:"https://ik.imagekit.io/fans5/pgr_derived_from_matrix.png",
         desc:"farming stage DFM dengan /20 levelnya.",
-        price:8000, badge:""
+        price:7000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
         title:"Cursed Waves", image:"https://ik.imagekit.io/fans5/pgr_cursed_waves.png",
         desc:"Mengerjakan stage event Cursed Waves dengan /20 levelnya.",
-        price:10000, badge:"POPULAR"
+        price:8000, badge:"POPULAR"
     },
     {
         game:"PGR", category:"FARMING",
@@ -4088,19 +4160,19 @@ const packages = [
         game:"PGR", category:"FARMING",
         title:"The Goddfall Revelation", image:"https://ik.imagekit.io/fans5/pgr_the_goddfall_revelation.png",
         desc:"Pengerjaan content dan target Character Badges sesuai akses serta kondisi akun.",
-        price:25000, badge:""
+        price:35000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
         title:"Recitativo di Fantasia", image:"https://ik.imagekit.io/fans5/pgr_recitativo_di_fantasia.png",
         desc:"Pengerjaan progress dan clear content sesuai target yang disepakati.",
-        price:18000, badge:""
+        price:45000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
         title:"Story — 2 Chapter", image:"https://ik.imagekit.io/fans5/pgr_story_2_chapter.png",
         desc:"Penyelesaian hingga 2 chapter story sesuai akses akun. Quest tambahan di luar scope tidak otomatis termasuk.",
-        price:10000, badge:""
+        price:6000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
@@ -4123,31 +4195,31 @@ const packages = [
         game:"PGR", category:"FARMING",
         title:"Rawat Akun — 1 Patch", image:"https://ik.imagekit.io/fans5/pgr_rawat_akun_1_patch.png", 
         desc:"Maintenance akun selama 1 patch: aktivitas rutin, resource farming prioritas, weekly, event aktif, dan progression sesuai kondisi akun.",
-        price:35000, badge:""
+        price:65000, badge:""
     },
     {
         game:"PGR", category:"FARMING",
         title:"Rawat Akun — 2 Patch", image:"https://ik.imagekit.io/fans5/pgr_rawat_akun_2_patch.png", 
         desc:"Maintenance akun selama 2 patch dengan aktivitas rutin, farming prioritas, weekly, event aktif, dan progression yang dapat dilanjutkan antar-patch.",
-        price:55000, badge:"BEST VALUE"
+        price:110000, badge:"BEST VALUE"
     },
     {
         game:"PGR", category:"FARMING",
         title:"Rawat Akun VIP — 1 Patch", image:"https://ik.imagekit.io/fans5/pgr_rawat_akun_vip_1_patch.png",
         desc:"Maintenance VIP 1 patch: seluruh scope Rawat Akun, event, progression, build/farming optimization, serta endgame seperti War Zone, Phantom Pain Cage, Norman Revival Plan, dan Babel Tower sesuai kemampuan akun.",
-        price:75000, badge:"VIP"
+        price:135000, badge:"VIP"
     },
     {
         game:"PGR", category:"FARMING",
         title:"Rawat Akun VIP — 2 Patch", image:"https://ik.imagekit.io/fans5/pgr_rawat_akun_vip_2_patch.png",
         desc:"Maintenance VIP selama 2 patch dengan scope rutin + event + progression + build optimization + endgame, diprioritaskan berdasarkan perkembangan akun.",
-        price:125000, badge:"VIP"
+        price:170000, badge:"VIP"
     },
     {
         game:"PGR", category:"FARMING",
         title:"Rawat Akun VIP — 3 Patch", image:"https://ik.imagekit.io/fans5/pgr_rawat_akun_vip_3_patch.png",
         desc:"Maintenance VIP selama 3 patch dengan scope rutin, event, progression, build optimization, dan endgame sesuai kemampuan akun.",
-        price:140000, badge:"VIP"
+        price:285000, badge:"VIP"
     }
 ];
 
@@ -4229,6 +4301,7 @@ function enterStore(){
     setTimeout(()=>{
         entry.classList.add("hide");
         app.classList.add("ready");
+        window.setTimeout(showPullPromo,1800);
     },620);
 
     setTimeout(()=>{
@@ -5073,6 +5146,69 @@ document.addEventListener("visibilitychange",()=>{
     }
 });
 
+
+/* ==============================
+   INTEGRATED SOURCE EXTENSIONS
+   Pull discovery + NIGHT45K
+================================ */
+
+function consultNight45K(){
+    const message="Halo FXNZZ STORE, saya ingin konsultasi layanan NIGHT45K untuk Punishing: Gray Raven. Mohon konfirmasi scope, ketersediaan worker, harga, dan estimasi setelah detail akun saya jelaskan.";
+    const phone=String(ADMIN_WHATSAPP||"").replace(/\\D/g,"");
+    window.open(phone ? `https://wa.me/${phone}?text=${encodeURIComponent(message)}` : `https://wa.me/?text=${encodeURIComponent(message)}`,"_blank","noopener,noreferrer");
+}
+
+function consultPullService(){
+    const message="Halo FXNZZ STORE, saya ingin konsultasi layanan Joki Pull ZZZ. Mohon bantu cek target pull, resource akun, scope pengerjaan, dan total harga sebelum order.";
+    const phone=String(ADMIN_WHATSAPP||"").replace(/\\D/g,"");
+    window.open(phone ? `https://wa.me/${phone}?text=${encodeURIComponent(message)}` : `https://wa.me/?text=${encodeURIComponent(message)}`,"_blank","noopener,noreferrer");
+    closePullPromo();
+}
+
+function populatePullPromo(){
+    const container=document.getElementById("pullPromoOptions");
+    if(!container)return;
+    const pullPackages=packages.filter(item=>item.game==="ZZZ" && item.category==="PULL" && Number.isFinite(Number(item.price)));
+    container.innerHTML=pullPackages.map(item=>{
+        const escapeText=value=>String(value||"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+        const title=escapeText(item.title);
+        const desc=escapeText(item.desc);
+        const count=Number((String(item.title||"").match(/\\d+/)||[])[0])||0;
+        const unit=count?`${rupiah(Math.round(Number(item.price)/count))} per pull`:"Konfirmasi scope";
+        return `<article class="pull-promo-option"><strong>${title}</strong><span class="pull-promo-price">${rupiah(Number(item.price))}</span><p>${desc}</p><p><strong>Pembanding unit:</strong> ${unit}. Hasil gacha tidak dijamin.</p></article>`;
+    }).join("") || '<p class="pull-promo-note">Detail paket pull belum tersedia. Hubungi owner untuk konsultasi.</p>';
+}
+
+function showPullPromo(){
+    const overlay=document.getElementById("pullPromoOverlay");
+    if(!overlay)return;
+    try{if(sessionStorage.getItem("fxnzzPullPromoDismissed")==="1")return;}catch(error){}
+    populatePullPromo();
+    overlay.classList.remove("closing");
+    overlay.classList.add("show");
+    overlay.setAttribute("aria-hidden","false");
+}
+
+function closePullPromo(){
+    const overlay=document.getElementById("pullPromoOverlay");
+    if(!overlay || !overlay.classList.contains("show"))return;
+    overlay.classList.remove("show");
+    overlay.classList.add("closing");
+    overlay.setAttribute("aria-hidden","true");
+    window.setTimeout(()=>overlay.classList.remove("closing"),480);
+    try{sessionStorage.setItem("fxnzzPullPromoDismissed","1");}catch(error){}
+}
+
+function showPullPackages(){
+    closePullPromo();
+    renderPackages("PULL");
+    document.querySelectorAll(".filter button").forEach(button=>button.classList.remove("active"));
+    scrollToId("services");
+}
+
+document.addEventListener("keydown",event=>{
+    if(event.key==="Escape")closePullPromo();
+});
 
 /* ==============================
    ADMIN CHAT
