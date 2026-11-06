@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#050506">
 <meta name="color-scheme" content="dark">
-<meta name="description" content="FXNZZ — gaming services and a growing collection of digital resources.">
-<title>FXNZZ — Gaming & Digital Services</title>
+<meta name="description" content="FXNZZ WEB UPDATE — Gaming services, PGR and ZZZ account care, and digital resources.">
+<title>[FXNZZ WEB UPDATE] — FXNZZ Gaming &amp; Digital Services</title>
 
 <style>
 :root{
@@ -40,13 +40,15 @@ html{
     scroll-behavior:smooth;
     overflow-x:clip;
     overflow-y:auto;
+    scroll-padding-top:88px;
 }
 
 body{
     min-height:100vh;
     overflow-x:clip;
-    overflow-y:auto;
-    touch-action:pan-y;
+    /* Keep the document viewport (html) as the only vertical scroller. */
+    overflow-y:visible;
+    touch-action:auto;
     background:
         radial-gradient(circle at 15% 10%,rgba(255,255,255,.13),transparent 28%),
         radial-gradient(circle at 85% 20%,rgba(255,255,255,.12),transparent 30%),
@@ -646,13 +648,7 @@ body::after{
     82%{opacity:.18;transform:scale(1);}
 }
 
-@media(prefers-reduced-motion:reduce) and (hover:none){
-    .nav .brand,
-    .nav .brand::before,
-    .nav .brand::after{
-        animation:none;
-    }
-}
+/* reduced-motion behavior is centralized in #fxnzz-motion-final */
 
 /* =========================
    APP
@@ -901,7 +897,6 @@ section{
         border-color .2s ease,
         background .2s ease;
     font-weight:700;
-    will-change:transform;
 }
 
 .btn:hover{
@@ -1379,68 +1374,6 @@ section{
 .form-group textarea:focus,
 .form-group select:focus{
     border-color:rgba(255,255,255,.5);
-}
-
-/* =========================
-   TRACKER
-/* =========================
-   TRACKER
-========================= */
-
-.tracker{
-    position:relative;
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:10px;
-}
-
-.tracker::before{
-    content:"";
-    position:absolute;
-    top:18px;
-    left:8%;
-    right:8%;
-    height:2px;
-    background:var(--line);
-}
-
-.step{
-    position:relative;
-    z-index:1;
-    text-align:center;
-}
-
-.step-dot{
-    width:36px;
-    height:36px;
-    margin:auto;
-    display:grid;
-    place-items:center;
-    border-radius:50%;
-    background:#171720;
-    border:1px solid var(--line);
-    color:#666;
-    font-size:11px;
-    font-weight:900;
-    transition:.25s;
-}
-
-.step.done .step-dot{
-    color:white;
-    background:var(--accent);
-    border-color:var(--accent);
-    box-shadow:0 0 22px rgba(255,255,255,.25);
-}
-
-.step span{
-    display:block;
-    margin-top:10px;
-    color:#777;
-    font-size:10px;
-}
-
-.step.done span{
-    color:#ccc;
 }
 
 /* =========================
@@ -2092,37 +2025,7 @@ body.cart-open{
     .payment-method small{
         font-size:8px;
     }
-
-    .tracker{
-        grid-template-columns:1fr;
-        gap:15px;
-    }
-
-    .tracker::before{
-        top:18px;
-        bottom:18px;
-        left:17px;
-        width:2px;
-        height:auto;
-    }
-
-    .step{
-        display:flex;
-        align-items:center;
-        text-align:left;
-        gap:12px;
-    }
-
-    .step-dot{
-        flex-shrink:0;
-        margin:0;
-    }
-
-    .step span{
-        margin:0;
-    }
-
-    .support{
+.support{
         grid-template-columns:1fr;
     }
 
@@ -2261,121 +2164,23 @@ body.cart-open{
 
 
 /* =========================
-   TEAM / MODULE STATUS / CHANGELOG
+   TEAM / WORKER CARDS
 ========================= */
-.team-grid,.module-grid,.changelog-list{
-    display:grid;
-    gap:14px;
-}
-.team-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-.team-card{
-    position:relative;overflow:hidden;padding:24px;
-    border:1px solid var(--line);border-radius:20px;
-    background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.02));
-}
-.team-card.owner{
-    border-color:rgba(255,255,255,.36);
-    background:radial-gradient(circle at 100% 0,rgba(255,255,255,.14),transparent 46%),var(--panel);
-}
-.team-card.worker{
-    border-color:rgba(255,255,255,.25);
-    background:radial-gradient(circle at 100% 0,rgba(255,255,255,.12),transparent 46%),var(--panel);
-}
-.team-role{
-    display:inline-flex;align-items:center;gap:7px;
-    padding:6px 9px;border-radius:8px;margin-bottom:16px;
-    font-size:9px;font-weight:900;letter-spacing:1.2px;
-    color:#ff9ab8;background:rgba(255,255,255,.1);
-    border:1px solid rgba(255,255,255,.2);
-}
-.team-card.worker .team-role{
-    color:#d4a7ff;background:rgba(255,255,255,.1);
-    border-color:rgba(255,255,255,.25);
-}
-.team-card h3{font-size:24px;letter-spacing:-.6px}
-.team-card p{margin-top:9px;color:var(--muted);font-size:13px;line-height:1.7}
-.team-specialty{
-    margin-top:17px;padding-top:14px;border-top:1px solid var(--line);
-    color:#ddd;font-size:11px;line-height:1.6;
-}
-.module-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
-.module-card{
-    padding:17px;border:1px solid var(--line);border-radius:15px;background:var(--panel);
-}
-.module-card strong{display:block;font-size:13px;margin-bottom:8px}
-.module-card p{color:var(--muted);font-size:11px;line-height:1.55}
-.module-status{
-    display:inline-flex;padding:5px 8px;border-radius:7px;margin-bottom:12px;
-    font-size:9px;font-weight:900;letter-spacing:.7px;
-}
-.module-status.active{color:#79edbb;background:rgba(53,230,154,.09);border:1px solid rgba(53,230,154,.2)}
-.module-status.dev{color:#ffd27c;background:rgba(255,200,87,.09);border:1px solid rgba(255,200,87,.2)}
-.module-status.soon{color:#c9a0ff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2)}
-.changelog-list{grid-template-columns:1fr}
-.change-item{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
-.change-date{color:#ff83a6;font-size:11px;font-weight:800}
-.change-item strong{font-size:12px}
-.change-item p{margin-top:5px;color:var(--muted);font-size:11px;line-height:1.6}
-.config-note{margin-top:15px;padding:16px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025);color:var(--muted);font-size:11px;line-height:1.7}
-@media(max-width:950px){
-    .team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:650px){
-    .team-grid,.module-grid{grid-template-columns:1fr}
-    .team-card{padding:19px}
-    .change-item{grid-template-columns:1fr;gap:5px}
-}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.team-card{position:relative;overflow:hidden;padding:18px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.02))}
+.team-card.owner{border-color:rgba(255,255,255,.36);background:radial-gradient(circle at 100% 0,rgba(255,255,255,.14),transparent 46%),var(--panel)}
+.team-card.worker{border-color:rgba(255,255,255,.25);background:radial-gradient(circle at 100% 0,rgba(255,255,255,.12),transparent 46%),var(--panel)}
+.team-role{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:7px;margin-bottom:11px;font-size:8px;font-weight:900;letter-spacing:1px;color:#e8e8eb;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2)}
+.team-card.worker .team-role{color:#dedee2;background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2)}
+.team-card h3{font-size:19px;letter-spacing:-.5px;line-height:1.15}
+.team-card p{margin-top:7px;color:var(--muted);font-size:11px;line-height:1.55}
+.team-specialty{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);color:#ddd;font-size:9px;line-height:1.55}
+.team-card.night45k{border-color:rgba(255,255,255,.48);background:radial-gradient(circle at 100% 0,rgba(255,255,255,.12),transparent 48%),var(--panel);box-shadow:0 0 0 1px rgba(255,255,255,.06),0 12px 28px rgba(255,255,255,.035)}
+.team-card.night45k .team-role{color:#f0f0f2;background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.24)}
+.team-card.night45k .btn{margin-top:10px;padding:9px 12px;font-size:9px}
+@media(max-width:950px){.team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.team-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.team-card{padding:12px;border-radius:13px}.team-role{font-size:7px;letter-spacing:.5px;padding:4px 6px;margin-bottom:8px}.team-card h3{font-size:15px}.team-card p{font-size:9px;line-height:1.45}.team-specialty{font-size:8px;margin-top:9px;padding-top:8px}.team-card.night45k .btn{width:100%;padding:8px 5px;font-size:8px}}
 
-
-
-
-/* Integrated source extensions: monochrome worker highlight + pull discovery modal. */
-.team-card.night45k{
-    border-color:rgba(255,255,255,.48);
-    background:radial-gradient(circle at 100% 0,rgba(255,255,255,.12),transparent 48%),var(--panel);
-    box-shadow:0 0 0 1px rgba(255,255,255,.06),0 16px 42px rgba(255,255,255,.045);
-}
-.team-card.night45k .team-role{
-    color:#f0f0f2;background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.24);
-}
-.team-card.night45k .btn{margin-top:14px}
-.pull-promo-overlay{
-    position:fixed;inset:0;z-index:10020;display:flex;align-items:center;justify-content:center;
-    padding:18px;background:rgba(3,3,8,.78);backdrop-filter:blur(12px);
-    opacity:0;visibility:hidden;pointer-events:none;
-    transition:opacity .38s ease,visibility .38s ease;
-}
-.pull-promo-overlay.show{opacity:1;visibility:visible;pointer-events:auto}
-.pull-promo-modal{
-    position:relative;width:min(610px,100%);max-height:min(86vh,760px);overflow:auto;
-    padding:clamp(22px,4vw,34px);border:1px solid rgba(255,255,255,.24);border-radius:22px;
-    background:linear-gradient(145deg,rgba(30,30,34,.98),rgba(10,10,12,.99));
-    box-shadow:0 28px 100px rgba(0,0,0,.55),0 0 38px rgba(255,255,255,.055);
-    opacity:0;transform:translateY(24px) scale(.97);
-    transition:opacity .42s cubic-bezier(.2,.75,.2,1),transform .48s cubic-bezier(.2,.75,.2,1);
-}
-.pull-promo-overlay.show .pull-promo-modal{opacity:1;transform:translateY(0) scale(1)}
-.pull-promo-overlay.closing{opacity:0;visibility:visible;pointer-events:none}
-.pull-promo-overlay.closing .pull-promo-modal{opacity:0;transform:translateY(16px) scale(.985)}
-.pull-promo-close{position:absolute;top:12px;right:14px;width:36px;height:36px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font-size:24px;cursor:pointer}
-.pull-promo-modal h2{font-size:clamp(22px,4vw,30px);letter-spacing:-.7px;margin:12px 38px 10px 0}
-.pull-promo-intro,.pull-promo-note{color:var(--muted);font-size:12px;line-height:1.65}
-.pull-promo-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}
-.pull-promo-option{padding:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}
-.pull-promo-option strong{display:block;font-size:15px}
-.pull-promo-option .pull-promo-price{display:block;margin:7px 0;color:#f0f0f2;font-size:18px;font-weight:900}
-.pull-promo-option p{color:var(--muted);font-size:11px;line-height:1.5;margin-top:5px}
-.pull-promo-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.pull-promo-actions .btn{flex:1;min-width:140px}
-@media(max-width:480px){.pull-promo-options{grid-template-columns:1fr}.pull-promo-modal{padding:22px 17px}}
-@media(prefers-reduced-motion:reduce) and (hover:none){
-    .pull-promo-overlay,.pull-promo-modal{transition:none!important}
-    .team-card.night45k{transition:none!important}
-}
-
-html{scroll-behavior:smooth;scroll-padding-top:88px}
-@media(prefers-reduced-motion:reduce) and (hover:none){html{scroll-behavior:auto!important}}
 </style>
 <style id="fxnzz-evolution-styles">
 
@@ -2492,7 +2297,7 @@ html{scroll-behavior:smooth;scroll-padding-top:88px}
 .ds-toast{position:fixed;left:50%;bottom:20px;z-index:2450;max-width:calc(100% - 30px);padding:11px 15px;background:#eee;color:#090909;font-size:10px;opacity:0;transform:translate(-50%,12px);pointer-events:none;transition:.25s}.ds-toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:850px){.ds-nav{gap:12px}.ds-hero-grid{grid-template-columns:1fr 210px;gap:25px}.ds-manifesto{grid-template-columns:120px 1fr 50px}.ds-product-grid{gap:24px 13px}}
 @media(max-width:680px){.ds-container,.ds-hero{width:calc(100% - 36px)}.ds-announcement{padding:0 18px;font-size:7px}.ds-announcement span:last-child{display:none}.ds-header{height:62px;padding:0 18px;gap:8px}.ds-brand{font-size:20px}.ds-brand small{font-size:6px;margin-left:5px}.ds-nav{gap:8px}.ds-nav button{font-size:9px;padding:7px 0}.ds-header-actions{display:none}.ds-hero{padding-top:42px}.ds-hero-kicker{font-size:7px}.ds-hero-grid{display:block;padding:34px 0 8px}.ds-hero h1{font-size:clamp(52px,13vw,80px)}.ds-hero-note{max-width:300px;margin-top:25px}.ds-hero-bottom{height:160px;padding-bottom:18px}.ds-orbit-art{width:175px;height:135px}.ds-orbit-one{width:165px;height:70px}.ds-orbit-two{width:130px;height:115px}.ds-orbit-art strong{font-size:43px}.ds-orbit-art small{font-size:6px;right:-4px}.ds-hero-bottom{font-size:6px}.ds-intro-inner{min-height:130px;grid-template-columns:1fr 42px;gap:7px}.ds-intro-inner .ds-eyebrow{grid-column:1/-1;align-self:end}.ds-intro-inner p{font-size:22px;padding-bottom:13px}.ds-intro-inner .ds-mono{align-self:end;padding-bottom:17px}.ds-section{padding-top:65px;padding-bottom:70px}.ds-section-heading{align-items:flex-start;flex-direction:column;gap:13px}.ds-section-heading h2{font-size:36px}.ds-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:23px 11px}.ds-visual-mark{font-size:38px}.ds-visual-index,.ds-visual-type{font-size:6px}.ds-product-title{font-size:17px}.ds-product-description{font-size:9px}.ds-category-band,.ds-coming-band{padding:60px 0 68px}.ds-category-list button{grid-template-columns:27px 1fr 20px;gap:8px;padding:15px 0}.ds-category-list button strong{font-size:23px}.ds-category-list button small{display:none}.ds-manifesto{grid-template-columns:1fr 40px;gap:12px;padding-top:65px;padding-bottom:68px}.ds-manifesto-label{grid-column:1/-1;flex-direction:row}.ds-manifesto-content h2{font-size:42px}.ds-manifesto-content p{font-size:10px}.ds-manifesto-stamp{font-size:35px}.ds-coming-grid{grid-template-columns:1fr;gap:8px}.ds-coming-grid article{min-height:auto;padding:16px}.ds-coming-grid h3{margin-top:14px}.ds-newsletter{display:block;padding-top:35px;padding-bottom:38px}.ds-newsletter h2{font-size:30px}.ds-newsletter .ds-button{margin-top:17px}.ds-footer-top{grid-template-columns:1fr 1fr;gap:20px;padding-top:30px}.ds-footer-top>p{font-size:18px}.ds-footer-links{grid-column:1/-1;justify-content:flex-start}.ds-footer-bottom{flex-wrap:wrap;padding:12px 0;font-size:6px}.ds-page-topline{padding-top:26px}.ds-page-intro{display:block;padding:39px 0 33px}.ds-page-intro h1{font-size:58px}.ds-page-intro p{margin-top:17px}.ds-catalog-toolbar{display:block}.ds-filter-tabs{margin-bottom:12px}.ds-catalog-controls input{width:60%;min-width:0}.ds-catalog-controls select{min-width:100px}.ds-catalog-meta{font-size:6px}.ds-detail-grid{grid-template-columns:1fr;gap:25px;padding-top:25px}.ds-detail-visual{min-height:250px}.ds-detail-visual strong{font-size:76px}.ds-detail-copy h1{font-size:40px}.ds-about-grid{grid-template-columns:1fr;gap:20px;padding:20px 0 65px}.ds-faq-list summary{font-size:18px}}
-@media(prefers-reduced-motion:reduce) and (hover:none){.entry::after,.entry-evolve,.entry-evolve::before,.entry-evolve::after,.store-view.is-leaving,#digitalStoreView .ds-page{animation:none!important;transition:none!important}.store-view.is-active{animation:none!important;opacity:1!important;transform:none!important;filter:none!important;transition:none!important}}
+/* reduced-motion behavior is centralized in #fxnzz-motion-final */
 
 </style>
 
@@ -2582,8 +2387,7 @@ img{max-width:100%}
  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
  .section-head h2{font-size:27px}
  .panel{padding:17px}
- .tracker{gap:4px}
- .step span{font-size:8px}
+.step span{font-size:8px}
  .floating-cart{right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px))}
  footer{flex-direction:column}
  .social-links{justify-content:flex-start}
@@ -2596,35 +2400,233 @@ img{max-width:100%}
  .package-desc{font-size:9px}
  .price{font-size:13px}
 }
-@media(prefers-reduced-motion:reduce) and (hover:none){
- *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-}
+/* reduced-motion behavior is centralized in #fxnzz-motion-final */
 </style>
 
 
-<style id="fxnzz-motion-refinement">
-:root{--motion-ease:cubic-bezier(.22,.8,.24,1)}
-html{scroll-behavior:smooth}
-body{background-image:radial-gradient(ellipse at 12% 8%,rgba(255,255,255,.055),transparent 34%),radial-gradient(ellipse at 88% 42%,rgba(180,180,180,.035),transparent 38%),linear-gradient(135deg,#050505,#090909 48%,#050505);background-size:160% 160%;animation:fxAtmosphere 24s ease-in-out infinite alternate}
-@keyframes fxAtmosphere{0%{background-position:0% 0%,100% 100%,0% 50%}100%{background-position:35% 25%,65% 70%,100% 50%}}
-/* Soft reveal: elements enter naturally as the user scrolls. */
-.fx-motion-ready [data-fx-reveal]{opacity:0;transform:translate3d(0,26px,0) scale(.985);filter:blur(3px);transition:opacity .85s var(--motion-ease),transform .85s var(--motion-ease),filter .85s var(--motion-ease);transition-delay:var(--fx-delay,0ms);will-change:opacity,transform}
-.fx-motion-ready [data-fx-reveal].fx-visible{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0);will-change:auto}
-/* More tactile cards and controls. */
-.product-card,.ds-product-card,.service-card,.category-card,.game-card,.digital-card{transition:transform .55s var(--motion-ease),border-color .4s ease,box-shadow .55s var(--motion-ease);transform:translateZ(0)}
-.product-card:hover,.service-card:hover,.category-card:hover,.game-card:hover,.digital-card:hover{transform:translate3d(0,-7px,0);box-shadow:0 18px 48px rgba(0,0,0,.32)}
-.ds-product-visual{transition:transform .7s var(--motion-ease),border-color .45s ease,filter .7s ease}
-.ds-product-card:hover .ds-product-visual{transform:translateY(-5px) scale(1.018);filter:brightness(1.12)}
-button,a,.ds-button,.switcher-option{ -webkit-tap-highlight-color:transparent;transition-timing-function:var(--motion-ease)}
-button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
-.ds-category-list button{transition:padding .35s var(--motion-ease),color .35s ease,background .35s ease}
-.ds-category-list button:hover{padding-left:16px}
-/* Gentle ambient drift for decorative elements only. */
-.entry::before,.entry::after{transform-origin:center;will-change:transform,opacity}
-.ds-hero-note,.ds-newsletter{animation:fxContentFloat 8s ease-in-out infinite}
-@keyframes fxContentFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-@media(hover:none){.product-card:hover,.service-card:hover,.category-card:hover,.game-card:hover,.digital-card:hover,.ds-product-card:hover .ds-product-visual{transform:none;box-shadow:none}}
-@media(prefers-reduced-motion:reduce) and (hover:none){html{scroll-behavior:auto}body{animation:none!important}.fx-motion-ready [data-fx-reveal]{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}.ds-hero-note,.ds-newsletter{animation:none!important}*{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+<style id="fxnzz-update-overrides">
+/* FXNZZ WEB UPDATE — compact UI, lightweight motion and detail views */
+.package{min-height:0;padding:14px;border-radius:16px}
+.package-image-wrap{aspect-ratio:16/8.5;margin-bottom:10px;border-radius:10px}
+.package-top{align-items:center;min-height:18px}
+.package h3{margin-top:10px;font-size:15px;line-height:1.28;min-height:2.55em}
+.package .price{padding-top:10px;font-size:18px}
+.package .price span{font-size:9px}
+.package .btn{margin-top:10px;padding:10px 12px;font-size:10px}
+.package-price-list{display:grid;gap:4px;margin-top:9px;padding:8px 9px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.025)}
+.package-price-list div{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:9px;line-height:1.35}
+.package-price-list span{color:#8f8f97}
+.package-price-list strong{color:#f3f3f4;font-size:9px;text-align:right}
+.package.empty-slot{opacity:.55}
+.package-detail-open{overflow:hidden}
+.package-detail-overlay{position:fixed;inset:0;z-index:2200;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility .22s ease}
+.package-detail-overlay.show{opacity:1;visibility:visible;pointer-events:auto}
+.package-detail-modal{position:relative;width:min(820px,100%);max-height:min(88vh,820px);overflow:auto;border:1px solid rgba(255,255,255,.16);border-radius:20px;background:#101012;box-shadow:0 24px 80px rgba(0,0,0,.55);transform:translateY(10px);transition:transform .22s ease;-webkit-overflow-scrolling:touch}
+.package-detail-overlay.show .package-detail-modal{transform:translateY(0)}
+.package-detail-close{position:sticky;top:10px;float:right;z-index:3;width:34px;height:34px;margin:10px 10px -44px 0;border:1px solid rgba(255,255,255,.18);border-radius:9px;background:rgba(15,15,17,.92);color:#fff;font-size:22px;cursor:pointer}
+.package-detail-layout{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:22px;padding:22px}
+.package-detail-media{min-height:240px;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:13px;background:#151518}
+.package-detail-media img{display:block;width:100%;height:100%;min-height:240px;max-height:420px;object-fit:cover}
+.package-detail-copy{min-width:0;padding:5px 2px 2px}
+.package-detail-copy h2{margin:7px 36px 8px 0;font-size:clamp(22px,3vw,31px);line-height:1.16;letter-spacing:-.8px}
+.package-detail-summary{margin:0 0 15px;color:#a1a1a8;font-size:11px;line-height:1.65}
+.package-detail-scope,.package-detail-pricing{padding:13px 0;border-top:1px solid rgba(255,255,255,.1)}
+.package-detail-scope h3,.package-detail-pricing h3{margin-bottom:8px;color:#aaa;font-size:9px;letter-spacing:1.1px}
+.package-detail-scope ul{display:grid;gap:6px;padding-left:18px;color:#d0d0d4;font-size:10px;line-height:1.55}
+.detail-price-options{display:grid;gap:5px}
+.detail-price-options div{display:flex;justify-content:space-between;gap:12px;padding:7px 9px;border:1px solid rgba(255,255,255,.08);border-radius:8px;background:rgba(255,255,255,.025);font-size:10px}
+.detail-price-options span{color:#999}
+.detail-price-options strong,.detail-single-price{color:#fff;font-weight:800}
+.detail-single-price{font-size:21px}.detail-single-price small{color:#999;font-size:10px;font-weight:500}
+.detail-select-label{display:block;margin:12px 0 6px;color:#aaa;font-size:9px;letter-spacing:.8px}
+#packagePatchChoice{width:100%;padding:10px 11px;border:1px solid rgba(255,255,255,.16);border-radius:9px;background:#18181b;color:#fff;font-size:11px}
+.detail-choice-note{margin-top:7px;color:#8f8f97;font-size:9px;line-height:1.5}
+.package-detail-actions{display:flex;gap:8px;margin-top:14px}
+.package-detail-actions .btn{flex:1;margin:0;padding:11px 9px;font-size:9px}
+.team-card{padding:16px}
+.team-card h3{font-size:18px}
+.team-card p{font-size:10px}
+.team-specialty{font-size:9px}
+#ds-product-detail .ds-detail-visual{overflow:hidden}
+.ds-product-visual{overflow:hidden}
+.ds-product-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.82}
+.ds-product-visual.has-photo .ds-visual-mark{z-index:2;padding:6px 10px;background:rgba(0,0,0,.45);color:#fff;font-size:25px;text-shadow:0 2px 14px #000}
+.ds-detail-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.72}
+.ds-detail-visual strong{position:relative;z-index:1;text-shadow:0 2px 18px #000}
+/* Stop continuous background and scroll effects from taxing mobile GPUs. */
+body{animation:none!important;background-size:auto!important}
+.ambient-orb{width:320px;height:320px;filter:blur(8px);opacity:.45;animation:none!important}
+.ambient-particles i{animation-duration:24s!important;opacity:.35}
+.fx-motion-ready [data-fx-reveal]{filter:none!important;transform:translate3d(0,10px,0)!important;transition:opacity .38s ease,transform .38s ease!important;transition-delay:0ms!important;will-change:auto!important}
+.fx-motion-ready [data-fx-reveal].fx-visible{filter:none!important;transform:none!important}
+.package,.team-card,.game-card,.ds-product-card,.ds-product-visual{transition-duration:.22s!important}
+.package:hover,.team-card:hover,.game-card:hover{transform:translateY(-2px)}
+.nav{backdrop-filter:blur(8px)}
+@media(max-width:950px){.package-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.package{padding:11px}.package h3{font-size:13px}.package-price-list{padding:7px}.package-price-list div,.package-price-list strong{font-size:8px}}
+@media(max-width:650px){
+ .package-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .package{padding:9px;border-radius:13px}
+ .package-image-wrap{aspect-ratio:16/8;margin-bottom:7px}
+ .package h3{font-size:12px;line-height:1.25;min-height:2.5em;margin-top:7px}
+ .package-category{font-size:7px;letter-spacing:.45px}
+ .package .btn{font-size:8px;padding:8px 5px;margin-top:8px}
+ .package .price{font-size:14px;padding-top:7px}
+ .package-price-list{gap:3px;padding:6px 6px;margin-top:6px}
+ .package-price-list div,.package-price-list strong{font-size:7px}
+ .team-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .team-card{padding:10px;border-radius:12px}
+ .team-role{font-size:6px;letter-spacing:.35px;padding:4px 5px;margin-bottom:7px}
+ .team-card h3{font-size:14px}
+ .team-card p{font-size:8px;line-height:1.4}
+ .team-specialty{font-size:7px;line-height:1.4;margin-top:7px;padding-top:7px}
+ .team-card.night45k .btn{font-size:7px;padding:7px 4px}
+ .package-detail-overlay{padding:8px;align-items:flex-end}
+ .package-detail-modal{width:100%;max-height:90dvh;border-radius:17px 17px 12px 12px}
+ .package-detail-layout{grid-template-columns:1fr;gap:13px;padding:13px}
+ .package-detail-media{max-height:145px;min-height:130px}
+ .package-detail-media img{min-height:130px;max-height:145px}
+ .package-detail-copy h2{font-size:22px}
+ .package-detail-scope ul{font-size:9px;gap:5px}
+ .package-detail-actions .btn{font-size:8px}
+ .ds-detail-grid{padding-bottom:50px}
+}
+/* reduced-motion behavior is centralized in #fxnzz-motion-final */
+</style>
+
+
+<style id="fxnzz-motion-final">
+:root{--fx-motion-ease:cubic-bezier(.22,.78,.22,1)}
+
+/* Viewport owns vertical scrolling; body remains content-sized. */
+html:not(.cart-open){
+  overflow-x:clip!important;
+  overflow-y:auto!important;
+  scroll-behavior:smooth!important;
+  scroll-padding-top:88px;
+}
+body:not(.cart-open){
+  overflow:visible!important;
+  overflow-x:clip!important;
+  touch-action:auto!important;
+  min-height:100vh;
+}
+@media(max-width:650px){
+  html:not(.cart-open){scroll-padding-top:76px}
+  body:not(.cart-open){overscroll-behavior-y:auto}
+}
+
+/* Entry intro: animation is explicitly armed after DOM is ready. */
+#entry .fx-title .fx-full{
+  opacity:0;
+  transform:translate3d(0,18px,0) scale(.97);
+  animation:none;
+}
+#entry.is-ready .fx-title .fx-full{
+  animation:fxBrandEnter .82s var(--fx-motion-ease) .12s both;
+}
+#entry .entry-evolve{
+  opacity:0;
+  transform:translate3d(0,9px,0);
+  animation:none;
+}
+#entry.is-ready .entry-evolve{
+  animation:fxEvolveEnter .58s var(--fx-motion-ease) .65s both,
+            evolveFlicker 4.8s steps(1,end) 1.55s infinite;
+}
+#entry.is-ready .entry-evolve::before{animation:evolveGlitchA 3.6s 1.8s infinite steps(1,end)}
+#entry.is-ready .entry-evolve::after{animation:evolveGlitchB 2.9s 1.9s infinite steps(1,end)}
+#entryTitle.slashing h1{animation:fxTitleWhiteFlash .62s ease both}
+#entry.is-exiting{pointer-events:none;animation:fxEntryFadeOut .66s ease both}
+#entry.is-exiting .entry-box{animation:fxEntryContentOut .48s ease both}
+#entry.is-exiting .fx-title .fx-full{animation:fxBrandExit .42s cubic-bezier(.3,.7,.2,1) both}
+#entry.hide{opacity:0!important;visibility:hidden!important;pointer-events:none!important;transition:none!important}
+@keyframes fxBrandEnter{
+  0%{opacity:0;transform:translate3d(0,22px,0) scale(.94);clip-path:inset(0 0 100% 0)}
+  65%{opacity:1;transform:translate3d(0,-2px,0) scale(1.012);clip-path:inset(0)}
+  100%{opacity:1;transform:translate3d(0,0,0) scale(1);clip-path:inset(0)}
+}
+@keyframes fxEvolveEnter{from{opacity:0;transform:translate3d(0,10px,0);letter-spacing:.34em}to{opacity:1;transform:none;letter-spacing:.26em}}
+@keyframes fxTitleWhiteFlash{0%{filter:brightness(1)}28%{filter:brightness(2.2)}100%{filter:brightness(1)}}
+@keyframes fxBrandExit{to{opacity:0;transform:translate3d(38px,0,0) skewX(-10deg)}}
+@keyframes fxEntryContentOut{to{opacity:0;transform:translate3d(0,-12px,0)}}
+@keyframes fxEntryFadeOut{to{opacity:0;visibility:hidden}}
+
+/* Store transition: opacity + short translate, no expensive blur filter. */
+.overlay{overflow:hidden}
+.store-view{
+  display:none;
+  opacity:0;
+  transform:translate3d(0,10px,0);
+  filter:none!important;
+  will-change:auto;
+}
+.store-view.is-active{
+  display:block;
+  pointer-events:auto;
+  animation:fxStoreEnter .42s var(--fx-motion-ease) both;
+}
+.store-view.is-leaving{
+  display:block;
+  pointer-events:none;
+  animation:fxStoreLeave .24s ease both;
+}
+.app.store-hidden{display:none!important}
+@keyframes fxStoreEnter{from{opacity:0;transform:translate3d(0,12px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes fxStoreLeave{to{opacity:0;transform:translate3d(0,-8px,0)}}
+
+/* Scroll reveal: modest movement and opacity only; no per-card blur. */
+.fx-motion-ready [data-fx-reveal]{
+  opacity:0;
+  transform:translate3d(0,13px,0);
+  filter:none!important;
+  transition:opacity .46s var(--fx-motion-ease),transform .46s var(--fx-motion-ease);
+  transition-delay:var(--fx-delay,0ms);
+}
+.fx-motion-ready [data-fx-reveal].fx-visible{
+  opacity:1;
+  transform:translate3d(0,0,0);
+  filter:none!important;
+}
+.package,.team-card,.game-card,.ds-product-card,.ds-product-visual{
+  transition-duration:.28s;
+  transition-timing-function:var(--fx-motion-ease);
+}
+@media(max-width:650px){
+  .fx-motion-ready [data-fx-reveal]{
+    transform:translate3d(0,7px,0);
+    transition-duration:.34s;
+    transition-delay:0ms;
+  }
+  .package,.team-card,.game-card,.ds-product-card,.ds-product-visual{transition-duration:.18s}
+}
+@media(hover:none){
+  .package:hover,.team-card:hover,.game-card:hover{transform:none}
+  .ds-product-card:hover .ds-product-visual{transform:none;filter:none}
+}
+@media(max-width:360px){
+  #entry h1{font-size:clamp(42px,13.5vw,46px);letter-spacing:-.08em}
+  #entry .entry-title-wrap{max-width:100%}
+  #entry .fx-title .fx-store{letter-spacing:-.08em}
+}
+
+/* Respect the visitor's OS-level reduced-motion preference while keeping all content visible. */
+@media(prefers-reduced-motion:reduce){
+  html:not(.cart-open){scroll-behavior:auto!important}
+  #entry .entry-box{animation:none!important;opacity:1!important;transform:none!important}
+  #entry .fx-title .fx-full,#entry .entry-evolve{
+    opacity:1!important;transform:none!important;animation:none!important;clip-path:none!important
+  }
+  #entry .entry-evolve::before,#entry .entry-evolve::after{display:none!important;animation:none!important}
+  #entry::after,#entryTitle::after,#entryTitle::before{animation:none!important}
+  #entry.is-exiting{animation:none!important;opacity:0!important;visibility:hidden!important}
+  #entry.is-exiting .entry-box,#entry.is-exiting .fx-title .fx-full{animation:none!important}
+  #app{transition:none!important}
+  .store-view.is-active,.store-view.is-leaving{
+    animation:none!important;opacity:1!important;transform:none!important;filter:none!important
+  }
+  .fx-motion-ready [data-fx-reveal]{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 </style>
 
 </head>
@@ -2719,21 +2721,9 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
         </button>
 
         <button
-            data-section="changelog"
-            onclick="scrollToId('changelog')">
-            Changelog
-        </button>
-
-        <button
             data-section="order"
             onclick="scrollToId('order')">
             Order
-        </button>
-
-        <button
-            data-section="status"
-            onclick="scrollToId('status')">
-            Status
         </button>
 
         <div class="nav-indicator" id="navIndicator"></div>
@@ -2794,9 +2784,8 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
         </p>
 
         <p class="hero-text">
-            Pilih layanan gaming yang lu butuhkan tanpa
-            muter-muter. Semua paket, checkout, pembayaran,
-            dan status order dirancang dalam satu dashboard.
+            Pilih layanan gaming yang dibutuhkan, lihat detail paket,
+            lalu lanjutkan konfirmasi dan checkout melalui WhatsApp FXNZZ.
         </p>
 
         <div class="actions">
@@ -2809,8 +2798,8 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
 
             <button
                 class="btn magnetic"
-                onclick="scrollToId('status')">
-                Cek Status
+                onclick="openAdminChat()">
+                Konsultasi
             </button>
 
         </div>
@@ -2986,54 +2975,9 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
     </div>
 </section>
 
-<section id="operations">
-    <div class="section-head">
-        <div>
-            <div class="eyebrow">SYSTEM OVERVIEW</div>
-            <h2>Module Status</h2>
-        </div>
-        <p>Status ditulis sesuai fungsi yang tersedia saat ini agar fitur simulasi tidak disalahartikan sebagai sistem backend realtime.</p>
-    </div>
-    <div class="module-grid">
-        <article class="module-card">
-            <span class="module-status active">ACTIVE</span>
-            <strong>Service Catalog</strong>
-            <p>Daftar layanan dan harga tersedia di halaman store.</p>
-        </article>
-        <article class="module-card">
-            <span class="module-status active">ACTIVE</span>
-            <strong>Cart &amp; WhatsApp Order</strong>
-            <p>Pilih paket, rangkum order, lalu lanjutkan detail melalui chat WhatsApp.</p>
-        </article>
-        <article class="module-card">
-            <span class="module-status dev">IN DEVELOPMENT</span>
-            <strong>Live Order Tracker</strong>
-            <p>Tracker di halaman ini belum terhubung ke database atau update order realtime.</p>
-        </article>
-        <article class="module-card">
-            <span class="module-status dev">IN DEVELOPMENT</span>
-            <strong>FXNZZ OS</strong>
-            <p>Lapisan operasional internal akan dikembangkan terpisah dari checkout publik.</p>
-        </article>
-    </div>
-</section>
 
-<section id="changelog">
-    <div class="section-head">
-        <div>
-            <div class="eyebrow">MAINTENANCE LOG</div>
-            <h2>Changelog</h2>
-        </div>
-        <p>Catatan perubahan manual, urut dari yang terbaru.</p>
-    </div>
-    <div class="changelog-list">
-        <article class="change-item">
-            <div class="change-date">2026-10-15</div>
-            <div><strong>Sticky checkout, package presets &amp; service hook</strong><p>Cart selalu dapat dibuka saat scroll, tujuh preset paket dapat diedit dari satu daftar ringkas, dan hook profesional ditambahkan tepat di bawah headline utama.</p></div>
-        </article>
-    </div>
-    <div class="config-note"><strong style="color:#ddd">Update sederhana:</strong> paket reguler dan harga dikelola di array <code>packages</code>. Tujuh preset paket custom ada di <code>packageTemplates</code>; ubah nama dan deskripsinya di satu daftar itu tanpa menyalin struktur object. Preset custom mengarahkan customer ke admin untuk konfirmasi harga. Situs ini belum memakai database/backend.</div>
-</section>
+
+
 
 <!-- =========================
      SERVICES
@@ -3236,153 +3180,6 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
 </section>
 
 <!-- =========================
-     STATUS
-========================= -->
-
-<section id="status">
-
-    <div class="section-head">
-
-        <div>
-
-            <div class="eyebrow">
-                ORDER TRACKER
-            </div>
-
-            <h2>
-                Track Your Order
-            </h2>
-
-        </div>
-
-        <p>
-            Tracker saat ini merupakan tampilan progres contoh dan belum tersambung ke database atau status order realtime.
-        </p>
-
-    </div>
-
-    <div class="panel">
-
-        <div style="
-            display:flex;
-            justify-content:space-between;
-            gap:15px;
-            flex-wrap:wrap;
-            margin-bottom:30px;
-        ">
-
-            <div>
-
-                <small style="color:#666">
-                    ORDER ID
-                </small>
-
-                <h3
-                    id="trackerId"
-                    style="margin:5px 0 0">
-                    TRACKER-IN-DEV
-                </h3>
-
-            </div>
-
-            <div style="text-align:right">
-
-                <small style="color:#666">
-                    ORDER STATUS
-                </small>
-
-                <h3
-                    id="trackerStatus"
-                    style="
-                        margin:5px 0 0;
-                        color:var(--warning);
-                    ">
-                    IN DEVELOPMENT
-                </h3>
-
-            </div>
-
-        </div>
-
-        <div class="tracker">
-
-            <div
-                class="step"
-                id="step1">
-
-                <div class="step-dot">
-                    01
-                </div>
-
-                <span>
-                    Payment
-                </span>
-
-            </div>
-
-            <div
-                class="step"
-                id="step2">
-
-                <div class="step-dot">
-                    02
-                </div>
-
-                <span>
-                    Queue
-                </span>
-
-            </div>
-
-            <div
-                class="step"
-                id="step3">
-
-                <div class="step-dot">
-                    03
-                </div>
-
-                <span>
-                    Processing
-                </span>
-
-            </div>
-
-            <div
-                class="step"
-                id="step4">
-
-                <div class="step-dot">
-                    04
-                </div>
-
-                <span>
-                    Quality Check
-                </span>
-
-            </div>
-
-            <div
-                class="step"
-                id="step5">
-
-                <div class="step-dot">
-                    05
-                </div>
-
-                <span>
-                    Completed
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =========================
      TESTIMONIALS
 ========================= -->
 
@@ -3515,7 +3312,7 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
                 class="faq-q"
                 onclick="toggleFAQ(this)">
 
-                Bagaimana status pengerjaan dilihat?
+                Bagaimana saya mengetahui progress pengerjaan?
 
                 <span>
                     +
@@ -3524,8 +3321,7 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
             </button>
 
             <div class="faq-a">
-                Setelah order dibuat, nomor order digunakan
-                untuk melihat progress pengerjaan pada Order Tracker.
+                Admin akan memberikan informasi progress pengerjaan melalui WhatsApp selama layanan berlangsung.
             </div>
 
         </div>
@@ -3546,26 +3342,6 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
 
             <div class="faq-a">
                 Pembayaran dikonfirmasi langsung bersama admin. Website ini belum memproses pembayaran otomatis atau terhubung ke payment gateway.
-            </div>
-
-        </div>
-
-        <div class="faq-item">
-
-            <button
-                class="faq-q"
-                onclick="toggleFAQ(this)">
-
-                Apakah data order realtime?
-
-                <span>
-                    +
-                </span>
-
-            </button>
-
-            <div class="faq-a">
-                Belum. Tracker pada website ini belum terhubung ke database dan tidak menampilkan pembaruan order secara realtime.
             </div>
 
         </div>
@@ -3729,11 +3505,6 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
         <span>□</span>
         ORDER
     </button>
-
-    <button onclick="scrollToId('status')">
-        <span>◌</span>
-        STATUS
-    </button>
     <button onclick="scrollToId('team')">
         <span>✦</span>
         TEAM
@@ -3743,19 +3514,10 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
 
 <!-- CART -->
 
-<!-- Integrated JOKI PULL SERVICE DISCOVERY -->
-<div class="pull-promo-overlay" id="pullPromoOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pullPromoTitle" onclick="if(event.target===this)closePullPromo()">
-  <div class="pull-promo-modal">
-    <button class="pull-promo-close" type="button" onclick="closePullPromo()" aria-label="Tutup popup">×</button>
-    <div class="eyebrow">SERVICE SPOTLIGHT · ZZZ</div>
-    <h2 id="pullPromoTitle">Joki Pull — pilih sesuai target</h2>
-    <p class="pull-promo-intro">Bandingkan jumlah pengerjaan dan harga tertera. Tidak ada paket yang ditandai paling unggul tanpa data operasional yang cukup; hasil gacha tetap mengikuti RNG game.</p>
-    <div id="pullPromoOptions" class="pull-promo-options"></div>
-    <p class="pull-promo-note">Resource akun, target pull, dan batas pengerjaan dikonfirmasi sebelum order.</p>
-    <div class="pull-promo-actions">
-      <button class="btn primary" type="button" onclick="showPullPackages()">LIHAT DETAIL</button>
-      <button class="btn" type="button" onclick="consultPullService()">KONSULTASI</button>
-    </div>
+<div class="package-detail-overlay" id="packageDetailOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Package detail" onclick="if(event.target===this)closePackageDetail()">
+  <div class="package-detail-modal">
+    <button class="package-detail-close" id="packageDetailClose" type="button" onclick="closePackageDetail()" aria-label="Close package detail">×</button>
+    <div id="packageDetailContent" class="package-detail-layout"></div>
   </div>
 </div>
 
@@ -3903,7 +3665,7 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
         <div class="ds-filter-tabs" id="ds-filter-tabs">
           <button class="active" type="button" data-ds-filter="All">All resources</button>
           <button type="button" data-ds-filter="Development">Development</button>
-          <button type="button" data-ds-filter="AI & Automation">AI &amp; Automation</button>
+          <button type="button" data-ds-filter="AI & Automation">AI &amp; AI</button>
           <button type="button" data-ds-filter="Design">Design</button>
           <button type="button" data-ds-filter="Business">Business</button>
         </div>
@@ -3967,284 +3729,62 @@ button:active,.ds-button:active,.switcher-option:active{transform:scale(.975)}
 ================================ */
 
 const packages = [
+  // ZZZ — ENDGAME
+  {game:"ZZZ",category:"ENDGAME",title:"Shiyu Defense — Full Clear / Full S+",image:"https://ik.imagekit.io/fans5/zzz_shiyu_defense_3_star_full_clear.png",desc:"Clear Shiyu Defense hingga target Full Clear / Full S+ sesuai kemampuan akun.",price:15000,badge:"",details:["Shiyu Defense — Full Clear / Full S+.","Hasil akhir mengikuti roster, build, dan kondisi akun."]},
+  {game:"ZZZ",category:"ENDGAME",title:"Deadly Assault — 3 STAR / Full Clear",image:"https://ik.imagekit.io/fans5/zzz_deadly_assault_3_star_full_clear.png",desc:"Pengerjaan Deadly Assault dengan target 3 STAR / Full Clear.",price:25000,badge:"",details:["Deadly Assault — 3 STAR / Full Clear.","Skor akhir menyesuaikan kemampuan roster dan build akun."]},
+  {game:"ZZZ",category:"ENDGAME",title:"Weekly 2 — Non-VIP",image:"https://ik.imagekit.io/fans5/zzz_bonus_paket_tambahan.png?updatedAt=1793743606902",desc:"Layanan weekly kedua untuk akun non-VIP.",price:45000,badge:"",details:["Weekly 2 Non-VIP.","Daily + Weekly Mission + Hollow Zero dasar + 3 Quest per-weekly."]},
+  {game:"ZZZ",category:"ENDGAME",title:"Weekly 2 — VIP",image:"https://ik.imagekit.io/fans5/zzz_bonus_paket_tambahan.png?updatedAt=1793743606902",desc:"Layanan weekly kedua untuk akun VIP.",price:80000,badge:"VIP",details:["Weekly 2 VIP.","Target dan kondisi akun dikonfirmasi sebelum pengerjaan."]},
+  {game:"ZZZ",category:"ENDGAME",title:"Weekly 1 — VIP",image:"https://ik.imagekit.io/fans5/zzz_bonus_paket_tambahan.png?updatedAt=1793743606902",desc:"Layanan weekly pertama untuk akun VIP.",price:45000,badge:"VIP",details:["Weekly 1 VIP.","Target dan kondisi akun dikonfirmasi sebelum pengerjaan."]},
+  {game:"ZZZ",category:"ENDGAME",title:"Hollow Bagel",image:"https://ik.imagekit.io/fans5/zzz_event_pyrois_2_mindscape_signature.png?updatedAt=1793743607486",desc:"Layanan Hollow Bagel sesuai scope yang disepakati.",price:170000,badge:"",details:["Hollow Bagel.","Rincian akses dan target dikonfirmasi melalui admin sebelum order."]},
 
-    /* ==============================
-       ZZZ — ENDGAME
-    ================================ */
+  // ZZZ — FARMING
+  {game:"ZZZ",category:"FARMING",title:"Weekly 1 — Non-VIP",image:"https://ik.imagekit.io/fans5/zzz_bonus_paket_tambahan.png?updatedAt=1793743606902",desc:"Layanan weekly pertama untuk akun non-VIP.",price:25000,badge:"",details:["Weekly 1 Non-VIP."]},
+  {game:"ZZZ",category:"FARMING",title:"Daily",image:"https://ik.imagekit.io/fans5/zzz_event_combat.png?updatedAt=1793743606696",desc:"Pengerjaan layanan Daily sesuai kebutuhan akun.",price:5000,badge:"",details:["Daily errands / aktivitas harian sesuai scope yang disepakati."]},
+  {game:"ZZZ",category:"FARMING",title:"Battle — 3 Floor",image:"https://ik.imagekit.io/fans5/zzz_battle_trial_3_floor.png",desc:"Pengerjaan Battle hingga 3 floor.",price:8000,badge:"",details:["Battle — 3 floor."]},
+  {game:"ZZZ",category:"FARMING",title:"Hollow Zero Max + Full Clear",image:"https://ik.imagekit.io/fans5/zzz_hollow_zero_max_full_clear.png",desc:"Hollow Zero hingga max point dan full clear.",price:22000,badge:"",details:["Hollow Zero Max + Full Clear."]},
+  {game:"ZZZ",category:"FARMING",title:"Event Combat / Annihilation",image:"https://ik.imagekit.io/fans5/zzz_endgame_combat_event.png",desc:"Pengerjaan Event Combat / Annihilation.",price:15000,badge:"",details:["Event Combat / Annihilation.","Hanya berlaku selama event terkait tersedia."]},
+  {game:"ZZZ",category:"FARMING",title:"ZZZ Story",image:"https://ik.imagekit.io/fans5/zzz_story_2_chapter.png",desc:"Pengerjaan story Zenless Zone Zero.",price:10000,badge:"",details:["ZZZ Story.","Jumlah chapter dan target akhir dikonfirmasi sebelum pengerjaan."]},
+  {game:"ZZZ",category:"FARMING",title:"ZZZ QUEST",image:"https://ik.imagekit.io/fans5/02c06152-4482-488f-bb9f-0e1af7307b46.png",desc:"Pengerjaan Operation: Bagel sesuai scope yang disepakati.",price:8000,badge:"",details:["1. Main Quest  Main Story  Agent Story Story Commission Chapter Progress 2. Daily Quest Daily Errands Daily Activity Routine Cleanup Daily Rewards 3. Event Quest Limited-Time Events Event Missions Event Challenges Event Rewards 4. Side Quest Side Commissions Exploration Commissions Combat Commissions Optional Missions KETENTUAN Pengerjaan menyesuaikan progres akun. Scope dan target disepakati sebelum pengerjaan. Quest yang membutuhkan prasyarat tertentu akan dikonfirmasi terlebih dahulu. Tidak termasuk pembelian item atau top-up. Estimasi waktu bergantung pada jumlah dan tingkat kesulitan quest."]},
+  {game:"ZZZ",category:"FARMING",title:"Character Build",image:"https://ik.imagekit.io/fans5/charbuild.png",desc:"Bantuan pengerjaan dan penataan build karakter.",price:7000,badge:"",details:["Character Build.","Prioritas build dan material disesuaikan dengan kondisi akun."]},
 
-    {
-        game:"ZZZ", category:"ENDGAME",
-        title:"Shiyu Defense — 3 STAR/Full Clear", image:"https://ik.imagekit.io/fans5/zzz_shiyu_defense_3_star_full_clear.png",
-        desc:"Pengerjaan Shiyu Defense sampai target clear yang disepakati. Hasil clear bergantung pada roster, build, dan kondisi akun.",
-        price:20000, badge:""
-    },
-    {
-        game:"ZZZ", category:"ENDGAME",
-        title:"Deadly Assault — 3 STAR/Full Clear", image:"https://ik.imagekit.io/fans5/zzz_deadly_assault_3_star_full_clear.png",
-        desc:"Pengerjaan Deadly Assault sesuai kemampuan akun dan target yang disepakati. Tidak menjamin skor tertentu jika akun belum memenuhi syarat.",
-        price:30000, badge:"POPULAR"
-    },
-    {
-        game:"ZZZ", category:"ENDGAME",
-        title:"Battle Trial — 3 Floor", image:"https://ik.imagekit.io/fans5/zzz_battle_trial_3_floor.png",
-        desc:"Pengerjaan Battle Trial hingga 5 floor sesuai kondisi akun dan target layanan.",
-        price:10000, badge:""
-    },
-    {
-        game:"ZZZ", category:"ENDGAME",
-        title:"Endgame Combat Event", image:"https://ik.imagekit.io/fans5/zzz_endgame_combat_event.png",
-        desc:"Pengerjaan combat event Annihillation.",
-        price:15000, badge:""
-    },
-    {
-        game:"ZZZ", category:"ENDGAME",
-        title:"Hollow Zero — Max + Full Clear", image:"https://ik.imagekit.io/fans5/zzz_hollow_zero_max_full_clear.png",
-        desc:"Pengerjaan Hollow Zero pada difficulty maksimal yang tersedia, dengan target full clear sesuai kemampuan akun.",
-        price:22000, badge:""
-    },
-    {
-        game:"ZZZ", category:"ENDGAME",
-        title:"Event Combat", image:"https://ik.imagekit.io/fans5/zzz_event_combat.png",
-        desc:"Pengerjaan stage combat event sesuai target customer dan reward yang tersedia.",
-        price:7000, badge:""
-    },
+  // ZZZ — ACCOUNT CARE (one card per tier; patch choices live in detail view)
+  {game:"ZZZ",category:"FARMING",title:"Rawat Akun — Basic",image:"https://ik.imagekit.io/fans5/zzz_rawat_akun_1_patch.png",desc:"Perawatan akun 1–3 patch. Buka detail untuk scope dan harga per patch.",price:null,quoteOnly:true,badge:"BASIC",priceOptions:[{label:"1 Patch",price:90000},{label:"2 Patch",price:175000},{label:"3 Patch",price:270000}],details:["Daily Errands (Harian).","Habiskan Battery Charge (Energi).","Kopi + Gosokan Howl.","Toko Kaset Random Play." ]},
+  {game:"ZZZ",category:"FARMING",title:"Rawat Akun — VIP",image:"https://ik.imagekit.io/fans5/zzz_rawat_akun_vip_1_patch.png",desc:"Perawatan akun VIP 1–3 patch. Buka detail untuk scope dan harga per patch.",price:null,quoteOnly:true,badge:"VIP",priceOptions:[{label:"1 Patch",price:165000},{label:"2 Patch",price:325000},{label:"3 Patch",price:495000}],details:["Semua fitur Basic.","Hollow Zero mingguan (poin maksimal).","Notorious Hunt (3× Boss Mingguan).","Clear semua Event Limited." ]},
+  {game:"ZZZ",category:"FARMING",title:"Rawat Akun — VVIP",image:"https://ik.imagekit.io/fans5/Rawat%20Akun%20ZZZ%20VVIP.png",desc:"Perawatan akun VVIP 1–3 patch. Buka detail untuk scope dan harga per patch.",price:null,quoteOnly:true,badge:"VVIP",priceOptions:[{label:"1 Patch",price:370000},{label:"2 Patch",price:740000},{label:"3 Patch",price:1110000}],details:["Semua fitur VIP.","Push Shiyu Defense (Critical Node tiap reset).","Beresin map baru / medali Mewmew baru.","Manajemen Drive Disc & Build Karakter." ]},
 
-    /* ==============================
-       ZZZ — ACCOUNT CARE / FARMING
-    ================================ */
+  // ZZZ — PULL (normal service cards; no automatic popup)
+  {game:"ZZZ",category:"PULL",title:"10 Pull",image:"https://ik.imagekit.io/fans5/zzz_10_pull.png",desc:"Joki pull hingga 10 kali sesuai resource akun. Hasil gacha mengikuti RNG game.",price:18000,badge:"",details:["10 Pull.","Resource dan target pull dikonfirmasi sebelum pengerjaan."]},
+  {game:"ZZZ",category:"PULL",title:"30 Pull",image:"https://ik.imagekit.io/fans5/zzz_30_pull.png",desc:"Joki pull hingga 30 kali sesuai resource akun. Hasil gacha mengikuti RNG game.",price:55000,badge:"",details:["30 Pull.","Resource dan target pull dikonfirmasi sebelum pengerjaan."]},
+  {game:"ZZZ",category:"PULL",title:"50 Pull",image:"https://ik.imagekit.io/fans5/zzz_50_pull.png",desc:"Joki pull hingga 50 kali sesuai resource akun. Hasil gacha mengikuti RNG game.",price:85000,badge:"",details:["50 Pull.","Resource dan target pull dikonfirmasi sebelum pengerjaan."]},
+  {game:"ZZZ",category:"PULL",title:"100 Pull",image:"https://ik.imagekit.io/fans5/zzz_100_pull.png",desc:"Joki pull hingga 100 kali sesuai resource akun. Hasil gacha mengikuti RNG game.",price:175000,badge:"",details:["100 Pull.","Resource dan target pull dikonfirmasi sebelum pengerjaan."]},
 
-    {
-        game:"ZZZ", category:"FARMING",
-        title:"Rawat Akun — 1 Patch", image:"https://ik.imagekit.io/fans5/zzz_rawat_akun_1_patch.png",
-        desc:"Maintenance akun selama 1 patch: daily utama, Battery/Stamina secara efisien, weekly, farming resource prioritas, event aktif, dan progression rutin sesuai kondisi akun.",
-        price:150000, badge:""
-    },
-    {
-        game:"ZZZ", category:"FARMING",
-        title:"Rawat Akun — 2 Patch", image:"https://ik.imagekit.io/fans5/zzz_rawat_akun_2_patch.png",
-        desc:"Maintenance akun selama 2 patch. Mencakup aktivitas rutin, Battery/Stamina, weekly, farming prioritas, event aktif, dan progression yang dapat dilanjutkan antar-patch.",
-        price:280000, badge:"BEST VALUE"
-    },
-    {
-        game:"ZZZ", category:"FARMING",
-        title:"Rawat Akun VIP — 1 Patch", image:"https://ik.imagekit.io/fans5/zzz_rawat_akun_vip_1_patch.png",
-        desc:"Maintenance 1 patch dengan prioritas lebih tinggi: seluruh scope Rawat Akun, event, build/farming optimization, serta endgame seperti Shiyu, Deadly Assault, Hollow Zero, dan combat event sesuai kemampuan akun.",
-        price:240000, badge:"VIP"
-    },
-    {
-        game:"ZZZ", category:"FARMING",
-        title:"Rawat Akun VIP — 2 Patch", image:"https://ik.imagekit.io/fans5/zzz_rawat_akun_vip_2_patch.png",
-        desc:"Maintenance VIP selama 2 patch dengan scope rutin + event + progression + build optimization + endgame. Prioritas disesuaikan dengan perkembangan akun setiap patch.",
-        price:420000, badge:"VIP"
-    },
-    {
-        game:"ZZZ", category:"FARMING",
-        title:"Event Pyrois 2 mindscape + signature", image:"https://ik.imagekit.io/fans5/zzz_event_pyrois_2_mindscape_signature.png",
-        desc:"Pengerjaan event khusunya pyrois untuk mendapatkan mindscape dan signature reward.",
-        price:35000, badge:"POPULAR"
-    },
-    {
-        game:"ZZZ", category:"FARMING",
-        title:"Bonus paket tambahan", image:"https://ik.imagekit.io/fans5/zzz_bonus_paket_tambahan.png",  
-        desc:"Pengerjaan 2 chapter story dan 5 quest + 2 event combat.",
-        price:17000, badge:"BEST VALUE"
-    },
-    {
-        game:"ZZZ", category:"FARMING",
-        title:"Bonus paket tambahan", image:"https://ik.imagekit.io/fans5/zzz_bonus_paket_tambahan.png",
-        desc:"Mengerjakan 2 chapter story dan 5 quest.",
-        price:10000, badge:""
-    },
-    {
-        game:"ZZZ", category:"FARMING",
-        title:"Bonus paket tambahan", image:"https://ik.imagekit.io/fans5/zzz_bonus_paket_tambahan.png",
-        desc:"Pengerjaan 2 chapter story dan 2 event combat.",
-        price:7000, badge:""
-    },
-    {
-        game:"ZZZ", category:"FARMING",
-        title:"Story — 2 Chapter", image:"https://ik.imagekit.io/fans5/zzz_story_2_chapter.png",
-        desc:"Penyelesaian 4 chapter story + 5 area combat + 8 quest.",
-        price:25000, badge:"BEST VALUE"
-    },
+  // PGR — ENDGAME
+  {game:"PGR",category:"ENDGAME",title:"War Zone",image:"https://ik.imagekit.io/fans5/pgr_war_zone.png",desc:"Clear War Zone sesuai target layanan.",price:19000,badge:"",details:["War Zone."]},
+  {game:"PGR",category:"ENDGAME",title:"Phantom Pain Cage",image:"https://ik.imagekit.io/fans5/pgr_phantom_pain_cage.png",desc:"Pengerjaan Phantom Pain Cage sesuai kondisi roster.",price:22000,badge:"",details:["Phantom Pain Cage (PPC)."]},
+  {game:"PGR",category:"ENDGAME",title:"Norman Revival Plan",image:"https://ik.imagekit.io/fans5/pgr_norman_revival_plan.png",desc:"Pengerjaan Norman Revival Plan sesuai tier akun.",price:55000,badge:"",details:["Norman Revival Plan.","Kesulitan disesuaikan dengan kapasitas komposisi tim akun."]},
+  {game:"PGR",category:"ENDGAME",title:"Weekly Basic",image:"https://ik.imagekit.io/fans5/Daftar%20Mingguan%20PGR_%20Layanan%20VVIP%20&%20Basic.png",desc:"Layanan weekly PGR basic.",price:32000,badge:"BASIC",details:["Weekly Basic."]},
+  {game:"PGR",category:"ENDGAME",title:"Weekly VIP",image:"https://ik.imagekit.io/fans5/Daftar%20Mingguan%20PGR_%20Layanan%20VVIP%20&%20Basic.png",desc:"Layanan weekly PGR VIP.",price:42000,badge:"VIP",details:["Weekly VIP."]},
 
-    /* ==============================
-       ZZZ — PULL
-    ================================ */
+  // PGR — FARMING
+  {game:"PGR",category:"FARMING",title:"Derived from Matrix — per 5 Level",image:"https://ik.imagekit.io/fans5/pgr_derived_from_matrix.png",desc:"Rp6.500 per 5 level. Full clear Rp225.000.",price:null,quoteOnly:true,badge:"",priceOptions:[{label:"Per 5 Level",price:6500},{label:"Full Clear",price:225000}],details:["Derived from Matrix — per 5 Level: Rp6.500.","Full clear: Rp225.000."]},
+  {game:"PGR",category:"FARMING",title:"Cursed Waves — per 5 Level",image:"https://ik.imagekit.io/fans5/pgr_cursed_waves.png",desc:"Rp8.000 per 5 level. Full clear Rp250.000.",price:null,quoteOnly:true,badge:"",priceOptions:[{label:"Per 5 Level",price:8000},{label:"Full Clear",price:250000}],details:["Cursed Waves — per 5 Level: Rp8.000.","Full clear: Rp250.000."]},
+  {game:"PGR",category:"FARMING",title:"Thundra Awakening — 5 Level",image:"https://ik.imagekit.io/fans5/pgr_awakening_thundra.png",desc:"Pengerjaan Thundra Awakening per 5 level.",price:4000,badge:"",priceSuffix:"/ service",details:["Thundra Awakening — 5 Level."]},
+  {game:"PGR",category:"FARMING",title:"Shrouded Requiem",image:"https://ik.imagekit.io/fans5/pgr_shrouded_requiem.png",desc:"Pengerjaan Shrouded Requiem.",price:50000,badge:"",details:["Shrouded Requiem."]},
+  {game:"PGR",category:"FARMING",title:"The Goddfall Revelation",image:"https://ik.imagekit.io/fans5/pgr_the_goddfall_revelation.png",desc:"Pengerjaan The Goddfall Revelation.",price:40000,badge:"",details:["The Goddfall Revelation."]},
+  {game:"PGR",category:"FARMING",title:"Recitativo di Fantasia",image:"https://ik.imagekit.io/fans5/pgr_recitativo_di_fantasia.png",desc:"Pengerjaan Recitativo di Fantasia.",price:35000,badge:"",details:["Recitativo di Fantasia."]},
+  {game:"PGR",category:"FARMING",title:"Story — 2 Chapter",image:"https://ik.imagekit.io/fans5/pgr_story_2_chapter.png",desc:"Pengerjaan story hingga 2 chapter.",price:6000,badge:"",details:["Story — 2 Chapter."]},
+  {game:"PGR",category:"FARMING",title:"Stronghold — 3 Stage",image:"https://ik.imagekit.io/fans5/images%20(4).jfif",desc:"Pengerjaan Stronghold hingga 3 stage.",price:7500,badge:"",details:["Stronghold — 3 Stage."]},
 
-    {
-        game:"ZZZ", category:"PULL",
-        title:"10 Pull", image:"https://ik.imagekit.io/fans5/zzz_10_pull.png", desc:"Joki pull hingga 10 kali sesuai resource yang tersedia pada akun.",
-        price:16000, badge:""
-    },
-    {
-        game:"ZZZ", category:"PULL",
-        title:"30 Pull", image:"https://ik.imagekit.io/fans5/zzz_30_pull.png", desc:"Joki pull hingga 30 kali sesuai resource yang tersedia pada akun.",
-        price:32000, badge:""
-    },
-    {
-        game:"ZZZ", category:"PULL",
-        title:"50 Pull", image:"https://ik.imagekit.io/fans5/zzz_50_pull.png", desc:"Joki pull hingga 50 kali sesuai resource yang tersedia pada akun.",
-        price:56000, badge:""
-    },
-    {
-        game:"ZZZ", category:"PULL",
-        title:"100 Pull", image:"https://ik.imagekit.io/fans5/zzz_100_pull.png", desc:"Joki pull hingga 100 kali sesuai resource yang tersedia pada akun. Hasil gacha tetap mengikuti sistem RNG game.",
-        price:155000, badge:"BEST VALUE"
-    },
+  // PGR — ACCOUNT CARE (one card per tier)
+  {game:"PGR",category:"FARMING",title:"Rawat Akun — Basic",image:"https://ik.imagekit.io/fans5/pgr_rawat_akun_1_patch.png",desc:"Perawatan akun basic 1–3 patch. Buka detail untuk scope dan harga per patch.",price:null,quoteOnly:true,badge:"BASIC",priceOptions:[{label:"1 Patch",price:80000},{label:"2 Patch",price:145000},{label:"3 Patch",price:265000}],details:["Daily Missions: menyelesaikan semua misi harian untuk mengamankan Serum harian.","Serum Burn: menghabiskan Serum ke Event Stage atau Resource Stage pilihan customer.","Phantom Pain Cage (PPC): menyelesaikan semua percobaan mingguan untuk mengumpulkan PPC Scars; skor diusahakan setinggi kapasitas akun.","Warzone: menyelesaikan semua area Warzone dua kali seminggu untuk mengamankan Warzone Merits.","Norman Revival Plan: clear stage Norman sesuai tier yang mampu dicapai komposisi tim akun.","Story & Interlude: menyelesaikan cerita utama dan kisah karakter yang rilis pada patch tersebut.","Event Shop Farming: membelanjakan mata uang event untuk material esensial agar tidak terbuang.","Limited-Time Events: menyelesaikan mode musiman, tantangan boss, atau mini-game berhadiah Black Cards (BC).","CUB & Pet Missions: mengurus ekspedisi CUB jika fitur terbuka.","Dorm Maintenance: membersihkan kamar, merespons interaksi chibi, dan menjalankan dorm dispatch.","Character Build Consultation: konsultasi atau pengaturan Memory terbaik bila termasuk kesepakatan layanan."]},
+  {game:"PGR",category:"FARMING",title:"Rawat Akun — VIP",image:"https://ik.imagekit.io/fans5/pgr_rawat_akun_vip_1_patch.png",desc:"Perawatan akun VIP 1–3 patch. Buka detail untuk scope dan harga per patch.",price:null,quoteOnly:true,badge:"VIP",priceOptions:[{label:"1 Patch",price:120000},{label:"2 Patch",price:235000},{label:"3 Patch",price:345000}],details:["Daily Mission: menyelesaikan semua misi harian dan menghabiskan Serum (stamina).","Weekly Mission: menyelesaikan seluruh misi mingguan untuk mengklaim Black Cards (BC).","Phantom Pain Cage (PPC): clear tantangan PPC mingguan untuk mengamankan Skull (PC currency).","War Zone: menyelesaikan seluruh tahapan War Zone dua sesi per minggu untuk War Zone Influence (material resonance).","Norman Revival Plan: menyelesaikan tantangan Norman sesuai kesepakatan tingkat kesulitan; biasanya minimal clear dasar untuk Black Cards (BC).","Event Shop Farming: menggunakan Serum di event stage untuk mengumpulkan currency toko event.","Story & Interlude: menyelesaikan cerita baru dan kisah karakter yang rilis pada patch tersebut.","Event Terbatas: menyelesaikan tantangan atau mini-game khusus demi hadiah eksklusif atau BC tambahan."]},
+  {game:"PGR",category:"FARMING",title:"Rawat Akun — VVIP Exclusive",image:"https://ik.imagekit.io/fans5/Layanan%20Joki%20PGR%20VVIP%20Futuristik.png",desc:"Perawatan akun VVIP exclusive 1–3 patch. Buka detail untuk scope dan harga per patch.",price:null,quoteOnly:true,badge:"VVIP EXCLUSIVE",priceOptions:[{label:"1 Patch",price:300000},{label:"2 Patch",price:550000},{label:"3 Patch",price:890000}],details:["Daily & Weekly: selesai 100% setiap hari dan minggu (Serum aman tidak bocor).","All End-Game & Challenge Content: pengurusan penuh Norman Black Cards Clash, Warzone, Phantom Pain Cage (PPC), Cursed Waves, hingga Babel Tower / alternative interpretation.","Event & Story Terbaru: menyelesaikan seluruh main story baru, interlude, tantangan limited-time event, serta menguras toko event (clear shop).","Paket VVIP exclusive mencakup seluruh konten yang tercantum tanpa terkecuali sesuai akses dan ketersediaan konten pada patch aktif."]},
 
-    /* ==============================
-       PGR — ENDGAME / CORE
-    ================================ */
-
-    {
-        game:"PGR", category:"ENDGAME",
-        title:"War Zone", image:"https://ik.imagekit.io/fans5/pgr_war_zone.png",
-        desc:"Pengerjaan War Zone sesuai target yang disepakati dan kemampuan akun.",
-        price:10000, displayPrice:"10000-20000", badge:"POPULAR"
-    },
-    {
-        game:"PGR", category:"ENDGAME",
-        title:"Phantom Pain Cage", image:"https://ik.imagekit.io/fans5/pgr_phantom_pain_cage.png",
-        desc:"Pengerjaan Phantom Pain Cage sesuai kondisi roster dan target layanan. Skor tidak dijamin jika build belum memadai.",
-        price:22000, badge:""
-    },
-    {
-        game:"PGR", category:"ENDGAME",
-        title:"Norman Revival Plan", image:"https://ik.imagekit.io/fans5/pgr_norman_revival_plan.png",
-        desc:"Progress Norman Revival Plan sesuai stage yang dapat dicapai oleh akun dan target layanan.",
-        price:22000, badge:"BEST VALUE"
-    },
-    {
-        game:"PGR", category:"ENDGAME",
-        title:"Babel Tower", image:"https://ik.imagekit.io/fans5/pgr_babel_tower.png",
-        desc:"Pengerjaan Babel Tower sesuai target dan kemampuan roster akun.",
-        price:20000, badge:""
-    },
-    {
-        game:"PGR", category:"ENDGAME",
-        title:"PGR Endgame Service", image:"https://ik.imagekit.io/fans5/pgr_pgr_endgame_service.png",
-        desc:"Pengerjaan content endgame PGR yang tersedia dan disepakati sebelum order, dengan hasil menyesuaikan kondisi akun.",
-        price:30000, badge:"BEST VALUE"
-    },
-
-    /* ==============================
-       PGR — FARMING / EVENT
-    ================================ */
-
-    {
-        game:"PGR", category:"FARMING",
-        title:"Derived from matrix", image:"https://ik.imagekit.io/fans5/pgr_derived_from_matrix.png",
-        desc:"farming stage DFM dengan /20 levelnya.",
-        price:7000, badge:""
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Cursed Waves", image:"https://ik.imagekit.io/fans5/pgr_cursed_waves.png",
-        desc:"Mengerjakan stage event Cursed Waves dengan /20 levelnya.",
-        price:8000, badge:"POPULAR"
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Awakening Thundra", image:"https://ik.imagekit.io/fans5/pgr_awakening_thundra.png",
-        desc:"Pengerjaan stage event Awakening thundra dengan /20 levelnya.",
-        price:5000, badge:""
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Shrouded Requiem", image:"https://ik.imagekit.io/fans5/pgr_shrouded_requiem.png",
-        desc:"Pengerjaan dan clear difficulty yang tersedia sesuai kondisi akun dan target layanan.",
-        price:20000, badge:""
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"The Goddfall Revelation", image:"https://ik.imagekit.io/fans5/pgr_the_goddfall_revelation.png",
-        desc:"Pengerjaan content dan target Character Badges sesuai akses serta kondisi akun.",
-        price:35000, badge:""
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Recitativo di Fantasia", image:"https://ik.imagekit.io/fans5/pgr_recitativo_di_fantasia.png",
-        desc:"Pengerjaan progress dan clear content sesuai target yang disepakati.",
-        price:45000, badge:""
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Story — 2 Chapter", image:"https://ik.imagekit.io/fans5/pgr_story_2_chapter.png",
-        desc:"Penyelesaian hingga 2 chapter story sesuai akses akun. Quest tambahan di luar scope tidak otomatis termasuk.",
-        price:6000, badge:""
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Quest", image:"https://ik.imagekit.io/fans5/pgr_quest.png",
-        desc:"Penyelesaian quest yang ditentukan customer sesuai kondisi akun.",
-        price:8000, badge:""
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Event Farming", image:"https://ik.imagekit.io/fans5/pgr_event_farming.png",
-        desc:"Farming reward atau resource event sesuai target selama event masih tersedia.",
-        price:12000, badge:""
-    },
-
-    /* ==============================
-       PGR — ACCOUNT CARE
-    ================================ */
-
-    {
-        game:"PGR", category:"FARMING",
-        title:"Rawat Akun — 1 Patch", image:"https://ik.imagekit.io/fans5/pgr_rawat_akun_1_patch.png", 
-        desc:"Maintenance akun selama 1 patch: aktivitas rutin, resource farming prioritas, weekly, event aktif, dan progression sesuai kondisi akun.",
-        price:65000, badge:""
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Rawat Akun — 2 Patch", image:"https://ik.imagekit.io/fans5/pgr_rawat_akun_2_patch.png", 
-        desc:"Maintenance akun selama 2 patch dengan aktivitas rutin, farming prioritas, weekly, event aktif, dan progression yang dapat dilanjutkan antar-patch.",
-        price:110000, badge:"BEST VALUE"
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Rawat Akun VIP — 1 Patch", image:"https://ik.imagekit.io/fans5/pgr_rawat_akun_vip_1_patch.png",
-        desc:"Maintenance VIP 1 patch: seluruh scope Rawat Akun, event, progression, build/farming optimization, serta endgame seperti War Zone, Phantom Pain Cage, Norman Revival Plan, dan Babel Tower sesuai kemampuan akun.",
-        price:135000, badge:"VIP"
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Rawat Akun VIP — 2 Patch", image:"https://ik.imagekit.io/fans5/pgr_rawat_akun_vip_2_patch.png",
-        desc:"Maintenance VIP selama 2 patch dengan scope rutin + event + progression + build optimization + endgame, diprioritaskan berdasarkan perkembangan akun.",
-        price:170000, badge:"VIP"
-    },
-    {
-        game:"PGR", category:"FARMING",
-        title:"Rawat Akun VIP — 3 Patch", image:"https://ik.imagekit.io/fans5/pgr_rawat_akun_vip_3_patch.png",
-        desc:"Maintenance VIP selama 3 patch dengan scope rutin, event, progression, build optimization, dan endgame sesuai kemampuan akun.",
-        price:285000, badge:"VIP"
-    }
+  // Additional services not listed are intentionally held for future release.
+  {game:"ZZZ",category:"COMING SOON",title:"ZZZ — Additional Services",image:"",desc:"Layanan tambahan akan ditambahkan setelah scope dan operasional siap.",price:null,empty:true,badge:"COMING SOON"},
+  {game:"PGR",category:"COMING SOON",title:"PGR — Additional Services",image:"",desc:"Layanan tambahan akan ditambahkan setelah scope dan operasional siap.",price:null,empty:true,badge:"COMING SOON"}
 ];
 
-/* =========================================================
-   7 QUICK-EDIT PACKAGE PRESETS
-   Ubah teks di bawah ini saja untuk menyesuaikan template.
-   Struktur object dikelola oleh makePackageTemplate(), jadi
-   tidak perlu menyalin ulang format package setiap kali.
-   Paket preset memakai sistem penawaran harga via admin.
-========================================================= */
-const makePackageTemplate = (game, category, title, desc, badge="CUSTOM") => ({
-    game, category, title, desc, price:null, badge, quoteOnly:true
-});
-
-const packageTemplates = [
-    makePackageTemplate("ZZZ", "ENDGAME", "ZZZ — Custom Endgame Target", "Tentukan target Shiyu Defense, Deadly Assault, Hollow Zero, atau combat endgame lain bersama admin."),
-    makePackageTemplate("ZZZ", "FARMING", "ZZZ — Event & Reward Clear", "Paket pengerjaan event dan reward sesuai event aktif, akses akun, serta target yang disepakati."),
-    makePackageTemplate("ZZZ", "FARMING", "ZZZ — Story & Quest Bundle", "Pilih chapter story dan quest yang ingin diselesaikan. Scope final dikonfirmasi sebelum pengerjaan."),
-    makePackageTemplate("ZZZ", "FARMING", "ZZZ — Resource Farming", "Farming material, resource, atau progression sesuai kebutuhan akun dan prioritas customer."),
-    makePackageTemplate("ZZZ", "FARMING", "ZZZ — Custom Account Care", "Maintenance akun dengan daftar aktivitas khusus yang ditentukan customer dan dikonfirmasi admin."),
-    makePackageTemplate("PGR", "ENDGAME", "PGR — Custom Endgame Target", "Tentukan target War Zone, Phantom Pain Cage, Norman Revival Plan, Babel Tower, atau content endgame lain."),
-    makePackageTemplate("PGR", "FARMING", "PGR — Event & Resource Bundle", "Paket event, farming, story, atau resource PGR dengan scope yang disepakati bersama admin.")
-];
-
-packages.push(...packageTemplates);
 
 let cart=[];
 let currentOrder=null;
@@ -4272,46 +3812,45 @@ function startBackgroundMusic(){
 }
 
 function enterStore(){
+    if(entering) return;
 
-    if(entering)return;
+    const title = document.getElementById("entryTitle");
+    const fxTitle = title?.querySelector(".fx-title");
+    const button = document.getElementById("enterButton");
+    const entry = document.getElementById("entry");
+    const app = document.getElementById("app");
 
-    entering=true;
+    // Fail safely instead of leaving the overlay permanently locked.
+    if(!entry || !app || !button){
+        console.error("FXNZZ entry: required element is missing.");
+        return;
+    }
 
-    /* ENTER STORE is a user gesture; retry audible autoplay here. */
+    entering = true;
+    button.disabled = true;
     startBackgroundMusic();
 
-    const title=document.getElementById("entryTitle");
-    const fxTitle=title.querySelector(".fx-title");
-    const button=document.getElementById("enterButton");
-    const entry=document.getElementById("entry");
-    const app=document.getElementById("app");
+    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-    title.classList.remove("slashing");
-    fxTitle.classList.remove("fx-slash");
+    // Start the app underneath the overlay so the cross-fade is continuous.
+    app.classList.add("ready");
 
-    void title.offsetWidth;
-    void fxTitle.offsetWidth;
+    if(title) title.classList.add("slashing");
+    if(fxTitle) fxTitle.classList.add("fx-slash");
+    entry.classList.add("is-exiting");
 
-    /* Black lightning + slash drives the logo out. */
-    fxTitle.classList.add("fx-slash");
-    title.classList.add("slashing");
-
-    button.style.pointerEvents="none";
-
-    setTimeout(()=>{
+    const finish = () => {
         entry.classList.add("hide");
-        app.classList.add("ready");
-        window.setTimeout(showPullPromo,600);
-    },620);
+        entry.style.display = "none";
+        button.disabled = false;
+        entering = false;
+        window.FXNZZRefreshMotion?.(document.getElementById("gamingStoreView"));
+    };
 
-    setTimeout(()=>{
-        entry.style.display="none";
-        button.style.pointerEvents="auto";
-        entering=false;
-    },900);
-
+    // Reduced-motion users get a direct state change; everyone else gets
+    // the complete logo slash + light sweep before the overlay is removed.
+    window.setTimeout(finish, reducedMotion ? 0 : 720);
 }
-
 
 /* ==============================
    UTIL
@@ -4329,9 +3868,11 @@ function scrollToId(id){
 
     if(!target)return;
 
+    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     target.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
+        behavior: reducedMotion ? "auto" : "smooth",
+        block: "start",
+        inline: "nearest"
     });
 
 }
@@ -4419,99 +3960,98 @@ document.addEventListener("click",function(e){
    PACKAGE RENDER
 ================================ */
 
-function renderPackages(filter="ALL"){
-
-    const grid=document.getElementById("packageGrid");
-
-    let data=packages;
-
-    if(
-        filter==="ZZZ" ||
-        filter==="PGR"
-    ){
-
-        data=data.filter(
-            x=>x.game===filter
-        );
-
-    }
-
-    else if(
-        filter==="ENDGAME" ||
-        filter==="FARMING" ||
-        filter==="PULL"
-    ){
-
-        data=data.filter(
-            x=>x.category===filter
-        );
-
-    }
-
-    grid.classList.remove("spotlight-mode");
-
-    grid.innerHTML=data.map(item=>`
-
-        <article class="package ${item.empty ? "empty-slot" : ""}">
-
-            <div class="package-image-wrap">
-                <img
-                    class="package-image"
-                    src="${item.image || 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 640 360%22%3E%3Crect width=%22640%22 height=%22360%22 fill=%22%23101019%22/%3E%3Cpath d=%22M0 270L180 120l120 100 105-85 235 180H0z%22 fill=%22%23262632%22/%3E%3Ctext x=%22320%22 y=%22195%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-family=%22Arial%22 font-size=%2222%22 letter-spacing=%225%22%3EFXNZZ%3C/text%3E%3C/svg%3E'}"
-                    alt="${item.title.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')}"
-                    loading="lazy"
-                    decoding="async"
-                    onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 640 360%22%3E%3Crect width=%22640%22 height=%22360%22 fill=%22%23101019%22/%3E%3Cpath d=%22M0 270L180 120l120 100 105-85 235 180H0z%22 fill=%22%23262632%22/%3E%3Ctext x=%22320%22 y=%22195%22 text-anchor=%22middle%22 fill=%22%23aaa%22 font-family=%22Arial%22 font-size=%2222%22 letter-spacing=%225%22%3EFXNZZ%3C/text%3E%3C/svg%3E';"
-                >
-            </div>
-
-            <div class="package-top">
-
-                <div class="package-category">
-                    ${item.game} / ${item.category}
-                </div>
-
-                ${
-                    item.badge
-                    ? `<div class="badge">${item.badge}</div>`
-                    : ""
-                }
-
-            </div>
-
-            <h3>
-                ${item.title}
-            </h3>
-
-            <p class="package-desc">
-                ${item.desc}
-            </p>
-
-            <div class="price">
-                ${item.empty ? "—" : item.quoteOnly ? "KONFIRMASI ADMIN" : rupiah(item.price)}
-                ${item.empty || item.quoteOnly ? "" : `<span>/ service</span>`}
-            </div>
-
-            ${
-                item.empty
-                ? `<button class="btn" type="button" disabled>COMING SOON</button>`
-                : item.quoteOnly
-                    ? `<button class="btn primary" type="button" onclick="askPackage(${packages.indexOf(item)})">TANYA ADMIN</button>`
-                    : `<button
-                        class="btn primary"
-                        type="button"
-                        onclick="addToCart(${packages.indexOf(item)})">
-                        ADD TO ORDER
-                   </button>`
-            }
-
-        </article>
-
-    `).join("");
-
-    initCardSpotlight();
-
+function escapePackageHTML(value){
+    return String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 }
+const PACKAGE_FALLBACK_IMAGE = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360"><rect width="640" height="360" fill="#101012"/><path d="M0 270L180 120l120 100 105-85 235 180H0z" fill="#26262c"/><text x="320" y="195" text-anchor="middle" fill="#aaa" font-family="Arial" font-size="26" letter-spacing="7">FXNZZ</text></svg>');
+
+function renderPackages(filter="ALL"){
+    const grid=document.getElementById("packageGrid");
+    if(!grid)return;
+    let data=packages;
+    if(filter==="ZZZ" || filter==="PGR") data=data.filter(x=>x.game===filter);
+    else if(filter==="ENDGAME" || filter==="FARMING" || filter==="PULL") data=data.filter(x=>x.category===filter);
+    grid.classList.remove("spotlight-mode");
+    grid.innerHTML=data.map(item=>{
+        const index=packages.indexOf(item);
+        const image=escapePackageHTML(item.image || PACKAGE_FALLBACK_IMAGE);
+        const title=escapePackageHTML(item.title);
+        const category=escapePackageHTML(`${item.game} / ${item.category}`);
+        const badge=item.badge ? `<span class="badge">${escapePackageHTML(item.badge)}</span>` : "";
+        const priceBlock=item.priceOptions?.length
+          ? `<div class="package-price-list">${item.priceOptions.map(option=>`<div><span>${escapePackageHTML(option.label)}</span><strong>${option.price==null?"Konfirmasi Admin":rupiah(option.price)}</strong></div>`).join("")}</div>`
+          : `<div class="price">${item.empty?"COMING SOON":rupiah(item.price)}${item.empty?"":`<span>${escapePackageHTML(item.priceSuffix || "/ service")}</span>`}</div>`;
+        const action=item.empty
+          ? `<button class="btn" type="button" disabled>COMING SOON</button>`
+          : `<button class="btn primary" type="button" onclick="showPackageDetail(${index})">DETAIL &amp; ORDER</button>`;
+        return `<article class="package ${item.empty?"empty-slot":""}">
+          <div class="package-image-wrap"><img class="package-image" src="${image}" alt="${title}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='${PACKAGE_FALLBACK_IMAGE}'"></div>
+          <div class="package-top"><div class="package-category">${category}</div>${badge}</div>
+          <h3>${title}</h3>
+          ${priceBlock}
+          ${action}
+        </article>`;
+    }).join("");
+    initCardSpotlight();
+}
+
+function showPackageDetail(index){
+    const item=packages[index];
+    const overlay=document.getElementById("packageDetailOverlay");
+    const content=document.getElementById("packageDetailContent");
+    if(!item || !overlay || !content || item.empty)return;
+    const safeTitle=escapePackageHTML(item.title);
+    const image=escapePackageHTML(item.image || PACKAGE_FALLBACK_IMAGE);
+    const detailList=(item.details?.length?item.details:[item.desc]).map(line=>`<li>${escapePackageHTML(line)}</li>`).join("");
+    const priceRows=item.priceOptions?.length
+      ? `<div class="detail-price-options">${item.priceOptions.map(option=>`<div><span>${escapePackageHTML(option.label)}</span><strong>${option.price==null?"Konfirmasi Admin":rupiah(option.price)}</strong></div>`).join("")}</div>`
+      : `<div class="detail-single-price">${rupiah(item.price)} <small>${escapePackageHTML(item.priceSuffix || "/ service")}</small></div>`;
+    const selector=item.priceOptions?.length
+      ? `<label class="detail-select-label" for="packagePatchChoice">PILIH DURASI PAKET</label><select id="packagePatchChoice">${item.priceOptions.map((option,i)=>`<option value="${i}">${escapePackageHTML(option.label)} — ${option.price==null?"Konfirmasi Admin":rupiah(option.price)}</option>`).join("")}</select><p class="detail-choice-note" id="packageChoiceNote">Pilih durasi yang sesuai. Durasi tanpa harga final akan dikonfirmasi admin.</p>`
+      : "";
+    content.innerHTML=`<div class="package-detail-media"><img src="${image}" alt="${safeTitle}" loading="eager" onerror="this.onerror=null;this.src='${PACKAGE_FALLBACK_IMAGE}'"></div><div class="package-detail-copy"><div class="eyebrow">${escapePackageHTML(item.game)} / ${escapePackageHTML(item.category)}</div><h2>${safeTitle}</h2><p class="package-detail-summary">${escapePackageHTML(item.desc)}</p><div class="package-detail-scope"><h3>PACKAGE SCOPE</h3><ul>${detailList}</ul></div><div class="package-detail-pricing"><h3>PRICE</h3>${priceRows}</div>${selector}<div class="package-detail-actions"><button type="button" class="btn" onclick="closePackageDetail()">KEMBALI</button><button type="button" class="btn primary" id="packageDetailAction" onclick="handlePackageDetailAction(${index})">${item.priceOptions?.length?"ADD TO ORDER":"ADD TO ORDER"}</button></div></div>`;
+    const select=document.getElementById("packagePatchChoice");
+    if(select){
+        const updateAction=()=>{
+            const option=item.priceOptions[Number(select.value)];
+            const action=document.getElementById("packageDetailAction");
+            const note=document.getElementById("packageChoiceNote");
+            if(action)action.textContent=option?.price==null?"TANYA ADMIN":"ADD TO ORDER";
+            if(note)note.textContent=option?.price==null?`${option.label}: harga belum ditetapkan di daftar. Admin akan mengonfirmasi sebelum order.`:`Harga pilihan: ${rupiah(option.price)}.`;
+        };
+        select.addEventListener("change",updateAction);
+        updateAction();
+    }
+    overlay.classList.add("show");
+    overlay.setAttribute("aria-hidden","false");
+    document.documentElement.classList.add("package-detail-open");
+    document.getElementById("packageDetailClose")?.focus({preventScroll:true});
+}
+
+function closePackageDetail(){
+    const overlay=document.getElementById("packageDetailOverlay");
+    overlay?.classList.remove("show");
+    overlay?.setAttribute("aria-hidden","true");
+    document.documentElement.classList.remove("package-detail-open");
+}
+
+document.addEventListener("keydown",event=>{if(event.key==="Escape")closePackageDetail();});
+
+function handlePackageDetailAction(index){
+    const item=packages[index];
+    if(!item)return;
+    if(item.priceOptions?.length){
+        const select=document.getElementById("packagePatchChoice");
+        const optionIndex=Number(select?.value || 0);
+        const option=item.priceOptions[optionIndex];
+        if(!option || option.price==null){askPackage(index,optionIndex);closePackageDetail();return;}
+        addToCart(index,optionIndex);
+    }else{
+        addToCart(index);
+    }
+    closePackageDetail();
+}
+
 function filterCategory(category,button){
 
     document.querySelectorAll(
@@ -4666,41 +4206,33 @@ function initMagneticButtons(){
    CART
 ================================ */
 
-function askPackage(index){
+function askPackage(index, optionIndex=null){
     const item=packages[index];
     if(!item)return;
-    const message=encodeURIComponent(
-        `Halo Admin FXNZZ STORE, saya ingin konsultasi paket:
-
-`+
-        `Game: ${item.game}
-Paket: ${item.title}
-Scope: ${item.desc}
-
-`+
-        `Mohon info harga dan estimasi pengerjaan.`
-    );
+    const option=(optionIndex!==null && item.priceOptions) ? item.priceOptions[Number(optionIndex)] : null;
+    const selected=option ? `\nDurasi: ${option.label}\nHarga: ${option.price==null?"Konfirmasi Admin":rupiah(option.price)}\n` : "";
+    const priceInfo=item.priceOptions?.length ? "\nPilihan harga:\n"+item.priceOptions.map(row=>`- ${row.label}: ${row.price==null?"Konfirmasi Admin":rupiah(row.price)}`).join("\n") : "";
+    const message=encodeURIComponent(`Halo Admin FXNZZ STORE, saya ingin konsultasi paket.\n\nGame: ${item.game}\nPaket: ${item.title}${selected}\nScope:\n${(item.details||[item.desc]).map(line=>"- "+line).join("\n")}${priceInfo}\n\nMohon konfirmasi scope dan ketersediaan pengerjaan.`);
     const phone=(typeof ADMIN_WHATSAPP!=="undefined" ? ADMIN_WHATSAPP : "").replace(/\D/g,"");
     const url=phone ? `https://wa.me/${phone}?text=${message}` : `https://wa.me/?text=${message}`;
     window.open(url,"_blank","noopener,noreferrer");
 }
 
-function addToCart(index){
-
+function addToCart(index, optionIndex=null){
     const item=packages[index];
-
-    cart.push({
-        ...item,
-        id:Date.now()+Math.random()
-    });
-
+    if(!item || item.empty)return;
+    let selected={...item};
+    if(item.priceOptions?.length){
+        const option=item.priceOptions[Number(optionIndex ?? 0)];
+        if(!option || option.price==null){askPackage(index,optionIndex ?? 0);return;}
+        selected.title=`${item.title} — ${option.label}`;
+        selected.price=Number(option.price);
+        selected.priceOptions=undefined;
+    }
+    if(!Number.isFinite(Number(selected.price))){askPackage(index);return;}
+    cart.push({...selected,id:Date.now()+Math.random()});
     updateCart();
-
-    toast(
-        item.title+
-        " ditambahkan."
-    );
-
+    toast(item.title+(selected.title!==item.title?` (${selected.title.split("—").pop().trim()})`:"")+" ditambahkan.");
 }
 
 function updateCart(){
@@ -4936,8 +4468,7 @@ function createOrder(){
         wa,
         payment,
         note,
-        total,
-        status:0
+        total
     };
 
     const items=cart.map((item,i)=>
@@ -4962,63 +4493,6 @@ function createOrder(){
         window.open(`https://wa.me/?text=${message}`,"_blank","noopener,noreferrer");
         toast("WhatsApp dibuka. Isi nomor admin di ADMIN_WHATSAPP untuk direct chat.");
     }
-
-    const trackerId=document.getElementById("trackerId");
-    const trackerStatus=document.getElementById("trackerStatus");
-    if(trackerId)trackerId.textContent=currentOrder.id;
-    if(trackerStatus)trackerStatus.textContent="WAITING FOR ADMIN";
-
-    updateTracker(0);
-    scrollToId("status");
-}
-
-
-/* ==============================
-   TRACKER
-================================ */
-
-function updateTracker(level){
-
-    for(let i=1;i<=5;i++){
-
-        const step=
-            document.getElementById(
-                "step"+i
-            );
-
-        if(!step)continue;
-
-        if(i<=level+1){
-
-            step.classList.add("done");
-
-        }else{
-
-            step.classList.remove("done");
-
-        }
-
-    }
-
-    const statuses=[
-
-        "PAYMENT",
-        "QUEUE",
-        "PROCESSING",
-        "QUALITY CHECK",
-        "COMPLETED"
-
-    ];
-
-    const status=
-        statuses[
-            Math.min(level,4)
-        ];
-
-    document.getElementById(
-        "trackerStatus"
-    ).textContent=status;
-
 }
 
 
@@ -5147,68 +4621,15 @@ document.addEventListener("visibilitychange",()=>{
 });
 
 
-/* ==============================
-   INTEGRATED SOURCE EXTENSIONS
-   Pull discovery + NIGHT45K
-================================ */
 
+/* ==============================
+   NIGHT45K SUPPORT
+================================ */
 function consultNight45K(){
     const message="Halo FXNZZ STORE, saya ingin konsultasi layanan NIGHT45K untuk Punishing: Gray Raven. Mohon konfirmasi scope, ketersediaan worker, harga, dan estimasi setelah detail akun saya jelaskan.";
-    const phone=String(ADMIN_WHATSAPP||"").replace(/\\D/g,"");
+    const phone=String(ADMIN_WHATSAPP||"").replace(/\D/g,"");
     window.open(phone ? `https://wa.me/${phone}?text=${encodeURIComponent(message)}` : `https://wa.me/?text=${encodeURIComponent(message)}`,"_blank","noopener,noreferrer");
 }
-
-function consultPullService(){
-    const message="Halo FXNZZ STORE, saya ingin konsultasi layanan Joki Pull ZZZ. Mohon bantu cek target pull, resource akun, scope pengerjaan, dan total harga sebelum order.";
-    const phone=String(ADMIN_WHATSAPP||"").replace(/\\D/g,"");
-    window.open(phone ? `https://wa.me/${phone}?text=${encodeURIComponent(message)}` : `https://wa.me/?text=${encodeURIComponent(message)}`,"_blank","noopener,noreferrer");
-    closePullPromo();
-}
-
-function populatePullPromo(){
-    const container=document.getElementById("pullPromoOptions");
-    if(!container)return;
-    const pullPackages=packages.filter(item=>item.game==="ZZZ" && item.category==="PULL" && Number.isFinite(Number(item.price)));
-    container.innerHTML=pullPackages.map(item=>{
-        const escapeText=value=>String(value||"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
-        const title=escapeText(item.title);
-        const desc=escapeText(item.desc);
-        const count=Number((String(item.title||"").match(/\\d+/)||[])[0])||0;
-        const unit=count?`${rupiah(Math.round(Number(item.price)/count))} per pull`:"Konfirmasi scope";
-        return `<article class="pull-promo-option"><strong>${title}</strong><span class="pull-promo-price">${rupiah(Number(item.price))}</span><p>${desc}</p><p><strong>Pembanding unit:</strong> ${unit}. Hasil gacha tidak dijamin.</p></article>`;
-    }).join("") || '<p class="pull-promo-note">Detail paket pull belum tersedia. Hubungi owner untuk konsultasi.</p>';
-}
-
-function showPullPromo(){
-    const overlay=document.getElementById("pullPromoOverlay");
-    if(!overlay)return;
-    try{if(sessionStorage.getItem("fxnzzPullPromoDismissed")==="1")return;}catch(error){}
-    populatePullPromo();
-    overlay.classList.remove("closing");
-    overlay.classList.add("show");
-    overlay.setAttribute("aria-hidden","false");
-}
-
-function closePullPromo(){
-    const overlay=document.getElementById("pullPromoOverlay");
-    if(!overlay || !overlay.classList.contains("show"))return;
-    overlay.classList.remove("show");
-    overlay.classList.add("closing");
-    overlay.setAttribute("aria-hidden","true");
-    window.setTimeout(()=>overlay.classList.remove("closing"),480);
-    try{sessionStorage.setItem("fxnzzPullPromoDismissed","1");}catch(error){}
-}
-
-function showPullPackages(){
-    closePullPromo();
-    renderPackages("PULL");
-    document.querySelectorAll(".filter button").forEach(button=>button.classList.remove("active"));
-    scrollToId("services");
-}
-
-document.addEventListener("keydown",event=>{
-    if(event.key==="Escape")closePullPromo();
-});
 
 /* ==============================
    ADMIN CHAT
@@ -5298,12 +4719,12 @@ window.addEventListener("DOMContentLoaded",()=>{
   let dsToastTimer = null;
 
   const digitalProducts = [
-    {id:"web-starter",name:"Website Starter Template",category:"Development",type:"WEB TEMPLATE",description:"A considered starting point for building a modern, responsive website.",mark:"</>",index:"FX—001",includes:["Responsive HTML structure","Reusable CSS components","Vanilla JavaScript interactions","Setup documentation"],requirements:"Modern browser. Basic familiarity with HTML and CSS is recommended."},
-    {id:"prompt-library",name:"AI Prompt Library",category:"AI & Automation",type:"PROMPT COLLECTION",description:"A structured prompt collection for research, planning, and practical execution.",mark:"AI",index:"FX—002",includes:["Categorized prompt library","Usage notes","Prompt refinement examples","Editable document"],requirements:"Access to a compatible AI assistant."},
-    {id:"editorial-ui",name:"Editorial UI Kit",category:"Design",type:"DESIGN RESOURCE",description:"A visual foundation for clean, typography-led digital interfaces.",mark:"Aa",index:"FX—003",includes:["Typography scale","Color tokens","UI component references","Layout examples"],requirements:"Figma or compatible design software."},
-    {id:"business-dashboard",name:"Business Dashboard",category:"Business",type:"WORKFLOW TOOL",description:"A practical dashboard concept for organizing small business operations.",mark:"01",index:"FX—004",includes:["Overview dashboard","Order tracking concept","Revenue summary layout","Documentation"],requirements:"Spreadsheet or web implementation environment."},
-    {id:"portfolio-frame",name:"Portfolio Framework",category:"Development",type:"WEB TEMPLATE",description:"A flexible portfolio structure for presenting selected work with clarity.",mark:"/ /",index:"FX—005",includes:["Project grid","Case study layout","Responsive navigation","Contact section"],requirements:"Modern browser and basic HTML/CSS knowledge."},
-    {id:"workflow-map",name:"Automation Workflow Map",category:"AI & Automation",type:"WORKFLOW RESOURCE",description:"A visual framework for mapping repeatable tasks and automation opportunities.",mark:"↗",index:"FX—006",includes:["Workflow canvas","Process checklist","Automation planning prompts","Example flows"],requirements:"No-code or automation platform knowledge is useful."}
+    {id:"web-starter",name:"Website Starter Template",image:"",imageAlt:"",category:"Development",type:"WEB TEMPLATE",description:"A considered starting point for building a modern, responsive website.",mark:"</>",index:"FX—001",includes:["Responsive HTML structure","Reusable CSS components","Vanilla JavaScript interactions","Setup documentation"],requirements:"Modern browser. Basic familiarity with HTML and CSS is recommended."},
+    {id:"prompt-library",name:"AI Prompt Library",image:"",imageAlt:"",category:"AI & Automation",type:"PROMPT COLLECTION",description:"A structured prompt collection for research, planning, and practical execution.",mark:"AI",index:"FX—002",includes:["Categorized prompt library","Usage notes","Prompt refinement examples","Editable document"],requirements:"Access to a compatible AI assistant."},
+    {id:"editorial-ui",name:"Editorial UI Kit",image:"",imageAlt:"",category:"Design",type:"DESIGN RESOURCE",description:"A visual foundation for clean, typography-led digital interfaces.",mark:"Aa",index:"FX—003",includes:["Typography scale","Color tokens","UI component references","Layout examples"],requirements:"Figma or compatible design software."},
+    {id:"business-dashboard",name:"Business Dashboard",image:"",imageAlt:"",category:"Business",type:"WORKFLOW TOOL",description:"A practical dashboard concept for organizing small business operations.",mark:"01",index:"FX—004",includes:["Overview dashboard","Order tracking concept","Revenue summary layout","Documentation"],requirements:"Spreadsheet or web implementation environment."},
+    {id:"portfolio-frame",name:"Portfolio Framework",image:"",imageAlt:"",category:"Development",type:"WEB TEMPLATE",description:"A flexible portfolio structure for presenting selected work with clarity.",mark:"/ /",index:"FX—005",includes:["Project grid","Case study layout","Responsive navigation","Contact section"],requirements:"Modern browser and basic HTML/CSS knowledge."},
+    {id:"workflow-map",name:"Automation Workflow Map",image:"",imageAlt:"",category:"AI & Automation",type:"WORKFLOW RESOURCE",description:"A visual framework for mapping repeatable tasks and automation opportunities.",mark:"↗",index:"FX—006",includes:["Workflow canvas","Process checklist","Automation planning prompts","Example flows"],requirements:"No-code or automation platform knowledge is useful."}
   ];
 
   function dsToast(message) {
@@ -5331,29 +4752,64 @@ window.addEventListener("DOMContentLoaded",()=>{
     document.documentElement.classList.remove("switcher-open");
   }
 
+  let storeSwitching = false;
+
   function switchStore(target) {
-    if (target !== "gaming" && target !== "digital") return;
+    if ((target !== "gaming" && target !== "digital") || storeSwitching) return;
     closeStoreSwitcher();
     if (target === activeStore) return;
+
     const outgoing = activeStore === "gaming" ? gamingView : digitalView;
     const incoming = target === "gaming" ? gamingView : digitalView;
     if (!outgoing || !incoming) return;
-    outgoing.classList.add("is-leaving");
-    window.setTimeout(() => {
+
+    storeSwitching = true;
+    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    let completed = false;
+    let fallbackTimer = null;
+
+    const finishSwitch = () => {
+      if (completed) return;
+      completed = true;
+      if (fallbackTimer) window.clearTimeout(fallbackTimer);
+
       outgoing.classList.remove("is-active", "is-leaving");
+
       if (target === "digital") {
         gamingApp?.classList.add("store-hidden");
         digitalView.classList.add("is-active");
         digitalView.setAttribute("aria-hidden", "false");
+        gamingView?.setAttribute("aria-hidden", "true");
       } else {
+        gamingApp?.classList.remove("store-hidden");
         digitalView.classList.remove("is-active");
         digitalView.setAttribute("aria-hidden", "true");
-        gamingApp?.classList.remove("store-hidden");
         gamingView.classList.add("is-active");
+        gamingView.setAttribute("aria-hidden", "false");
       }
+
       activeStore = target;
-      window.scrollTo({top:0,behavior:"smooth"});
-    }, 280);
+      window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+
+      // Refresh items that were previously inside a display:none store/page.
+      window.requestAnimationFrame(() => {
+        window.FXNZZRefreshMotion?.(incoming);
+        storeSwitching = false;
+      });
+    };
+
+    if (reducedMotion) {
+      finishSwitch();
+      return;
+    }
+
+    outgoing.classList.add("is-leaving");
+    outgoing.addEventListener("animationend", (event) => {
+      if (event.target === outgoing && event.animationName === "fxStoreLeave") finishSwitch();
+    }, { once: true });
+
+    // Fallback prevents a stuck switch when CSS animation is unavailable.
+    fallbackTimer = window.setTimeout(finishSwitch, 340);
   }
 
   switcher?.querySelectorAll("[data-switch-close]").forEach((el) => el.addEventListener("click", closeStoreSwitcher));
@@ -5369,9 +4825,10 @@ window.addEventListener("DOMContentLoaded",()=>{
   }
 
   function dsCard(product) {
+    const photo = product.image ? `<img class="ds-product-photo" src="${escapeHTML(product.image)}" alt="${escapeHTML(product.imageAlt || product.name)}" loading="lazy" decoding="async" onerror="this.remove()">` : "";
     return `<article class="ds-product-card">
-      <button type="button" class="ds-product-visual" data-ds-product="${escapeHTML(product.id)}" aria-label="View ${escapeHTML(product.name)}">
-        <span class="ds-visual-index">${escapeHTML(product.index)}</span><span class="ds-visual-mark">${escapeHTML(product.mark)}</span><span class="ds-visual-type">${escapeHTML(product.type)}</span>
+      <button type="button" class="ds-product-visual ${product.image ? "has-photo" : ""}" data-ds-product="${escapeHTML(product.id)}" aria-label="View ${escapeHTML(product.name)}">
+        ${photo}<span class="ds-visual-index">${escapeHTML(product.index)}</span><span class="ds-visual-mark">${escapeHTML(product.mark)}</span><span class="ds-visual-type">${escapeHTML(product.type)}</span>
       </button>
       <div class="ds-product-info">
         <div class="ds-product-meta"><span>${escapeHTML(product.category.toUpperCase())}</span><span>PREVIEW</span></div>
@@ -5413,14 +4870,15 @@ window.addEventListener("DOMContentLoaded",()=>{
       button.classList.toggle("active", button.dataset.dsPage === page);
     });
     if (page === "explore") renderCatalog();
-    window.scrollTo({top:0,behavior:"smooth"});
+    window.scrollTo({top:0,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+    window.FXNZZRefreshMotion?.(document.getElementById("digitalStoreView"));
   }
 
   function showProductDetail(id) {
     const product = digitalProducts.find((item) => item.id === id);
     const target = byId("ds-product-detail");
     if (!product || !target) return;
-    target.innerHTML = `<div class="ds-detail-visual"><span>${escapeHTML(product.index)}</span><strong>${escapeHTML(product.mark)}</strong></div>
+    target.innerHTML = `<div class="ds-detail-visual">${product.image ? `<img class="ds-detail-photo" src="${escapeHTML(product.image)}" alt="${escapeHTML(product.imageAlt || product.name)}" onerror="this.remove()">` : ""}<span>${escapeHTML(product.index)}</span><strong>${escapeHTML(product.mark)}</strong></div>
       <div class="ds-detail-copy"><div class="ds-product-meta"><span>${escapeHTML(product.category.toUpperCase())}</span><span>PRE-LAUNCH PREVIEW</span></div>
       <h1>${escapeHTML(product.name)}</h1><p>${escapeHTML(product.description)}</p>
       <div class="ds-detail-block"><h3>WHAT'S INCLUDED</h3><ul>${product.includes.map((line) => `<li>${escapeHTML(line)}</li>`).join("")}</ul></div>
@@ -5445,6 +4903,7 @@ window.addEventListener("DOMContentLoaded",()=>{
       } catch (_) { dsToast("Wishlist storage is unavailable in this browser."); }
     });
     dsShowPage("detail");
+    window.FXNZZRefreshMotion?.(target);
   }
 
   document.querySelectorAll("#digitalStoreView [data-ds-page]").forEach((button) => {
@@ -5485,38 +4944,103 @@ window.addEventListener("DOMContentLoaded",()=>{
 
 <script id="fxnzz-motion-engine">
 (() => {
-  // Run the reveal engine on desktop as well; reduced-motion CSS remains scoped to touch devices.
-  const selectors = [
-    'main section','section.hero','section:not(.entry)',' .product-card',
-    '.service-card','.category-card','.game-card','.digital-card',
-    '.ds-section','.ds-product-card','.ds-category-band','.ds-newsletter',
-    '.section-title','.catalog-section'
-  ].join(',');
-  const collect = (root=document) => {
-    const nodes = [...root.querySelectorAll(selectors)].filter(el => !el.closest('.entry') && !el.hasAttribute('data-fx-reveal'));
-    nodes.forEach((el,i) => {
-      el.setAttribute('data-fx-reveal','');
-      if (el.matches('.product-card,.service-card,.category-card,.game-card,.digital-card,.ds-product-card')) {
-        const siblings=[...el.parentElement.children].filter(x=>x.matches('.product-card,.service-card,.category-card,.game-card,.digital-card,.ds-product-card'));
-        el.style.setProperty('--fx-delay',`${Math.min(siblings.indexOf(el),5)*75}ms`);
-      } else el.style.setProperty('--fx-delay','0ms');
-    });
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver(entries => entries.forEach(entry => {
-        if(entry.isIntersecting){entry.target.classList.add('fx-visible');io.unobserve(entry.target)}
-      }),{threshold:.12,rootMargin:'0px 0px -35px 0px'});
-      nodes.forEach(el=>io.observe(el));
-    } else nodes.forEach(el=>el.classList.add('fx-visible'));
+  "use strict";
+
+  const reduceQuery = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+  const prefersReducedMotion = !!reduceQuery?.matches;
+  const selector = [
+    "#gamingStoreView main section",
+    "#gamingStoreView .team-card",
+    "#gamingStoreView .package",
+    "#digitalStoreView .ds-section",
+    "#digitalStoreView .ds-product-card"
+  ].join(",");
+
+  let observer = null;
+  const collect = (root) => {
+    if (!root) return [];
+    const nodes = [];
+    if (root.nodeType === 1 && root.matches?.(selector)) nodes.push(root);
+    if (root.querySelectorAll) nodes.push(...root.querySelectorAll(selector));
+    return [...new Set(nodes)];
   };
-  document.documentElement.classList.add('fx-motion-ready');
-  collect();
-  // Re-scan content rendered later (catalog filters / page switching).
-  const observer = new MutationObserver(records => {
-    if(records.some(r=>[...r.addedNodes].some(n=>n.nodeType===1))) collect();
+
+  const reveal = (root = document) => {
+    const nodes = collect(root);
+    if (prefersReducedMotion) {
+      nodes.forEach((node) => node.classList.add("fx-visible"));
+      return;
+    }
+
+    nodes.forEach((node) => {
+      // display:none pages have no layout boxes; defer them until the store/page opens.
+      if (!node.getClientRects().length) return;
+      if (!node.hasAttribute("data-fx-reveal")) node.setAttribute("data-fx-reveal", "1");
+      if (node.classList.contains("fx-visible")) return;
+      if (observer) {
+        observer.unobserve(node);
+        observer.observe(node);
+      } else {
+        node.classList.add("fx-visible");
+      }
+    });
+  };
+
+  if (!prefersReducedMotion && "IntersectionObserver" in window) {
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("fx-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      threshold: 0.01,
+      rootMargin: "0px 0px -5% 0px"
+    });
+    document.documentElement.classList.add("fx-motion-ready");
+  }
+
+  window.FXNZZRefreshMotion = reveal;
+
+  const start = () => {
+    // Reflow is not forced; the class begins its entrance animation on the next frame.
+    reveal(document);
+    const entry = document.getElementById("entry");
+    if (entry) window.requestAnimationFrame(() => entry.classList.add("is-ready"));
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start, { once: true });
+  } else {
+    start();
+  }
+
+  if ("MutationObserver" in window) {
+    const mutationObserver = new MutationObserver((records) => {
+      records.forEach((record) => {
+        record.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) window.requestAnimationFrame(() => reveal(node));
+        });
+      });
+    });
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // If the OS preference changes while the page is open, update safely.
+  reduceQuery?.addEventListener?.("change", (event) => {
+    if (event.matches) {
+      document.documentElement.classList.remove("fx-motion-ready");
+      document.querySelectorAll(selector).forEach((node) => node.classList.add("fx-visible"));
+    } else {
+      document.documentElement.classList.add("fx-motion-ready");
+      document.querySelectorAll(selector).forEach((node) => {
+        node.classList.remove("fx-visible");
+      });
+      reveal(document);
+    }
   });
-  observer.observe(document.body,{childList:true,subtree:true});
-  // Avoid keeping the observer alive forever on long-running tabs.
-  document.addEventListener('visibilitychange',()=>{if(document.hidden) observer.disconnect();},{once:true});
 })();
 </script>
 
