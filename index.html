@@ -2419,7 +2419,9 @@ img{max-width:100%}
 .package-price-list strong{color:#f3f3f4;font-size:9px;text-align:right}
 .package.empty-slot{opacity:.55}
 .package-detail-open{overflow:hidden}
-.package-detail-overlay{position:fixed;inset:0;z-index:2200;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility .22s ease}
+.package-detail-overlay{position:fixed;inset:0;z-index:10050;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,visibility .22s ease;isolation:isolate}
+.package-detail-overlay.show{opacity:1;visibility:visible;pointer-events:auto}
+.package-detail-modal{overscroll-behavior:contain;max-height: min(88vh, 820px);max-height:min(88dvh,820px)}
 .package-detail-overlay.show{opacity:1;visibility:visible;pointer-events:auto}
 .package-detail-modal{position:relative;width:min(820px,100%);max-height:min(88vh,820px);overflow:auto;border:1px solid rgba(255,255,255,.16);border-radius:20px;background:#101012;box-shadow:0 24px 80px rgba(0,0,0,.55);transform:translateY(10px);transition:transform .22s ease;-webkit-overflow-scrolling:touch}
 .package-detail-overlay.show .package-detail-modal{transform:translateY(0)}
@@ -2480,8 +2482,9 @@ body{animation:none!important;background-size:auto!important}
  .team-card p{font-size:8px;line-height:1.4}
  .team-specialty{font-size:7px;line-height:1.4;margin-top:7px;padding-top:7px}
  .team-card.night45k .btn{font-size:7px;padding:7px 4px}
- .package-detail-overlay{padding:8px;align-items:flex-end}
- .package-detail-modal{width:100%;max-height:90dvh;border-radius:17px 17px 12px 12px}
+ .package-detail-overlay{padding:8px;padding-bottom:max(8px,env(safe-area-inset-bottom));align-items:flex-end}
+ .package-detail-modal{width:100%;max-height:90vh;max-height:90dvh;border-radius:17px 17px 12px 12px;overscroll-behavior:contain}
+ .package-detail-layout{padding-bottom:max(13px,env(safe-area-inset-bottom))}
  .package-detail-layout{grid-template-columns:1fr;gap:13px;padding:13px}
  .package-detail-media{max-height:145px;min-height:130px}
  .package-detail-media img{min-height:130px;max-height:145px}
@@ -4022,10 +4025,23 @@ function showPackageDetail(index){
         select.addEventListener("change",updateAction);
         updateAction();
     }
+    // Keep the fixed modal outside transformed store containers.
+    // A transformed ancestor can become the containing block for position:fixed,
+    // which causes the detail overlay to render off-screen on some mobile browsers.
+    if(overlay.parentElement !== document.body){
+        document.body.appendChild(overlay);
+    }
+
     overlay.classList.add("show");
     overlay.setAttribute("aria-hidden","false");
     document.documentElement.classList.add("package-detail-open");
-    document.getElementById("packageDetailClose")?.focus({preventScroll:true});
+
+    // Use the visual viewport on mobile and start each detail at its top.
+    const modal=overlay.querySelector(".package-detail-modal");
+    if(modal) modal.scrollTop=0;
+    requestAnimationFrame(()=>{
+        document.getElementById("packageDetailClose")?.focus({preventScroll:true});
+    });
 }
 
 function closePackageDetail(){
